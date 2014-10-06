@@ -1,13 +1,47 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Pagehub</title>
-  <%= stylesheet_link_tag    'application', media: 'all' %>
+  <title>PageHub</title>
+
+  <%= stylesheet_link_tag 'compiled/app', media: 'all' %>
   <%= csrf_meta_tags %>
 </head>
-<body>
 
-<%= yield %>
+<body class="<%= logged_in? ? 'member' : 'guest' %> light">
+  <%= render "layouts/header" %>
 
+  <div class="status-wrap">
+    <%= render "layouts/flashes" %>
+  </div>
+
+  <div class="stuff content-wrapper">
+    <% klasses = [ request.path.gsub('/', ' ').strip.sanitize.split('-').first ] %>
+    <% klasses << (yield_content :section if content_for?(:section)) %>
+
+    <div id="content" class="<%= klasses.join(' ') %>">
+      <%= yield %>
+    </div>
+  </div>
+
+  <div id="loader" class="loader"></div>
+  <div class="loader-overlay"></div>
+
+  <aside class="hidden modal alert" id="html5_compatibility_notice">
+    <h2>Unsupported Browser</h2>
+
+    <p>The brower you are currently using does not appear to support
+      the latest HTML5 standards which are required for PageHub to
+      function correctly.
+    </p>
+    <p>Please update your browser or use a recent version of the
+      officially supported browsers: Google Chrome, Safari 5, or Mozilla Firefox.
+    </p>
+  </aside>
+
+  <%= render "layouts/footer" %>
+  <%= render "layouts/pagehub_js" %>
+
+  <script data-main="/javascripts/compiled/app" src="/javascripts/vendor/require.js"></script>
 </body>
+
 </html>

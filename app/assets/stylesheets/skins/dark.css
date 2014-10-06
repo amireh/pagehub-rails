@@ -1,0 +1,199 @@
+.cm-s-neat span.cm-header { color: #D4EE5E; }
+.CodeMirror pre.CodeMirror-cursor {
+  border-color: #fff;
+}
+
+body {
+  background: url(../bg.png) repeat;
+  color: #F4FAD2;  
+}
+
+.header_wrap {
+  background: rgba(0,0,0,0.5);
+  box-shadow: 0 -1px 10px 0px black;;
+}
+
+.action_bar_wrap {
+  background: rgba(0,0,0,0.1);
+  border: none;
+}
+
+#editor_container {
+  border: none;
+  padding: 0;
+}
+.CodeMirror {
+  width: 720px;
+}
+
+a,
+a:visited {
+  /*color: #D4EE5E;*/
+  color: #F0AD11;
+  /*color: #008cdd;*/
+}
+.highlighted {
+  color: #E15E32;  
+}
+
+header h1 a:visited,
+header h1 a {
+  letter-spacing: 5px;
+  font-weight: 100;
+  color: inherit;
+  font-family: inherit;
+}
+
+header h1 a em {
+  color: #F4FAD2;
+}
+
+* { border-color: rgba(0,0,0,0.2); }
+hr {
+  box-shadow: none;
+  border-color: rgba(0,0,0,0.2);
+}
+
+input[type=submit],
+button,
+a.button {
+  color: white;
+  background-color: #B85C00;
+  background-repeat: no-repeat;
+  background-image: -webkit-gradient(linear,0 0,0 100%,from(#F93),color-stop(25%,#F93),to(#B85C00));
+  background-image: -webkit-linear-gradient(#F93,#F93 25%,#B85C00);
+  background-image: -moz-linear-gradient(top,#F93,#F93 25%,#B85C00);
+  background-image: -ms-linear-gradient(#F93,#F93 25%,#B85C00);
+  background-image: -o-linear-gradient(#F93,#F93 25%,#B85C00);
+  background-image: linear-gradient(#F93,#F93 25%,#B85C00);
+  text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.25);
+
+  border: 2px solid #000;
+  border-color: #C60 #C60 #AD5700;
+  border-color: rgba(0, 0, 0, 0.10) rgba(0, 0, 0, 0.10) rgba(0, 0, 0, 0.3);
+}
+
+button:hover, 
+input[type=submit]:hover,
+a.button:hover {
+  color: #EEE;
+}
+
+button:active,
+input[type=submit]:active,
+a.button:active {
+  background: #FFFFF7;
+  color: #312D21;
+}
+
+
+input[type=text],
+input[type=email],
+input[type=password] {
+  background: none;
+  border: 1px solid #615B4E;
+  color: #fff;
+  box-shadow: 0 0 5px 0 black inset;
+  background: rgba(0,0,0,0.2);
+}
+
+input[type=text]:focus,
+input[type=email]:focus,
+input[type=password]:focus {
+  background: none;
+}
+
+form input[type=text],
+form input[type=email],
+form input[type=password] {
+  width: 320px;
+}
+
+
+/*.flash_wrap {
+  background-color: rgba(0,0,0,0.10);
+}
+#flashes {
+  background: transparent;
+}*/
+#flashes {
+  box-shadow: 0 0 1px 1px #000;
+  background:   rgba(0,0,0,0.85);
+  border-color: rgba(0,0,0,0.85);
+}
+
+#flashes button {
+  background: #000;
+  border: none;
+  top: 0;
+  right: 0;
+  color: #fff;
+  font-size: 24px;
+  line-height: inherit;
+  height: 100%;
+}
+
+#pages hr {
+  border-color: rgba(0,0,0,0.25);
+}
+
+#pages .useful_links {
+  color: #F4FAD2;
+}
+
+.stuff ::-webkit-scrollbar-thumb:vertical {
+  background: rgba(0,0,0,0.1);
+  border-color: rgba(0,0,0,0.1);
+}
+
+a.listlike.selected,
+ol.listlike {
+  background: rgba(0,0,0,0.85);
+  box-shadow: 0 0 0px 1px #111 inset;
+  border-color: #000;
+}
+ol.listlike li {
+  border-color: #111;
+}
+
+.jqmConfirmWindow input[type=text],
+.jqmConfirmWindow input[type=text]:focus {
+  background: white;
+  color: #333;
+}
+
+a.listlike:after {
+  content: "\00a0\2193";
+}
+a.listlike.selected:after {
+  content: "\00a0\2191";
+}
+a.listlike.selected {
+  border: none;
+}
+a.listlike.selected:before {
+  content: '';
+  display: inline-block;
+  border-left: 7px solid transparent;
+  border-right: 7px solid transparent;
+  border-bottom: 7px solid #ff0000;
+  border-bottom-color: rgba(0, 0, 0, 0.2);
+  position: absolute;
+  bottom: 0px;
+  margin-right: auto; margin-left: auto;
+  z-index: 1000;
+}
+a.listlike.selected:after {
+  content: '';
+  display: inline-block;
+  border-left: 6px solid transparent;
+  border-right: 6px solid transparent;
+  border-bottom: 6px solid #F0AD11;
+  position: absolute;
+  bottom: 0px;
+  margin-right: auto; margin-left: auto;
+  z-index: 1000;
+}
+footer {
+  border-color: rgba(0,0,0,0.25);
+}

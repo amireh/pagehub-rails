@@ -1,0 +1,7 @@
+## Migration notes
+
+- constants defined in application.rb are now scoped inside the PageHub module
+  and are UPPER_CASED:
+    - ReservedResourceTitles
+    - ReservedSpaceTitles
+    - ReservedUsernames

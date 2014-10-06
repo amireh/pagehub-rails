@@ -1,0 +1,236 @@
+body {
+  /*font-family: Arial, Helvetica;*/
+  font-family: "Trebuchet MS", Helvetica, Verdana, Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  font-size: 14px;
+  line-height: 18px;
+  margin: 0;
+  padding: 0;
+}
+
+body * {
+  -webkit-box-sizing: border-box;
+     -moz-box-sizing: border-box;
+          box-sizing: border-box;
+}
+body > header {
+  width: auto;
+}
+body > header h1,
+body > header h3 {
+  display: inherit;
+}
+
+h1,h2,h3,h4,h5,h6 {
+  font-family: inherit;
+  line-height: normal;
+}
+
+img,
+iframe {
+  max-width: 100%;
+}
+
+.with_sidebar #breadcrumbs {
+  background: rgba(0,0,0,0.075);
+  margin: 0 0 10px 0;
+  font-weight: bold;
+  letter-spacing: 1px;
+  font-size: 0.8em;
+  padding: 0 5px;
+  position: relative;
+}
+
+.with_sidebar #breadcrumbs > a {
+  position: relative;
+  display: inline-block;
+}
+
+code {
+  border: 1px solid #eee;
+  background: #fcfcfc;
+  font-size: 12px;
+}
+
+blockquote {
+  border-left: 4px solid #DDD;
+  padding: 0 15px;
+  margin: 15px 0;
+}
+
+.sidebar .group_listing ul {
+  font-size: 12px;
+  line-height: 15px;
+}
+
+.sidebar .group_listing > :first-child {
+  padding-top: 0;
+  margin-top: 0;
+}
+.group_listing ol,
+.group_listing ul {
+  list-style-type: none;
+  padding: 0 0 0 20px;
+}
+.group_listing > ul {
+  padding: 0;
+}
+.group_listing label {
+  display: block;
+  padding-bottom: 5px;
+}
+
+.group_listing ol li:last-child {
+  padding-bottom: 3px;
+}
+
+.group_listing a.selected {
+  position: relative;
+}
+.group_listing a.selected:after {
+  width: 0px;
+  height: 0px;
+  border-top:     5px solid transparent;
+  border-bottom:  5px solid transparent;
+  border-left:   5px solid orange;
+  content: '>';
+  font-size: 0;
+  position: absolute;
+  top: 1px;
+  left: -10px;
+}
+
+em.small {
+  font-size: 11px;
+  font-style: normal;
+}
+
+.page_title em.small {
+  vertical-align: middle;
+}
+
+.scope_title h1 {
+  vertical-align: middle;
+  font-weight: bold;
+}
+
+::-webkit-scrollbar {
+  width:  12px;
+  height: 12px;
+}
+
+::-webkit-scrollbar-button:start:decrement,
+::-webkit-scrollbar-button:end:increment  {
+  height: 12px;
+  width: 12px;
+  display: block;
+  background-color: rgba(0,0,0,0.25);
+  border: 1px solid transparent;
+  box-shadow: 0 0 0 1px rgba(255,255,255,0.5) inset;
+}
+
+::-webkit-scrollbar-track-piece  {
+  background-color: rgba(0,0,0,0.05);
+  -webkit-border-radius: 0;
+
+}
+::-webkit-scrollbar-thumb:vertical {
+  height: 30px;
+}
+
+::-webkit-scrollbar-thumb:horizontal {
+  width: 30px;
+}
+
+::-webkit-scrollbar-thumb:vertical,
+::-webkit-scrollbar-thumb:horizontal {
+  background-color: rgba(0, 0, 0, 0.25);
+  border: 1px solid transparent;
+  -webkit-border-radius: 0;
+  box-shadow: 0 0 0 1px rgba(255,255,255,0.5) inset;
+}
+
+::-webkit-scrollbar-thumb:vertical:hover,
+::-webkit-scrollbar-thumb:horizontal:hover,
+::-webkit-scrollbar-button:start:decrement:hover,
+::-webkit-scrollbar-button:end:increment:hover {
+  background-color: rgba(0,0,0,0.35);
+}
+
+
+#jumpers a {
+  text-decoration: none;
+}
+
+a[href="#bottom"] {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  color: #33332d;
+  text-decoration: none;
+  opacity: 0.5;
+  z-index: 10;
+}
+a[href="#top"] {
+  position: fixed;
+  bottom: 40px;
+  right: 20px;
+  color: #33332d;
+  text-decoration: none;
+  opacity: 0.5;
+  z-index: 10;
+}
+
+
+.content table {
+  padding: 0;
+  border-collapse: collapse;
+  border-spacing: 0;
+  width: 100%;
+}
+.content table tr {
+  border-top: 1px solid #ccc;
+  background-color: #fff;
+  margin: 0;
+  padding: 0;
+}
+.content table tr:nth-child(2n) {
+  background-color: #f4f4f4;
+}
+.content table tr th {
+  font-weight: bold;
+}
+.content table tr th,
+.content table tr td {
+  border: 1px solid #ccc;
+  text-align: left;
+  margin: 0;
+  padding: 6px 13px;
+}
+.content table tr th>:first-child,
+.content table tr td>:first-child {
+  margin-top: 0;
+}
+.content table tr th>:last-child,
+.content table tr td>:last-child {
+  margin-bottom: 0;
+}
+
+div.highlight {
+}
+
+div.highlight > pre {
+  padding: 15px;
+  /*padding: 0;*/
+  margin: 0;
+  overflow: auto;
+}
+
+footer.article_info {
+  font-size: 11px;
+  font-style: normal;
+}
+
+code, pre {
+  font-family: Monospace, monospace, courier;
+}

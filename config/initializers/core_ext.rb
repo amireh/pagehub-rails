@@ -1,0 +1,1 @@
+String.include CoreExt::String

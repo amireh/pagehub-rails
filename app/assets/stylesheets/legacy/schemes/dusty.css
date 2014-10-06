@@ -1,0 +1,50 @@
+body {
+  background: #F0F2EB;
+  color: #1C140D;
+}
+
+h1 {
+  color: #FF4242;
+}
+
+h2 {
+  color: #99173C;
+}
+
+h2, h3, a, a:visited {
+  color: #5E8C6A;
+}
+
+a:hover {
+  color: #1C140D;
+}
+
+hr {
+  box-shadow: none;
+  border-color: #aaa;
+}
+
+.highlight .nt { color: #5E8C6A; } /* Name.Tag */
+.highlight .cp { color: #555;}
+
+#content {
+  padding-bottom: 0;
+}
+
+.dusty .highlight,
+.dusty code {
+  background: rgba(205,160,95, 0.075);
+  border-color: #CDA05F;
+}
+
+.fluid .sidebar {
+  text-shadow: 0 1px 0 #fff;
+  background: rgba(205,160,95, 0.075);
+  border-right: 1px solid #CCC;
+}
+
+.fluid .scope_title {
+  background: rgba(205,160,95, 0.075);
+  border-bottom: 1px solid #ccc;
+  /*box-shadow: 0 0 10px 2px white inset;*/
+}

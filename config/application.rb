@@ -26,6 +26,10 @@ module PageHub
     # The default locale is :en and all translations from config/locales/*.rb,yml are auto loaded.
     # config.i18n.load_path += Dir[Rails.root.join('my', 'locales', '*.{rb,yml}').to_s]
     # config.i18n.default_locale = :de
+    config.assets.enabled = false
+
+    config.autoload_paths += Dir["#{config.root}/lib/"]
+    config.eager_load_paths += ["#{Rails.root}/lib"]
 
     # Load all config parameters from config/*.yml
     Dir["#{config.root}/config/*.yml"].each do |config_file|

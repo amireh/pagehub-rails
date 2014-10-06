@@ -1,0 +1,16 @@
+<li data-url="{{media.url}}"
+    data-parent="{{parent.id}}"
+    data-collapsible
+    id="folder_{{id}}"
+    class="folder{{#unless parent.id}} general-folder{{/unless}}">
+
+  <button data-collapse></button>
+  <a href="#{{path}}" class="folder-title"{{#if parent.id}} draggable="true"{{/if}}>
+    <i class="icon-folder-close"></i>{{{title}}}
+  </a>
+
+  <ol class="listing folders"></ol>
+  <ol class="listing pages">
+    <li class="empty-folder"><i class="icon-warning-sign"></i> This folder has no pages.</li>
+  </ol>
+</li>
