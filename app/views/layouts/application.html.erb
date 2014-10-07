@@ -16,7 +16,7 @@
 
   <div class="stuff content-wrapper">
     <% klasses = [ request.path.gsub('/', ' ').strip.sanitize.split('-').first ] %>
-    <% klasses << (yield_content :section if content_for?(:section)) %>
+    <% klasses << (yield :section if content_for?(:section)) %>
 
     <div id="content" class="<%= klasses.join(' ') %>">
       <%= yield %>

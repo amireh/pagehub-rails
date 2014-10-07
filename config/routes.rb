@@ -9,7 +9,9 @@ Rails.application.routes.draw do
     # sign_up: 'cmon_let_me_in'
   }
 
-  root 'guest#index'
+  root 'application#landing'
+
+  get '/dashboard', controller: :users, action: :dashboard, as: :user_dashboard
 
   scope '/users', controller: :users do
     get '/:user_id', action: :show, as: :user

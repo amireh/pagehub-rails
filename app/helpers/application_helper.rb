@@ -22,7 +22,7 @@ module ApplicationHelper
   end
 
   def current_nav_section
-    content_for?(:nav_section) ? yield_content(:nav_section) : ''
+    content_for?(:nav_section) ? content_for(:nav_section) : ''
   end
 
   def current_nav_section?(section)

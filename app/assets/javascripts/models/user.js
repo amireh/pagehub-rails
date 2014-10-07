@@ -26,7 +26,7 @@ define('models/user',
     initialize: function(data) {
       this.ctx = {};
 
-      this.spaces = new Spaces(data.spaces);
+      this.spaces = new Spaces(data.spaces || []);
       this.spaces.creator = this;
     }
   });

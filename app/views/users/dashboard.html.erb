@@ -1,0 +1,43 @@
+<% content_for :section     do %>dashboard<% end %>
+<% content_for :nav_section do %>dashboard<% end %>
+<% content_for :deferred_js do %>
+<script>
+  require([ 'views/users/dashboard/director' ], function(Dashboard) {
+    application.view = new Dashboard(application);
+  });
+</script>
+<% end %>
+
+<div id="dashboard">
+  <div class="profile">
+    <div class="avatar">
+      <%= gravatar_tag (current_user.gravatar_email || current_user.email), size: 196, secure: true %>
+    </div>
+    <h3 class="user-name"><%= current_user.name %></h3>
+    <h4 class="hint"><%= current_user.nickname %></h4>
+    <hr />
+    <div class="user-info">
+      <span class="join-date">Joined on <%= current_user.created_at.strftime('%b. %d, %Y') %></span>
+    </div>
+  </div>
+
+  <div class="user-spaces">
+    <h3 class="spaces-heading">Spaces
+      <% if false && current_user == current_user %>
+        <% if can? :create, Space %>
+          <a href="/new" class="btn btn-mini btn-primary" rel="tooltip" title="Create a new space">&plus;</a>
+        <% else %>
+          <a class="btn btn-mini btn-warning" disabled="disabled" rel="tooltip" title="You must upgrade your account to create new spaces">&plus;</a>
+        <% end %>
+      <% end %>
+    </h3>
+    <br />
+    <!-- <div class="gridster">
+      <ul>
+      </ul>
+    </div> -->
+    <p class="alert alert-warning" style="display: none;" id="no_spaces_marker"><%= current_user.nickname %> has no public spaces, or ones you have access to.</p>
+    <ul id="user_space_listing">
+    </ul>
+  </div>
+</div>
