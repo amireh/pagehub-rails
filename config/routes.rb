@@ -18,9 +18,13 @@ Rails.application.routes.draw do
 
   scope '/users', controller: :users do
     get '/:user_id', action: :show, as: :user
+    patch '/:user_id', action: :update
   end
 
   scope '/settings', controller: :settings do
     get '/', action: :index, as: :settings
   end
+
+  match '*path' => 'application#rogue_route', via: :all
+  match '/' => 'application#rogue_route', via: :all
 end

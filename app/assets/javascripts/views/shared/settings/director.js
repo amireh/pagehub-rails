@@ -223,7 +223,7 @@ function(Backbone, $, Shortcut, UI) {
       return false;
     },
 
-    sync: function(d, no_presync_callbacks, fetch_after_sync) {
+    sync: function(attrs, no_presync_callbacks, fetch_after_sync) {
       var director = this,
           state    = this.state,
           fetch_after_sync = fetch_after_sync === undefined ? this.fetch_after_sync : fetch_after_sync;
@@ -257,7 +257,7 @@ function(Backbone, $, Shortcut, UI) {
 
         this.state.set('syncing', true);
 
-        this.model.save($.extend(true, d, { no_object: true }), {
+        this.model.save(attrs, {
           wait: true,
           patch: true,
 
@@ -292,6 +292,7 @@ function(Backbone, $, Shortcut, UI) {
               }
 
             } catch(err) {
+              console.error(err);
             }
 
             if (!fetch_after_sync) {
@@ -318,6 +319,7 @@ function(Backbone, $, Shortcut, UI) {
 
       } catch(e) {
         state.set('syncing', false);
+        throw e;
       }
 
       return this;
