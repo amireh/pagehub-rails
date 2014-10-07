@@ -3,5 +3,16 @@ class User < ActiveRecord::Base
   # :confirmable, :lockable, :timeoutable and :omniauthable
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :trackable, :validatable,
-         :confirmable
+         :confirmable, :encryptable
+
+  def href(*args)
+  end
+
+  def url(*args)
+    user_url(self)
+  end
+
+  def preferences=(value)
+    write_attribute(:preferences, (value || {}).to_json)
+  end
 end

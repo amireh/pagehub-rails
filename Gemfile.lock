@@ -49,6 +49,8 @@ GEM
       railties (>= 3.2.6, < 5)
       thread_safe (~> 0.1)
       warden (~> 1.2.3)
+    devise-encryptable (0.1.2)
+      devise (>= 2.1.0)
     diff-lcs (1.1.3)
     dotenv (0.11.1)
       dotenv-deployment (~> 0.0.2)
@@ -191,6 +193,7 @@ DEPENDENCIES
   cancan
   debugger
   devise
+  devise-encryptable
   diff-lcs (= 1.1.3)
   foreman
   gravatarify (>= 3.1.0)

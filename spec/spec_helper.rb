@@ -32,3 +32,9 @@ RSpec.configure do |config|
     Rails.logger = Logger.new(STDOUT)
   end
 end
+
+Dir["./spec/support/**/*.rb"].sort.each { |f| require f }
+
+at_exit do
+  FileUtils.rm_rf(Rails.root.join('tmp', 'test').to_s)
+end

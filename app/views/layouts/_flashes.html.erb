@@ -1,5 +1,5 @@
 <% unless flash.empty? %>
-  <% flash.each_pair do |ctx, messages| %>
+  <% flash.each do |ctx, messages| %>
     <div id="flash" class="hidden flashes <%= ctx %>">
       <% if messages.is_a?(Array) && messages.size > 1 %>
         <ol>

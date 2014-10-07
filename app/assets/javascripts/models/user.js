@@ -14,8 +14,13 @@ define('models/user',
       return '/users';
     },
 
-    parse: function(data) {
-      return data.user;
+    parse: function(payload) {
+      if (payload.hasOwnProperty('user')) {
+        return payload.user;
+      }
+      else {
+        return payload;
+      }
     },
 
     initialize: function(data) {
