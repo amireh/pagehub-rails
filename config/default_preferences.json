@@ -1,0 +1,60 @@
+{
+  "user": {
+    "skin": "light",
+
+    "editing": {
+      "font_face":      "Monospace",
+      "font_size":      13,
+      "line_height":    16,
+      "letter_spacing": 0,
+      "autosave":       true
+    },
+
+    "workspace": {
+      "fluid": false,
+      "scrolling": true,
+      "animable": true,
+      "browser": {
+        "type": "finder"
+      }
+    },
+
+    "runtime": {
+      "spaces": {
+      }
+    }
+  },
+
+  "spaces": {
+    "publishing": {
+      "scheme": "Clean",
+      "width": "960",
+      "justified": false,
+      "theme": {
+        "name": "Clean"
+      },
+
+      "layout": {
+        "name": "fluid",
+        "show_homepages_in_sidebar": null,
+        "show_breadcrumbs": null
+      }
+    }
+  },
+
+  "app": {
+    "animes": {
+      "toggling_duration": 250
+    },
+
+    "pulses": {
+      "runtime_preferences": 1000,
+      "page_content": 30000,
+      "flash": {
+        "error": 10000,
+        "notice": 2500
+      }
+    },
+    "lookup_pulse": 250
+  }
+}

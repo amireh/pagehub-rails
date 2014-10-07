@@ -1,0 +1,31 @@
+<%#= partial "users/settings/_nav" %>
+
+<form id="user_profile_settings">
+  <fieldset>
+    <legend>Profile stuff</legend>
+
+    <p>When people visit your <a href="<%= current_user.href %>">profile</a>
+      they will get to see your name, avatar, and your public spaces.</p>
+
+    <div class="control-group">
+      <label class="control-label" for="name">Name</label>
+
+      <div class="controls">
+        <input required type="text" autocomplete="off" class="span4" id="name" name="name" value="<%= h current_user.name %>" />
+        <span class="help-inline"></span>
+      </div>
+    </div>
+
+    <div class="control-group">
+      <label for="gravatar_email">Gravatar email</label>
+      <div class="controls">
+        <input required type="email" id="gravatar_email" name="gravatar_email" class="span4" value="<%= h current_user.gravatar_email %>" />
+        <span class="help-inline"></span>
+      </div>
+    </div>
+
+    <div id="avatar" class="inline-avatar"></div>
+    <span>Change your avatar at <a href="http://www.gravatar.com">gravatar.com</a></span>
+  </fieldset>
+
+</form>

@@ -1,0 +1,68 @@
+<%= render "/shared/editor" %>
+
+<form id="user_editing_settings" class="editing-settings">
+  <fieldset>
+    <legend>Editing preferences</legend>
+
+    <p>These settings will apply to PageHub's editor you write your pages in and <em>not</em>
+      to the browsable versions of your pages.</p>
+
+    <p><strong>Autosaving</strong></p>
+
+    <label>
+      <input type="checkbox" name="autosave" value="true" <%= checkify "editing.autosave", current_user %> />
+      Automatically save while editing (every <%= PageHub::Config.defaults['app']['pulses']['page_content'] / 1000 %> seconds)
+    </label>
+  </fieldset>
+
+  <fieldset>
+    <legend>Customize your editor</legend>
+
+    <p><strong>Font face</strong></p>
+    <div id="editor_font_face_list">
+      <% PageHub::FONT_MAP.each_pair do |name, font| %>
+        <label style="font-family: <%= font %>; font-size: 14px">
+          <input type="radio" name="font_face" value="<%=h name%>" <%= checkify("editing.font_face", current_user) { |v| v == name } %>
+           /> <%= h name %>
+        </label>
+      <% end %>
+    </div>
+
+    <p><strong>Font size &times; Line height &times; Letter spacing</strong></p>
+
+    <div id="editor_font_dim_settings">
+      <input
+        type="text" name="font_size"
+        autocomplete="off"
+        style="text-align: center; width: 70px; font-size: 20px; vertical-align: middle;"
+        value="<%= h current_user.preference "editing.font_size" %>" />
+      <span style="font-size: 18px;">&nbsp;x&nbsp;</span>
+      <input
+        type="text" name="line_height"
+        autocomplete="off"
+        style="text-align: center; width: 70px; font-size: 20px; vertical-align: middle;"
+        value="<%= h current_user.preference "editing.line_height" %>" />
+      <span style="font-size: 18px;">&nbsp;x&nbsp;</span>
+      <input
+        type="text" name="letter_spacing"
+        autocomplete="off"
+        style="text-align: center; width: 70px; font-size: 20px; vertical-align: middle;"
+        value="<%= h current_user.preference "editing.letter_spacing" %>" />
+      <span style="font-size: 18px;">px</span>
+    </div>
+    <section class="editor-preview">
+      <span class="arrow">&rarr;</span>
+      <!-- <h3>Editor preview</h3> -->
+      <textarea readonly="readonly" id="preview_editor"># A sample
+
+This is how text in the editor will look like using the font face you've chosen with the specified dimensions.
+
+* A chicken
+* A dog
+* A goose
+
+I'm **bold** and I'm *not*.
+      </textarea>
+    </section>
+  </fieldset>
+</form>

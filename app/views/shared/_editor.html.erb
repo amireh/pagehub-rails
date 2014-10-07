@@ -1,0 +1,10 @@
+<% content_for :css do %>
+  <style>
+    .CodeMirror {
+      font-family:    <%= PageHub::FONT_MAP[current_user.preference('editing.font_face')] %>;
+      font-size:      <%= current_user.preference('editing.font_size').to_i %>px;
+      line-height:    <%= current_user.preference('editing.line_height').to_i %>px;
+      letter-spacing: <%= current_user.preference('editing.letter_spacing').to_i %>px;
+    }
+  </style>
+<% end %>

@@ -10,4 +10,10 @@ class ApplicationController < ActionController::Base
       redirect_to controller: :guest, action: :index
     end
   end
+
+  protected
+
+  def require_user
+    authenticate_user!
+  end
 end

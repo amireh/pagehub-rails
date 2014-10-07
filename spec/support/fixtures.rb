@@ -17,6 +17,7 @@ module Fixtures
     end
 
     def teardown
+
       User.destroy_all
 
       [ User ].each do |r|

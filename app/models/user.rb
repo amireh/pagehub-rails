@@ -1,9 +1,15 @@
 class User < ActiveRecord::Base
+  include Preferencable
+
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable and :omniauthable
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :trackable, :validatable,
          :confirmable, :encryptable
+
+  has_many :owned_spaces, class_name: 'Space', dependent: :destroy
+  has_many :space_users, dependent: :destroy
+  has_many :spaces, through: :space_users
 
   def href(*args)
   end
@@ -12,7 +18,11 @@ class User < ActiveRecord::Base
     user_url(self)
   end
 
-  def preferences=(value)
-    write_attribute(:preferences, (value || {}).to_json)
+  def gravatar_email
+    read_attribute(:gravatar_email) || self.email
+  end
+
+  def preference(key, default_value=nil)
+    self.preferences.fetch(key.to_s, default_value)
   end
 end

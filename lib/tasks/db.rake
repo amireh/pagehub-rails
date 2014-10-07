@@ -4,6 +4,7 @@ namespace :db do
     # basically these are the tables that get imported from legacy and may need
     # adjustment
     tables = %w[
+      spaces
       users
     ]
 

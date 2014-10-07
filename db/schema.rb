@@ -11,10 +11,36 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141006151330) do
+ActiveRecord::Schema.define(version: 20141007144738) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "space_users", id: false, force: true do |t|
+    t.integer  "role",       default: 1
+    t.integer  "user_id"
+    t.integer  "space_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "space_users", ["space_id", "role"], name: "index_space_users_on_space_id_and_role", using: :btree
+  add_index "space_users", ["space_id"], name: "index_space_users_on_space_id", using: :btree
+  add_index "space_users", ["user_id", "space_id"], name: "index_space_users_on_user_id_and_space_id", unique: true, using: :btree
+  add_index "space_users", ["user_id"], name: "index_space_users_on_user_id", using: :btree
+
+  create_table "spaces", force: true do |t|
+    t.string   "title",                        null: false
+    t.string   "pretty_title"
+    t.text     "brief"
+    t.boolean  "is_public",    default: false
+    t.text     "preferences"
+    t.integer  "user_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "spaces", ["user_id"], name: "index_spaces_on_user_id", using: :btree
 
   create_table "users", force: true do |t|
     t.string   "name",                                   null: false
@@ -45,5 +71,10 @@ ActiveRecord::Schema.define(version: 20141006151330) do
   add_index "users", ["email"], name: "index_users_on_email", unique: true, using: :btree
   add_index "users", ["nickname"], name: "index_users_on_nickname", unique: true, using: :btree
   add_index "users", ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true, using: :btree
+
+  add_foreign_key "space_users", "spaces", name: "space_users_space_id_fk"
+  add_foreign_key "space_users", "users", name: "space_users_user_id_fk"
+
+  add_foreign_key "spaces", "users", name: "spaces_user_id_fk"
 
 end

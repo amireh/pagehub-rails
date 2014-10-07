@@ -5,3 +5,4 @@
     - ReservedResourceTitles
     - ReservedSpaceTitles
     - ReservedUsernames
+    - FontMap => ApplicationHelper::FONT_MAP

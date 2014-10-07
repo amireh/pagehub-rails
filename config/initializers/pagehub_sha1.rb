@@ -5,7 +5,6 @@ module Devise
     module Encryptors
       class PagehubSha1 < Base
         def self.digest(password, stretches, salt, pepper)
-          puts "Salt: #{salt}"
           # str = if salt == 'legacy'
           #   password
           # else

@@ -38,4 +38,12 @@ module ApplicationHelper
   def nav_highlight(section)
     highlight_if current_nav_section?(section)
   end
+
+  def preference(key, scope = nil)
+    scope ||= @space || @user || current_user || DefaultPreferences
+
+    if scope && scope.respond_to?(:p)
+      scope.p(key)
+    end
+  end
 end

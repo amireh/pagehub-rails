@@ -38,6 +38,33 @@ describe 'import_from_legacy rake task' do
     User.count.should == 2
   end
 
+  describe 'spaces' do
+    before do
+      run({
+        'users' => json_fixture('import_from_legacy/users.json'),
+        'spaces' => json_fixture('import_from_legacy/spaces.json')
+      })
+    end
+
+    it 'should import spaces' do
+      User.count.should == 2
+      Space.count.should == 5
+
+      User.find(1).owned_spaces.count.should == 3
+      User.find(2).owned_spaces.count.should == 2
+    end
+
+    it 'should import attributes properly' do
+      space = Space.find(1)
+      space.title.should == 'Personal'
+      space.pretty_title.should == 'personal'
+      space.is_public.should == false
+      space.preferences['publishing'].should be_present
+      space.preferences['publishing']['scheme'].should == 'Clean'
+      space.created_at.should == Time.parse('2013-02-19T21:59:02+02:00')
+    end
+  end
+
   it 'should not import blacklisted items' do
     run({
       users: {

@@ -1,0 +1,17 @@
+<%= render "settings/nav" %>
+
+<% content_for :nav_section do %>settings<% end %>
+<% content_for :deferred_js do %>
+<script>
+  require([ 'views/users/settings/index' ], function(SettingsView) {
+    application.view = new SettingsView(application);
+  })
+</script>
+<% end %>
+
+<div id="settings" style="display: none;">
+  <%= render "settings/profile" %>
+  <%= render "settings/account" %>
+  <%= render "settings/editing" %>
+  <%= render "settings/spaces" %>
+</div>

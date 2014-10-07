@@ -43,13 +43,13 @@ define('views/flash',
     },
 
     render: function(additional_data) {
-      // this.$el.css({
-      //   top: 0,
-      //   cursor: "default"
-      // });
-      // // this.$el.addClass('visible');
-      // this.$el.off('click', this.__show_proxy);
-      // this.hide_timer && this.hide_timer.queue();
+      this.$el.css({
+        top: 0,
+        cursor: "default"
+      });
+      // this.$el.addClass('visible');
+      this.$el.off('click', this.__show_proxy);
+      this.hide_timer && this.hide_timer.queue();
 
       return this;
     },

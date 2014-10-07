@@ -1,0 +1,73 @@
+<form id="user_account_settings">
+  <fieldset>
+    <legend>Change your nickname</legend>
+    <label>
+      Your nickname is used in the links when sharing documents with people.
+      <br />
+      <br />
+      <div class="input-append">
+        <input type="text" autocomplete="off" name="nickname" class="span4" value="<%= current_user.nickname %>" />
+        <button class="btn btn-success" id="check_availability"><i class="icon-ok"></i></button>
+      </div>
+    </label>
+
+    <p class="well">Links to your pages will look something like this:
+      <br />
+      <a><code>http://<%= request.host %>/<strong id="user_public_href_example_nickname">your-nickname</strong>/<strong>space-title</strong>/<strong>page-title</strong></code></a>
+    </p>
+
+    <!-- <button id="change_nickname" class="btn btn-danger">Save</button> -->
+  </fieldset>
+
+  <fieldset class="form-horizontal">
+    <legend>Change your password</legend>
+
+    <div class="control-group">
+      <label class="control-label" for="current_password">Your current password</label>
+      <div class="controls">
+        <input type="password" id="current_password" name="current_password" />
+        <span class="help-inline"></span>
+      </div>
+    </div>
+
+    <div class="control-group">
+      <label class="control-label" for="password">The new password</label>
+      <div class="controls">
+        <input type="password" id="password" name="password" />
+        <span class="help-inline"></span>
+      </div>
+    </div>
+
+    <div class="control-group">
+      <label class="control-label" for="password_confirmation">Again</label>
+      <div class="controls">
+        <input type="password" id="password_confirmation" name="password_confirmation" />
+        <span class="help-inline"></span>
+      </div>
+    </div>
+
+    <button id="reset_password" rel="tooltip" title="Coming soon" class="btn btn-danger btn-mini">Reset my password</button>
+
+  </fieldset>
+
+  <fieldset>
+    <legend>Change your email</legend>
+
+    <p>Your primary email address where we can reach you: <small><em>(not visible to people)</em></small>.</p>
+
+    <div class="control-group">
+      <div class="controls">
+        <input required type="email" id="email" name="email" value="<%= current_user.email %>" />
+        <span class="help-inline"></span>
+      </div>
+      <!-- <button id="change_email" class="btn btn-small">Save</button> -->
+
+      <% unless current_user.confirmed? %>
+        <a href="/settings/verify/primary" class="btn btn-primary">Verify</a>
+      <% else %>
+        <span class="label label-success">Verified</span>
+      <% end %>
+    </div>
+
+  </fieldset>
+</form>

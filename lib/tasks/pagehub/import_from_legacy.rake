@@ -53,16 +53,32 @@ namespace :pagehub do
       user.created_at = data['created_at']
       user.password = 'temporary'
       user.password_confirmation = 'temporary'
-      user.preferences = begin
-        JSON.parse(data['preferences'])
-      rescue
-        {}
-      end
+      user.preferences = data['preferences']
 
       user.save!
       user.update_columns(encrypted_password: data['password'])
 
       puts "\tUser #{user.id} imported successfully."
+    end
+
+    def import_space(data)
+      user_id = data['creator_id']
+      puts "\tSpace#{data['id']}: #{data['pretty_title']} (#{user_id})"
+
+      user = User.find(user_id.to_s)
+      space = Space.new
+      space.id = data['id']
+      space.title = data['title']
+      space.pretty_title = data['pretty_title']
+      space.brief = data['brief']
+      space.is_public = data['is_public']
+      space.created_at = Time.parse(data['created_at'])
+      space.preferences = data['preferences']
+
+      space.user = user
+      space.save!
+
+      puts "\tSpace #{space.id} imported successfully."
     end
 
     unless args[:path]
@@ -80,6 +96,18 @@ namespace :pagehub do
         next if blacklisted?(:users, user['id'])
 
         import_user(user)
+      end
+    end
+
+    # Spaces
+    ActiveRecord::Base.transaction do
+      dump['spaces'] ||= []
+      dump['spaces'].each do |resource|
+        next if blacklisted?(:spaces, resource['id'])
+
+        guard resource do
+          import_space(resource)
+        end
       end
     end
 
