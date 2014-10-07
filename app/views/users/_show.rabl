@@ -9,7 +9,7 @@ node(:media) do |u|
     spaces: {
       url:  user_path(u) + '/spaces'
     },
-    name_availability_url: '/users/name'
+    name_availability_url: nickname_availability_url()
   }
 end
 

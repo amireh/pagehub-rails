@@ -19,6 +19,7 @@ Rails.application.routes.draw do
   scope '/users', controller: :users do
     get '/:user_id', action: :show, as: :user
     patch '/:user_id', action: :update
+    post '/nickname_availability', action: :nickname_availability, as: :nickname_availability
   end
 
   scope '/settings', controller: :settings do

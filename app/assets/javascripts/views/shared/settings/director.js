@@ -234,6 +234,7 @@ function(Backbone, $, Shortcut, UI) {
         _.each(this.presync_map[this.current_view.label], function(callback) {
           if (!callback()) {
             director.ctx.abort_sync = true;
+            console.warn('Sync callback failed:', callback.toString());
             return false;
           }
 
