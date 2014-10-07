@@ -1,0 +1,25 @@
+<script>
+  var ENV;
+  var global = this;
+
+  ENV = <%= @js_env.to_json.html_safe %>;
+  ENV.DEBUG = <%= Rails.env.development? %>;
+
+  <% if logged_in? %>
+    ENV.current_user = <%= render_json_object("/users/show", {
+      locals: { user: current_user }
+    }) %>;
+  <% end %>
+
+  <% if @user.present? && @user.id.present? %>
+    ENV.user = <%= render_json_object("/users/show", object: @user) %>;
+  <% end %>
+
+  <% if @space.present? %>
+    ENV.space = <%= render_json_object "/spaces/show", object: @space %>;
+    ENV.space_creator = <%= render_json_object("/users/show", object: @space.user) %>;
+  <% end %>
+
+  // Expose it.
+  global.ENV = ENV;
+</script>

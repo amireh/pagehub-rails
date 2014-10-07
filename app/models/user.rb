@@ -9,7 +9,10 @@ class User < ActiveRecord::Base
 
   has_many :owned_spaces, class_name: 'Space', dependent: :destroy
   has_many :space_users, dependent: :destroy
-  has_many :spaces, through: :space_users
+  has_many :spaces, {
+    through: :space_users,
+    validate: false
+  }
 
   def href(*args)
   end

@@ -1,0 +1,9 @@
+<script>
+  var pageScripts = function(application) {
+    <%= (yield :deferred_js).gsub(/\<\/?script\>/, '').strip.html_safe %>
+  };
+
+  require([ 'pagehub.state' ], function(application) {
+    application.once('ready', pageScripts.bind(null, application));
+  });
+</script>

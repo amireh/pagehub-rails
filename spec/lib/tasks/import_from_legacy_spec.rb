@@ -65,6 +65,16 @@ describe 'import_from_legacy rake task' do
     end
   end
 
+  it 'should import space_users' do
+    run({
+      'users' => json_fixture('import_from_legacy/users.json'),
+      'spaces' => json_fixture('import_from_legacy/spaces.json'),
+      'space_users' => json_fixture('import_from_legacy/space_users.json')
+    })
+
+    SpaceUser.count.should == 1
+  end
+
   it 'should not import blacklisted items' do
     run({
       users: {

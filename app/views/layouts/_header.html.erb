@@ -34,10 +34,27 @@
       <span class="avatar">
         <%= gravatar_tag (current_user.gravatar_email || current_user.email), :icon, { secure: true, html: { rel: "tooltip", title: current_user.nickname } } %>
       </span>
-      <a class="icon dashboard <%= nav_highlight 'dashboard' %>" rel="tooltip" title="Your dashboard" href="<%= user_url(current_user) %>">Dashboard</a>
 
-      <a href="<%= settings_url %>" class="icon tools <%= nav_highlight 'settings' %>" rel="tooltip" title="Account settings">Settings</a>
-      <a href="/sessions/destroy" class="icon signout" rel="tooltip" title="Sign out">Sign out</a>
+      <a
+        class="icon dashboard <%= nav_highlight 'dashboard' %>"
+        rel="tooltip"
+        title="Your dashboard"
+        href="<%= user_dashboard_url %>">Dashboard
+      </a>
+
+      <a
+        href="<%= settings_url %>"
+        class="icon tools <%= nav_highlight 'settings' %>"
+        rel="tooltip"
+        title="Account settings">Settings
+      </a>
+
+      <a
+        href="<%= logout_url %>"
+        class="icon signout"
+        rel="tooltip"
+        title="Sign out">Sign out
+      </a>
     </nav>
   </div>
 </header>

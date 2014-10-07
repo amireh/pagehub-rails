@@ -110,19 +110,18 @@ require([
   'views/users/dashboard/director',
   'views/users/settings/index',
   'views/welcome/landing_page'
-
-], function(State) {
-  var application = new State({});
-
+], function(application) {
   try       { if (pagehub_hooks); }
   catch(e)  { pagehub_hooks = []; }
 
-  console.log("PageHub dependencies loaded. Running " + pagehub_hooks.length + " hooks.")
+  if (pagehub_hooks.length) {
+    throw new Error("Deprecated: stop using pagehub_hooks!");
+  }
 
-  _.each(pagehub_hooks, function(cb) {
-    cb(application); return true;
+  console.log("PageHub dependencies loaded. Booting up...");
+
+  require([ 'boot' ], function() {
+    console.log('Booted.');
   });
-
-  delete pagehub_hooks;
 });
 

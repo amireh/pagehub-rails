@@ -12,6 +12,9 @@ Rails.application.routes.draw do
   root 'application#landing'
 
   get '/dashboard', controller: :users, action: :dashboard, as: :user_dashboard
+  get '/logout', controller: :sessions, action: :logout, as: :logout
+
+  get '/welcome', controller: :guests, action: :index
 
   scope '/users', controller: :users do
     get '/:user_id', action: :show, as: :user

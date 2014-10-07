@@ -17,7 +17,7 @@ ActiveRecord::Schema.define(version: 20141007144738) do
   enable_extension "plpgsql"
 
   create_table "space_users", id: false, force: true do |t|
-    t.integer  "role",       default: 1
+    t.integer  "role",       default: 0, null: false
     t.integer  "user_id"
     t.integer  "space_id"
     t.datetime "created_at"

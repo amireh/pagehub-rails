@@ -5,6 +5,9 @@
 
   <%= stylesheet_link_tag 'compiled/app', media: 'all' %>
   <%= csrf_meta_tags %>
+
+  <script src="/javascripts/vendor/require.js"></script>
+  <%= render "layouts/js_env" %>
 </head>
 
 <body class="<%= logged_in? ? 'member' : 'guest' %> light">
@@ -39,9 +42,10 @@
   </aside>
 
   <%= render "layouts/footer" %>
-  <%= render "layouts/pagehub_js" %>
 
-  <script data-main="/javascripts/compiled/app" src="/javascripts/vendor/require.js"></script>
+  <script src="/javascripts/compiled/app.js"></script>
+
+  <%= render "layouts/page_scripts" %>
 </body>
 
 </html>

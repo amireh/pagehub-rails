@@ -20,9 +20,9 @@ module Fixtures
 
       User.destroy_all
 
-      [ User ].each do |r|
-        unless r.all.length == 0
-          raise "[ERROR] Cleanup: expected #{r} to contain 0 resources, but got #{r.all.length}"
+      [ User, Space, SpaceUser ].each do |r|
+        unless r.count == 0
+          raise "Fixture teardown: expected #{r} to contain 0 resources, but got #{r.count}"
         end
       end
     end

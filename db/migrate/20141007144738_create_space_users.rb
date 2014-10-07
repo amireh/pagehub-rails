@@ -1,7 +1,7 @@
 class CreateSpaceUsers < ActiveRecord::Migration
   def change
     create_table :space_users, id: false do |t|
-      t.integer :role, default: 1
+      t.integer :role, null: false, default: 0
 
       t.references :user
       t.index :user_id

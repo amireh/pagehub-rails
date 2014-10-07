@@ -81,6 +81,21 @@ namespace :pagehub do
       puts "\tSpace #{space.id} imported successfully."
     end
 
+    def import_space_user(data)
+      puts "\tSpaceUser: #{data['user_id']} <-> #{data['space_id']} (#{data['role']})"
+
+      user = User.find(data['user_id'].to_s)
+      space = Space.find(data['space_id'].to_s)
+
+      SpaceUser.create!({
+        user: user,
+        space: space,
+        role: [ 0, data['role'].to_i - 1 ].max
+      })
+
+      puts "\tSpaceUser imported successfully."
+    end
+
     unless args[:path]
       puts 'Must provide a path to the JSON dump, e.g: ' +
         '`bundle exec rake pagehub:import_from_legacy[path/to/dump.json]`'
@@ -107,6 +122,18 @@ namespace :pagehub do
 
         guard resource do
           import_space(resource)
+        end
+      end
+    end
+
+    # SpaceUsers
+    ActiveRecord::Base.transaction do
+      dump['space_users'] ||= []
+      dump['space_users'].each do |resource|
+        next if blacklisted?(:space_users, resource['id'])
+
+        guard resource do
+          import_space_user(resource)
         end
       end
     end

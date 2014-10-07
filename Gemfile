@@ -5,6 +5,7 @@ gem 'rails', '4.1.5'
 gem 'uuid'
 gem 'pg'
 gem 'addressable'
+gem 'composite_primary_keys', '~> 7.x'
 
 # Use ActiveModel has_secure_password
 gem 'bcrypt', '~> 3.1.7'
