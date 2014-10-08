@@ -15,7 +15,6 @@ class User < ActiveRecord::Base
       password_length: 7..128
     }
 
-
   has_many :owned_spaces, class_name: 'Space', dependent: :destroy
   has_many :space_users, dependent: :destroy
   has_many :spaces, {

@@ -16,9 +16,9 @@ end
 # node(:nr_pages) do |u| u.pages.count end
 # node(:nr_folders) do |u| u.folders.count end
 
-# node(:spaces) do
-#   partial "/spaces/index", object: @user.spaces
-# end
+node(:spaces) do
+  partial "/spaces/index", object: @user.spaces
+end
 
 node(:preferences) do |s|
   s.preferences

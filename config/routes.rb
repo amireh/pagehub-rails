@@ -17,13 +17,22 @@ Rails.application.routes.draw do
   get '/welcome', controller: :guests, action: :index
 
   scope '/users', controller: :users do
-    get '/:user_id', action: :show, as: :user
-    patch '/:user_id', action: :update
     post '/nickname_availability', action: :nickname_availability, as: :nickname_availability
     post '/resend_confirmation_instructions', {
       action: :resend_confirmation_instructions,
       as: :resend_confirmation_instructions
     }
+
+    scope '/:nickname' do
+      get '/', action: :show, as: :user
+      patch '/', action: :update
+
+      scope '/:space', controller: :spaces do
+        get '/', action: :show, as: :user_space
+        get '/edit', action: :edit, as: :user_space_editor
+        get '/settings', action: :settings, as: :user_space_settings
+      end
+    end
   end
 
   scope '/settings', controller: :settings do

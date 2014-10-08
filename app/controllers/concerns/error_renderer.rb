@@ -17,7 +17,10 @@ module ErrorRenderer
       puts error.backtrace
     end
 
-    render_error Rack::API::Error.new(500, error.message)
+    respond_to do |format|
+      format.json { render_error Rack::API::Error.new(500, error.message) }
+      format.any  { raise error }
+    end
   end
 
   def render_not_found_error(error)
@@ -36,6 +39,9 @@ module ErrorRenderer
       return head :no_content
     end
 
-    render json: error
+    respond_to do |format|
+      format.json { render json: error }
+      format.any  { raise error }
+    end
   end
 end

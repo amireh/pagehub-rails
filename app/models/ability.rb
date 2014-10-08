@@ -26,13 +26,7 @@ class Ability
 
     # space resources
     can :author, Space do |s| s.editor?(user) end
-    can :author_more, Space do |s|
-      if user.demo?
-        s.folders.count + s.pages.count <= 10
-      else
-        true
-      end
-    end
+    can :author_more, Space
 
     # can :update, [ Page, Folder ] do |r| r.space.editor?(user) end
     # can :delete, [ Page, Folder ] do |r|
@@ -40,7 +34,7 @@ class Ability
     # end
 
     # spaces
-    can :create, Space unless user.demo?
+    can :create, Space
     can :update, Space do |s|
       s.admin?(user)
     end
@@ -50,9 +44,7 @@ class Ability
     can :invite, Array do |a|
       space, target, role = *a
 
-      if user.demo?
-        false
-      elsif space.creator?(user)
+      if space.creator?(user)
         true
       else
         space.admin?(user) && space.role_of(target) == nil && role.to_sym != :admin

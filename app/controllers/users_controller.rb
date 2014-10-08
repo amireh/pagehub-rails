@@ -4,14 +4,17 @@ class UsersController < ApplicationController
   respond_to :html, :json
 
   before_filter :require_user
-  before_filter :require_json_format, only: [ :update, :show ]
+  before_filter :require_json_format, only: [ :update ]
 
   def dashboard
     @user = current_user
   end
 
   def show
-    expose current_user
+    respond_to do |format|
+      format.html { redirect_to action: :dashboard }
+      format.json { expose current_user }
+    end
   end
 
   def nickname_availability

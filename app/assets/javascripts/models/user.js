@@ -1,6 +1,4 @@
-define('models/user',
-  [ 'backbone', 'collections/spaces' ],
-  function(Backbone, Spaces) {
+define([ 'backbone', 'collections/spaces' ], function(Backbone, Spaces) {
 
   var User = Backbone.DeepModel.extend({
     defaults: {
@@ -15,18 +13,32 @@ define('models/user',
     },
 
     parse: function(payload) {
+      var data;
+
       if (payload.hasOwnProperty('user')) {
-        return payload.user;
+        data = payload.user;
       }
       else {
-        return payload;
+        data = payload;
       }
+
+      if (data) {
+        if (data.spaces) {
+          this.spaces = this.spaces || new Spaces();
+          this.spaces.reset(data.spaces, { parse: false });
+        }
+      }
+
+      return data;
     },
 
     initialize: function(data) {
       this.ctx = {};
 
-      this.spaces = new Spaces(data.spaces || []);
+      if (!this.spaces) {
+        this.spaces = new Spaces(data.spaces || []);
+      }
+
       this.spaces.creator = this;
     }
   });
