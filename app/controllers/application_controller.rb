@@ -27,6 +27,10 @@ class ApplicationController < ActionController::Base
       format.json do
         halt! 404
       end
+
+      format.any do
+        render text: 'Not Found', status: :not_found, content_type: Mime::TEXT
+      end
     end
   end
 
@@ -61,7 +65,6 @@ class ApplicationController < ActionController::Base
   # @warning
   # Calling this method halts the execution.
   def no_content!
-    broadcast_journal_playback
     halt! 204
   end
 

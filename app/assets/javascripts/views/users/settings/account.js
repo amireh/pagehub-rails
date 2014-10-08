@@ -5,12 +5,12 @@ define(
   'jquery',
   'hbs!templates/users/settings/dialog_nickname_change_warning'
  ],
-function(SettingView, $, NnWarningDlgTmpl) {
+function(SettingView, $, NicknameWarningDialogTemplate) {
   return SettingView.extend({
     el: $("#user_account_settings"),
 
     templates: {
-      nickname_change_warning: NnWarningDlgTmpl
+      nickname_change_warning: NicknameWarningDialogTemplate
     },
 
     events: {
@@ -40,6 +40,7 @@ function(SettingView, $, NnWarningDlgTmpl) {
       this.user.on('change:nickname', this.update_public_href_example, this);
       this.elements.current_password.on('keyup', this, this.unlock_password_form);
       this.reset();
+      this.update_public_href_example();
     },
 
     serialize: function() {
@@ -84,7 +85,7 @@ function(SettingView, $, NnWarningDlgTmpl) {
         return true;
       }
 
-      $(view.templates.nickname_change_warning()).dialog({
+      $(NicknameWarningDialogTemplate()).dialog({
         dialogClass: "alert-dialog",
         buttons: {
           "Cancel": function() {
@@ -96,7 +97,7 @@ function(SettingView, $, NnWarningDlgTmpl) {
             view.propagate_sync(true);
           }
         }
-      });
+      }).dialog('open');
 
       this.director.abort_sync = true;
       return false;

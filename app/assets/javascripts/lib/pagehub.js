@@ -235,12 +235,12 @@ define([
     },
 
     open: function() {
-      var dlg = $(this);
+      var $dialog = $(this);
 
       // Close all open dialogs.
-      $(".ui-dialog-content:visible").dialog("close");
+      $(".ui-dialog-content:visible").not($dialog).dialog("close");
 
-      DialogDelegate.on_open(dlg);
+      DialogDelegate.on_open($dialog);
     }
   });
 

@@ -58,4 +58,9 @@ class UsersController < ApplicationController
 
     expose current_user
   end
+
+  def resend_confirmation_instructions
+    current_user.send_confirmation_instructions
+    no_content!
+  end
 end

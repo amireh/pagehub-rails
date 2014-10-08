@@ -20,6 +20,10 @@ Rails.application.routes.draw do
     get '/:user_id', action: :show, as: :user
     patch '/:user_id', action: :update
     post '/nickname_availability', action: :nickname_availability, as: :nickname_availability
+    post '/resend_confirmation_instructions', {
+      action: :resend_confirmation_instructions,
+      as: :resend_confirmation_instructions
+    }
   end
 
   scope '/settings', controller: :settings do

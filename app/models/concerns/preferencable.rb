@@ -18,11 +18,11 @@ module Preferencable
       @cached_preferences = values
     end
 
-    def get_preference(path = nil)
+    def preference(path = nil)
       prefs = preferences
 
       if path && path.is_a?(String)
-        path.split('.').each { |key| prefs = prefs[key] if prefs.is_a?(Hash) }
+        path.split('.').each { |key| prefs = prefs[key] }
       end
 
       prefs
@@ -55,7 +55,7 @@ module Preferencable
     end
 
     def is_on?(*setting)
-      value = get_preference(*setting)
+      value = preference(*setting)
 
       if block_given?
         return yield(value)

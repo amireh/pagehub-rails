@@ -25,7 +25,7 @@ class User < ActiveRecord::Base
     read_attribute(:gravatar_email) || self.email
   end
 
-  def preference(key, default_value=nil)
-    self.preferences.fetch(key.to_s, default_value)
+  def to_param
+    nickname
   end
 end

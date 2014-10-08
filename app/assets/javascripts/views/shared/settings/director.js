@@ -60,7 +60,6 @@ function(Backbone, $, Shortcut, UI) {
         root: path
       });
 
-      console.log(Backbone.history.root)
       return this;
     },
 
