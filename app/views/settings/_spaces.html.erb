@@ -18,7 +18,7 @@
       <% current_user.spaces.each do |s| %>
         <% @space = s %>
         <tr data-space="<%= s.id %>">
-          <td><a href="<%= s.url %>"><%= fq_space_title s %></a></td>
+          <td><a href="<%= user_space_url(s.user, s) %>"><%= fq_space_title s %></a></td>
           <td><%= pluralize(s.pages({ creator: current_user }).count, "page" ) %></td>
           <td><span class="label span1 text-center <%= labels[s.role_of(current_user)] %>"><%= s.role_of(current_user).capitalize %></span></td>
           <td>

@@ -60,7 +60,7 @@
       <!-- <button id="change_email" class="btn btn-small">Save</button> -->
 
       <% unless current_user.confirmed? %>
-        <%= link_to "Verify", new_user_confirmation_url, class: 'btn btn-primary' %>
+        <%= link_to "Verify", '#', id: 'verify_email', class: 'btn btn-primary' %>
       <% else %>
         <span class="label label-success">Verified</span>
       <% end %>

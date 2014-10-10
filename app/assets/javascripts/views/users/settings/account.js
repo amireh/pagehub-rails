@@ -1,11 +1,10 @@
-define(
-'views/users/settings/account',
-[
+define([
   'views/shared/settings/setting_view',
   'jquery',
-  'hbs!templates/users/settings/dialog_nickname_change_warning'
+  'hbs!templates/users/settings/dialog_nickname_change_warning',
+  'pagehub'
  ],
-function(SettingView, $, NicknameWarningDialogTemplate) {
+function(SettingView, $, NicknameWarningDialogTemplate, UI) {
   return SettingView.extend({
     el: $("#user_account_settings"),
 
@@ -18,6 +17,7 @@ function(SettingView, $, NicknameWarningDialogTemplate) {
       'click #change_password':     'propagate_sync',
       'click #check_availability':  'check_availability',
       'keyup input[name=nickname]': 'queue_availability_check',
+      'click #verify_email': 'resend_confirmation_email',
     },
 
     initialize: function(data) {
@@ -152,5 +152,18 @@ function(SettingView, $, NicknameWarningDialogTemplate) {
       return false;
     }, // check_availability
 
+    resend_confirmation_email: function(e) {
+      e.preventDefault();
+
+      $.ajax({
+        type: 'POST',
+        url: this.user.get('media.resend_confirmation_instructions')
+      }).then(function() {
+        UI.status.show("Instructions have been re-sent to your email address. " +
+          "Please check your inbox shortly.", "good");
+      }, function() {
+        UI.status.show("Unable to send instructions, please try again later.", "bad");
+      });
+    }
   });
 });

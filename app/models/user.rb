@@ -13,8 +13,15 @@ class User < ActiveRecord::Base
     :omniauthable,
     {
       password_length: 7..128,
-      omniauth_providers: [ :github ]
+      # omniauth_providers: [ :github ]
     }
+
+  class << self
+    def find_for_github_oauth(hash, current_user)
+      puts "Locating user from OAuth: #{hash}"
+      User.where(provider: 'github', uid: hash.uid, email: hash.info[:email]).first
+    end
+  end
 
   has_many :owned_spaces, class_name: 'Space', dependent: :destroy
   has_many :space_users, dependent: :destroy
@@ -26,14 +33,18 @@ class User < ActiveRecord::Base
   has_many :folders, dependent: :destroy
   has_many :pages, dependent: :destroy
 
+  validates_uniqueness_of :nickname, message: 'That nickname is not available.'
+  validates_length_of :nickname, within: 3..64,
+    message: 'A nickname must be at least three characters long.'
+
   before_validation do
     self.encrypted_password = generate_random_password if self.provider != 'pagehub'
     self.uid = UUID.generate if self.provider == 'pagehub'
   end
 
-  before_create do
-    self.nickname = self.name.to_s.sanitize if self.nickname.blank?
-  end
+  # before_create do
+  #   self.nickname = self.name.to_s.sanitize if self.nickname.blank?
+  # end
 
   def href(*args)
   end
@@ -44,6 +55,10 @@ class User < ActiveRecord::Base
 
   def gravatar_email
     read_attribute(:gravatar_email) || self.email
+  end
+
+  def first_name
+    self.name.split(/\s/).first
   end
 
   def to_param

@@ -152,7 +152,7 @@ class Space < ActiveRecord::Base
 
       return false if membership.blank?
 
-      SpaceUser.weigh(membership.role) >= role_weight
+      membership.role >= role_weight
     end
 
     alias_method :"#{role}?",     :"has_#{role}?"

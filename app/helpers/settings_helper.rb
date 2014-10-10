@@ -16,4 +16,9 @@ module SettingsHelper
 
     checked ? 'checked="checked"'.html_safe : ''
   end
+
+  # fully qualified space title
+  def fq_space_title(s)
+    (s.user.nickname + '/' + '<strong>' + s.title + '</strong>').html_safe
+  end
 end

@@ -1,5 +1,21 @@
-<p>Welcome <%= @email %>!</p>
+<p>Hello <%= @resource.first_name %>,</p>
 
-<p>You can confirm your account email through the link below:</p>
+<p>You've entered <strong><%= @resource.email %></strong> as the email address
+  for your Pagehub account. To complete the process, we just need to verify that
+  this email address belongs to you. Simply click the link below to finish the
+  registration.
+</p>
 
-<p><%= link_to 'Confirm my account', confirmation_url(@resource, confirmation_token: @token) %></p>
+<p><a href="<%= confirmation_url(@resource, confirmation_token: @token) %>">Verify email</a></p>
+
+<p>
+  Thanks,<br />
+  -The PageHub Team
+</p>
+
+<p class="footer-notice">
+  <em>
+    PS: if you are not <%= @resource.name %> or didn't request this verification,
+    you can safely ignore this email.
+  </em>
+</p>
