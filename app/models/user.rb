@@ -1,8 +1,6 @@
 class User < ActiveRecord::Base
   include Preferencable
 
-  # Include default devise modules. Others available are:
-  # :confirmable, :lockable, :timeoutable and :omniauthable
   devise :database_authenticatable,
     :registerable,
     :recoverable,
@@ -21,6 +19,9 @@ class User < ActiveRecord::Base
     through: :space_users,
     validate: false
   }
+
+  has_many :folders, dependent: :destroy
+  has_many :pages, dependent: :destroy
 
   before_create do
     self.nickname = self.name.to_s.sanitize if self.nickname.blank?
@@ -42,10 +43,23 @@ class User < ActiveRecord::Base
   end
 
   def create_default_space
-    default_space || owned_spaces.create({ title: Space::DEFAULT_TITLE })
+    default_space || begin
+      owned_spaces.create({ title: Space::DEFAULT_TITLE }).tap do |space|
+        space.create_root_folder
+      end
+    end
   end
 
   def default_space
     owned_spaces.first
+  end
+
+  # TODO: use Ability
+  def public_spaces(user)
+    if !user
+      spaces.where({ is_public: true })
+    else
+      owned_spaces.select { |s| s.member? user }
+    end
   end
 end

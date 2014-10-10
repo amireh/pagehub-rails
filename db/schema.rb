@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141008191135) do
+ActiveRecord::Schema.define(version: 20141010120529) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -30,6 +30,46 @@ ActiveRecord::Schema.define(version: 20141008191135) do
   add_index "folders", ["folder_id"], name: "index_folders_on_folder_id", using: :btree
   add_index "folders", ["space_id"], name: "index_folders_on_space_id", using: :btree
   add_index "folders", ["user_id"], name: "index_folders_on_user_id", using: :btree
+
+  create_table "page_carbon_copies", force: true do |t|
+    t.text     "content"
+    t.integer  "page_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "page_carbon_copies", ["page_id"], name: "index_page_carbon_copies_on_page_id", unique: true, using: :btree
+
+  create_table "page_revisions", force: true do |t|
+    t.binary   "blob"
+    t.string   "version"
+    t.integer  "additions",  limit: 8
+    t.integer  "deletions",  limit: 8
+    t.integer  "patchsz",    limit: 8
+    t.integer  "page_id"
+    t.integer  "user_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "page_revisions", ["created_at"], name: "index_page_revisions_on_created_at", using: :btree
+  add_index "page_revisions", ["page_id"], name: "index_page_revisions_on_page_id", using: :btree
+  add_index "page_revisions", ["user_id"], name: "index_page_revisions_on_user_id", using: :btree
+
+  create_table "pages", force: true do |t|
+    t.string   "title",        null: false
+    t.string   "pretty_title"
+    t.text     "content"
+    t.boolean  "browsable"
+    t.integer  "folder_id"
+    t.integer  "user_id",      null: false
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "pages", ["folder_id"], name: "index_pages_on_folder_id", using: :btree
+  add_index "pages", ["pretty_title"], name: "index_pages_on_pretty_title", using: :btree
+  add_index "pages", ["user_id"], name: "index_pages_on_user_id", using: :btree
 
   create_table "space_users", id: false, force: true do |t|
     t.integer  "role",       default: 0, null: false
@@ -90,6 +130,14 @@ ActiveRecord::Schema.define(version: 20141008191135) do
   add_foreign_key "folders", "folders", name: "folders_folder_id_fk"
   add_foreign_key "folders", "spaces", name: "folders_space_id_fk"
   add_foreign_key "folders", "users", name: "folders_user_id_fk"
+
+  add_foreign_key "page_carbon_copies", "pages", name: "page_carbon_copies_page_id_fk"
+
+  add_foreign_key "page_revisions", "pages", name: "page_revisions_page_id_fk"
+  add_foreign_key "page_revisions", "users", name: "page_revisions_user_id_fk"
+
+  add_foreign_key "pages", "folders", name: "pages_folder_id_fk"
+  add_foreign_key "pages", "users", name: "pages_user_id_fk"
 
   add_foreign_key "space_users", "spaces", name: "space_users_space_id_fk"
   add_foreign_key "space_users", "users", name: "space_users_user_id_fk"

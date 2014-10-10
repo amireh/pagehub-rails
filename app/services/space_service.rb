@@ -25,9 +25,8 @@ class SpaceService < Service
     end
 
     # subscribe the user as the creator
-    space.space_users.create({
-      user_id: self.user_id,
-      role: SpaceUser.weigh(:creator)
+    space.space_users.creators.create({
+      user_id: user.id
     })
 
     space.create_root_folder

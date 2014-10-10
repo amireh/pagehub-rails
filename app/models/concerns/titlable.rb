@@ -11,6 +11,7 @@ module Titlable
       }
 
       before_save :set_pretty_title, :if => :title_changed?
+      scope :titled, ->(raw_title) { where(pretty_title: raw_title.to_s.sanitize) }
     end
   end
 

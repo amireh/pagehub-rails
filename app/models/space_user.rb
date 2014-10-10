@@ -6,6 +6,11 @@ class SpaceUser < ActiveRecord::Base
   belongs_to :space
   belongs_to :user
 
+  ROLES.each_with_index do |role, role_weight|
+    role_scope = role.to_s.pluralize.to_sym
+    scope role_scope, -> { where(role: role_weight) }
+  end
+
   class << self
     def weigh(role)
       role = ROLES.index(role.to_sym)
@@ -23,5 +28,4 @@ class SpaceUser < ActiveRecord::Base
 
     alias_method :weight_of, :weigh
   end
-
 end

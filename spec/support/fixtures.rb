@@ -1,6 +1,6 @@
 module Fixtures
   class << self
-    attr_accessor :fixtures
+    attr_accessor :fixtures, :skip_teardown
 
     def [](type)
       self.fixtures ||= {}
@@ -76,6 +76,6 @@ end
 
 RSpec.configure do |config|
   config.before :each do
-    Fixtures.teardown
+    Fixtures.teardown unless Fixtures.skip_teardown
   end
 end

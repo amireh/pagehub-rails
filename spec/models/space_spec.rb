@@ -21,19 +21,6 @@ describe Space do
   end
 
   context "Creation" do
-    xit "should create a default space for a new user" do
-      pending 'move to SpaceService spec'
-
-      @user.owned_spaces.count.should == 1
-      @user.spaces.count.should == 1
-    end
-
-    it "should implicitly define a :creator membership for the creator" do
-      pending 'move to SpaceService spec'
-
-      space.space_users.count.should == 1
-      space.space_users.all({ role: :creator, user: @u }).count.should == 1
-    end
 
     it "should create a homepage for the space by default" do
       pending 'port pages'

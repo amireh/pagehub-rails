@@ -39,4 +39,14 @@ module PageHub
     "Verdana" => "Verdana",
     "Helvetica Neue" => "Helvetica Neue"
   }
+
+  def self.resource_title_available?(raw_title)
+    title = (raw_title || '').to_s.sanitize
+
+    return false if title.empty?
+    return false if title.length < 3
+    return false if RESERVED_RESOURCE_TITLES.include?(title)
+
+    true
+  end
 end

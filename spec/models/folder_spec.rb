@@ -3,10 +3,49 @@ require 'spec_helper'
 describe Folder do
   it { should belong_to :user }
 
-  describe "Instance methods" do
-    let(:user) { valid! fixture(:user) }
-    let(:space) { valid! user.create_default_space }
+  let(:user) { valid! fixture(:user) }
+  let(:space) { valid! user.create_default_space }
 
+  it "should be created" do
+    f = valid! fixture(:folder, space)
+    f.folder.should == f.space.root_folder
+  end
+
+  it "should nest folders" do
+    parent = valid! space.folders.create!({ title: 'Xyz', user_id: user.id })
+    subfolder = valid! space.folders.create!({ title: 'Xyz', folder_id: parent.id, user_id: user.id })
+
+    parent.folders.should include(subfolder)
+    subfolder.folder.should == parent
+  end
+
+  it "should nest folders with the same title in different levels" do
+    f = valid! fixture(:folder, space, { title: "Mock" })
+        valid! fixture(:folder, space, { title: "Mock", folder: f })
+  end
+
+  it "should not allow for duplicate-titled folders" do
+    valid! space.folders.create({
+      title: "Test",
+      user_id: user.id
+    })
+
+    invalid! space.folders.create({
+      title: "Test",
+      user_id: user.id
+    })
+  end
+
+  it "should not allow for duplicate-titled pages" do
+    folder = fixture(:folder, space)
+
+    page1 = valid!   fixture(:page, folder, { title: 'Xyz' })
+    page2 = invalid! fixture(:page, folder, { title: 'Xyz' })
+    page3 = valid!   fixture(:page, folder, { title: 'ABC' })
+    page2.errors.get(:title).first.should == Page::ERR_NAME_UNAVAILABLE
+  end
+
+  describe "Instance methods" do
     before do
       space.create_root_folder
       @root        = space.root_folder
@@ -44,4 +83,6 @@ describe Folder do
     end
   end
 
+  describe 'Placement' do
+  end
 end

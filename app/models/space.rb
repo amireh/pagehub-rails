@@ -4,7 +4,7 @@ class Space < ActiveRecord::Base
 
   DEFAULT_TITLE = 'Personal'
 
-  default_scope { order('pretty_title ASC') }
+  default_scope { order(pretty_title: :asc) }
 
   belongs_to :user
   alias_method :creator, :user
@@ -16,6 +16,7 @@ class Space < ActiveRecord::Base
   }
 
   has_many :folders, dependent: :destroy
+  has_many :pages, through: :folders
 
   validates_presence_of :title,
     message: 'You must provide a title for this space.'
@@ -27,15 +28,15 @@ class Space < ActiveRecord::Base
   end
 
   def create_root_folder
-    folder = folders.first_or_create({
-      title: Folder::DEFAULT_FOLDER,
-      user_id: self.user_id
-    })
+    folder = folders.first_or_create({ title: Folder::DEFAULT_FOLDER }) do |folder|
+      folder.user_id = self.user_id
+    end
 
     folder.create_homepage
     folder
   end
 
+  # TODO: ...?
   def folder_pages
     { folders: folders.map(&:serialize) }
   end
@@ -53,7 +54,7 @@ class Space < ActiveRecord::Base
   end
 
   def browsable_pages(cnd = {}, order = [])
-    pages.all({ conditions: cnd.merge({ browsable: true }), order: order })
+    pages.where(cnd.merge({ browsable: true })).order(order)
   end
 
   def browsable_folders(query = {}, order = [])
@@ -66,13 +67,12 @@ class Space < ActiveRecord::Base
   end
 
   def locate_resource(path)
-    path = [ path ] if !path.is_a?(Array)
-    path = path.collect { |r| r.to_s }.reject { |s| s.empty? }
+    path = Array(path).map(&:to_s).map(&:strip).reject(&:empty?)
     folder = root_folder
 
     if path.empty?
-      if self.root_folder && self.root_folder.has_homepage?
-        return self.root_folder.homepage
+      if root_folder && root_folder.has_homepage?
+        return root_folder.homepage
       end
     end
 
@@ -82,10 +82,10 @@ class Space < ActiveRecord::Base
     end
 
     resource_title = path.last.to_s.sanitize
-    page = folder.pages.first({ pretty_title: resource_title })
+    page = folder.pages.where({ pretty_title: resource_title }).first
 
     if !page
-      if subfolder = folder.folders.first({ pretty_title: resource_title })
+      if subfolder = folder.folders.where({ pretty_title: resource_title }).first
         if subfolder.has_homepage?
           page = subfolder.homepage
         end
@@ -108,8 +108,8 @@ class Space < ActiveRecord::Base
   end
 
   def role_of(user)
-    if entry = space_users.where({ user_id: self.user_id }).first
-      SpaceUser.role_name(entry.role)
+    if membership = space_users.where({ user_id: self.user_id }).first
+      SpaceUser.role_name(membership.role)
     else
       nil
     end
@@ -175,7 +175,7 @@ class Space < ActiveRecord::Base
 
     # members()
     define_method("#{role}s") do
-      space_users.where({ role: role_weight }).map(&:user)
+      space_users.where({ role: role_weight }).includes(:user).map(&:user)
     end
   end
 
@@ -208,7 +208,7 @@ class Space < ActiveRecord::Base
   end
 
   def orphanize
-    authors.each { |u|
+    authors.each do |u|
       next if u.id == creator.id
       next if u.is_on? 'spaces.no_orphanize'
 
@@ -227,7 +227,8 @@ class Space < ActiveRecord::Base
       user_pages.each { |p|
         p.update({ folder: s.root_folder })
       }
-    }
-    refresh
+    end
+
+    reload
   end
 end
