@@ -1,16 +1,19 @@
 class User < ActiveRecord::Base
   include Preferencable
+  include DeviseUserValidatable
 
   devise :database_authenticatable,
     :registerable,
     :recoverable,
     :rememberable,
     :trackable,
-    :validatable,
+    # :validatable,
     :confirmable,
     :encryptable,
+    :omniauthable,
     {
-      password_length: 7..128
+      password_length: 7..128,
+      omniauth_providers: [ :github ]
     }
 
   has_many :owned_spaces, class_name: 'Space', dependent: :destroy
@@ -22,6 +25,11 @@ class User < ActiveRecord::Base
 
   has_many :folders, dependent: :destroy
   has_many :pages, dependent: :destroy
+
+  before_validation do
+    self.encrypted_password = generate_random_password if self.provider != 'pagehub'
+    self.uid = UUID.generate if self.provider == 'pagehub'
+  end
 
   before_create do
     self.nickname = self.name.to_s.sanitize if self.nickname.blank?
@@ -61,5 +69,11 @@ class User < ActiveRecord::Base
     else
       owned_spaces.select { |s| s.member? user }
     end
+  end
+
+  private
+
+  def generate_random_password
+    SecureRandom.hex
   end
 end

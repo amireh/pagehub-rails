@@ -4,6 +4,10 @@ namespace :db do
     # basically these are the tables that get imported from legacy and may need
     # adjustment
     tables = %w[
+      folders
+      page_carbon_copies
+      page_revisions
+      pages
       spaces
       users
     ]

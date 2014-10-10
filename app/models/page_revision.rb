@@ -16,12 +16,14 @@ class PageRevision < ActiveRecord::Base
   MAX_PATCH_SIZE = 1.megabytes
 
   attr_writer :context
+  attr_writer :from_import
+
   attr_readonly :blob, :version
 
   belongs_to :page
   belongs_to :user
 
-  before_create :generate_patch
+  before_create :generate_patch, unless: lambda { @from_import }
 
   def generate_patch
     if !@context || !@context[:content]
