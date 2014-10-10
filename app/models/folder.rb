@@ -34,7 +34,7 @@ class Folder < ActiveRecord::Base
   end
 
   def homepage
-    self.pages.where(title: [ 'Home', PageHub::README ]) || pages.first
+    self.pages.where(title: [ 'Home', Page::README_PAGE ]) || pages.first
   end
 
   # def deny_reserved_titles
@@ -101,7 +101,7 @@ class Folder < ActiveRecord::Base
   end
 
   def empty?(scope = :public)
-    self.folders.empty? && self.pages.all({ browsable: true }).empty?
+    self.folders.empty? && self.pages.browsable.empty?
   end
 
   def is_child_of?(other_folder)

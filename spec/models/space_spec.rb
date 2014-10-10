@@ -21,13 +21,6 @@ describe Space do
   end
 
   context "Creation" do
-
-    it "should create a homepage for the space by default" do
-      pending 'port pages'
-
-      space.root_folder.pages.count.should == 1
-    end
-
     it "should reject duplicate titled spaces per-user scope" do
       space = valid! fixture(:space, user, { title: "Moo" })
       space = invalid! fixture(:space, user, { title: "Moo" })
@@ -49,27 +42,6 @@ describe Space do
   end
 
   context "Memberships" do
-    # it "should not modify memberships with no editor assigned" do
-    #   expect { @s.add_member(@u) }.to raise_error(DataMapper::MissingOperatorError)
-    # end
-
-    # it "should not modify memberships by a non-admin" do
-    #   u2 = create_user({ email: "user2@tester.com" }, false).first
-
-    #   @s.editor = @u
-    #   @s.add_member(u2).should be_true
-
-    #   u3 = create_user({ email: "user3@tester.com" }, false).first
-
-    #   @s.editor = u2
-    #   @s.add_member(u3).should be_false
-    #   @s.report_errors.should match(/not authorized/)
-    # end
-
-    # let(:user2) do
-    #   valid! fixture(:user, { name: 'Ahmad', email: 'ahmad@something.com' })
-    # end
-
     it "should add a member" do
       membership = subject.add_member(user)
       subject.reload
@@ -101,121 +73,4 @@ describe Space do
       user.owned_spaces.should be_empty
     end
   end
-
-  context "Total annihilation" do
-    # it "should reject destroying the default space" do
-    #   @space.destroy.should be_false
-    #   @space.report_errors.should match(/can not remove the default space/)
-    # end
-
-    it "should delete itself cleanly" do
-      pending 'port folders & pages'
-
-      s = @u.owned_spaces.create({ title: "The Zoo" })
-      s.saved?.should be_true
-
-      @u = @u.refresh
-
-      nr_memberships = @u.space_users.count
-      nr_spaces      = @u.spaces.count
-      nr_ospaces     = @u.owned_spaces.count
-      nr_pages       = Page.count
-      nr_folders     = Folder.count
-      nr_spages      = s.pages.count
-      nr_sfolders    = s.folders.count
-
-      nr_spaces.should == nr_ospaces
-
-      User.editor = s.creator
-
-      s.pages.destroy.should be_true
-      s.folders.destroy.should be_true
-      s.destroy.should be_true
-
-      @u = @u.refresh
-      @u.should be_true
-
-      @u.space_users.count.should   == nr_memberships - 1
-      @u.spaces.count.should        == nr_spaces - 1
-      @u.owned_spaces.count.should  == nr_ospaces - 1
-      Page.count.should   == nr_pages - nr_spages
-      Folder.count.should == nr_folders - nr_sfolders
-    end
-
-    it "should orphanize its folders into a new user space" do
-      pending 'port folders & pages'
-
-      @u2 = valid! fixture(:user)
-
-      u1, u2 = @u, @u2
-
-      # create a space owned by u2
-      s = u2.owned_spaces.create({ title: "The Zoo 123" })
-      s.saved?.should be_true
-
-      # add u1 to the space
-      s.add_admin(u1).should be_true
-
-      # create some page in the space as u1
-      valid! s.root_folder.pages.create({ title: "Test", creator: u1 })
-
-      nr_pages = s.pages.count
-
-      s.orphanize.destroy.should be_true
-
-      u1, u2 = u1.refresh, u2.refresh
-
-      u1.spaces.count.should == 2
-      u2.spaces.count.should == 1
-
-      orphan = u1.spaces.first({ title: "Orphaned: The Zoo 123" })
-      orphan.should be_true
-      orphan.pages.count.should == 2
-      orphan.pages.first.title.should == "README"
-      orphan.pages.last.title.should  == "Test"
-    end
-
-    it "should respect the user's orphanizing setting" do
-      pending 'port folders & pages'
-      fixture(:another_user)
-
-      u1, u2 = @u, @u2
-
-      u1.p['spaces']['no_orphanize'] = true
-      u1.save_preferences
-
-      u1 = u1.refresh
-
-      # create a space owned by u2
-      s = u2.owned_spaces.create({ title: "The Zoo 123" })
-      s.saved?.should be_true
-
-      # add u1 to the space
-      # s.editor = s.creator
-      s.add_admin(u1).should be_true
-
-      u1 = u1.refresh
-
-      s.users.count.should == 2
-      u1.spaces.count.should == 2
-
-      # create some page in the space as u1
-      valid! u1.pages.create({ title: "Test", folder: s.root_folder })
-
-      s.pages.last.creator.id.should == u1.id
-      nr_pages = s.pages.count
-
-      s.orphanize.destroy.should be_true
-
-      u1, u2 = u1.refresh, u2.refresh
-
-      u1.spaces.count.should == 1
-      u2.spaces.count.should == 1
-
-      orphan = u1.spaces.first({ title: "Orphaned: The Zoo 123" })
-      orphan.should be_false
-    end
-  end
-
-
 end

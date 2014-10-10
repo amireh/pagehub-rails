@@ -16,6 +16,8 @@ class Page < ActiveRecord::Base
   before_save :set_defaults
   after_create :create_carbon_copy
 
+  scope :browsable, -> { where browsable: true }
+
   class << self
     def random_suffix
       Base64.urlsafe_encode64(Random.rand(12345 * 100).to_s)
