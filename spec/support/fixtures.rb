@@ -35,7 +35,7 @@ module Fixtures
 end # Fixtures
 
 module Fixtures
-  class Factory
+  class Fixture
     attr_accessor :params
 
     def self.inherited(instance)

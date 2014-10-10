@@ -11,6 +11,10 @@ namespace :pagehub do
       {}
     end
 
+    def logger
+      Rails.logger || Rack::Logger.new(STDOUT)
+    end
+
     def blacklisted?(resource_type, id)
       return (@blacklist[resource_type.to_s] || []).include?(id)
     end
@@ -19,8 +23,8 @@ namespace :pagehub do
       begin
         block.call
       rescue ActiveRecord::RecordNotFound => e
-        puts "Failed to import: #{data}"
-        puts "Cause: #{e.message}"
+        logger.error "Failed to import: #{data}"
+        logger.error "Cause: #{e.message}"
         @failures << { data: data, error: e.message }
       rescue Exception => e
         @failures << { data: data, error: e.message }
@@ -43,7 +47,7 @@ namespace :pagehub do
     #   * auto_password
     #   * gravatar_email
     def import_user(data)
-      puts "\tUser#{data['id']}: #{data['email']} (#{data['provider']})"
+      logger.debug "\tUser#{data['id']}: #{data['email']} (#{data['provider']})"
 
       user = User.new
       user.id = data['id']
@@ -58,12 +62,12 @@ namespace :pagehub do
       user.save!
       user.update_columns(encrypted_password: data['password'])
 
-      puts "\tUser #{user.id} imported successfully."
+      logger.debug "\tUser #{user.id} imported successfully."
     end
 
     def import_space(data)
       user_id = data['creator_id']
-      puts "\tSpace#{data['id']}: #{data['pretty_title']} (#{user_id})"
+      logger.debug "\tSpace#{data['id']}: #{data['pretty_title']} (#{user_id})"
 
       user = User.find(user_id.to_s)
       space = Space.new
@@ -78,11 +82,11 @@ namespace :pagehub do
       space.user = user
       space.save!
 
-      puts "\tSpace #{space.id} imported successfully."
+      logger.debug "\tSpace #{space.id} imported successfully."
     end
 
     def import_space_user(data)
-      puts "\tSpaceUser: #{data['user_id']} <-> #{data['space_id']} (#{data['role']})"
+      logger.debug "\tSpaceUser: #{data['user_id']} <-> #{data['space_id']} (#{data['role']})"
 
       user = User.find(data['user_id'].to_s)
       space = Space.find(data['space_id'].to_s)
@@ -93,11 +97,11 @@ namespace :pagehub do
         role: [ 0, data['role'].to_i - 1 ].max
       })
 
-      puts "\tSpaceUser imported successfully."
+      logger.debug "\tSpaceUser imported successfully."
     end
 
     unless args[:path]
-      puts 'Must provide a path to the JSON dump, e.g: ' +
+      logger.error 'Must provide a path to the JSON dump, e.g: ' +
         '`bundle exec rake pagehub:import_from_legacy[path/to/dump.json]`'
       next
     end
@@ -138,9 +142,9 @@ namespace :pagehub do
       end
     end
 
-    puts "Number of failures: #{@failures.length}"
-    puts "Failures:"
-    puts @failures.to_json
+    logger.info "Number of failures: #{@failures.length}"
+    logger.info "Failures:"
+    logger.info @failures.to_json
   end
 
   task :import_from_legacy_fragments, [:path, :blacklist_path] => [:environment] do |t, args|

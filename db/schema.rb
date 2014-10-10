@@ -11,10 +11,25 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141007144738) do
+ActiveRecord::Schema.define(version: 20141008191135) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "folders", force: true do |t|
+    t.string   "title",        null: false
+    t.string   "pretty_title"
+    t.boolean  "browsable"
+    t.integer  "space_id",     null: false
+    t.integer  "folder_id"
+    t.integer  "user_id",      null: false
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "folders", ["folder_id"], name: "index_folders_on_folder_id", using: :btree
+  add_index "folders", ["space_id"], name: "index_folders_on_space_id", using: :btree
+  add_index "folders", ["user_id"], name: "index_folders_on_user_id", using: :btree
 
   create_table "space_users", id: false, force: true do |t|
     t.integer  "role",       default: 0, null: false
@@ -71,6 +86,10 @@ ActiveRecord::Schema.define(version: 20141007144738) do
   add_index "users", ["email"], name: "index_users_on_email", unique: true, using: :btree
   add_index "users", ["nickname"], name: "index_users_on_nickname", unique: true, using: :btree
   add_index "users", ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true, using: :btree
+
+  add_foreign_key "folders", "folders", name: "folders_folder_id_fk"
+  add_foreign_key "folders", "spaces", name: "folders_space_id_fk"
+  add_foreign_key "folders", "users", name: "folders_user_id_fk"
 
   add_foreign_key "space_users", "spaces", name: "space_users_space_id_fk"
   add_foreign_key "space_users", "users", name: "space_users_user_id_fk"

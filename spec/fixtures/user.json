@@ -1,7 +1,6 @@
 {
   "name": "Mysterious Mocker",
   "email": "very@mysterious.com",
-  "provider": "pagehub",
   "password": "helloWorld123",
   "password_confirmation": "helloWorld123"
 }

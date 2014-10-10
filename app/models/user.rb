@@ -22,6 +22,10 @@ class User < ActiveRecord::Base
     validate: false
   }
 
+  before_create do
+    self.nickname = self.name.to_s.sanitize if self.nickname.blank?
+  end
+
   def href(*args)
   end
 
@@ -35,5 +39,13 @@ class User < ActiveRecord::Base
 
   def to_param
     nickname
+  end
+
+  def create_default_space
+    default_space || owned_spaces.create({ title: Space::DEFAULT_TITLE })
+  end
+
+  def default_space
+    owned_spaces.first
   end
 end
