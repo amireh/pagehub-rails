@@ -12,7 +12,11 @@
   <% end %>
 
   <% if @user.present? && @user.id.present? %>
-    ENV.user = <%= render_json_object("/users/show", object: @user) %>;
+    <% if @user == current_user %>
+      ENV.user = ENV.current_user;
+    <% else %>
+      ENV.user = <%= render_json_object("/users/show", object: @user) %>;
+    <% end %>
   <% end %>
 
   <% if @space.present? %>

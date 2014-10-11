@@ -108,7 +108,7 @@ class Space < ActiveRecord::Base
   end
 
   def role_of(user)
-    if membership = space_users.where({ user_id: self.user_id }).first
+    if membership = cached_find_membership(user.id)
       SpaceUser.role_name(membership.role)
     else
       nil
@@ -148,7 +148,7 @@ class Space < ActiveRecord::Base
 
     # has_member?(user)
     define_method(:"has_#{role}?") do |user|
-      membership = space_users.where({ user: user }).first
+      membership = cached_find_membership(user.id)
 
       return false if membership.blank?
 
@@ -230,5 +230,21 @@ class Space < ActiveRecord::Base
     end
 
     reload
+  end
+
+  def cached_find_membership(user_id)
+    if space_users.loaded?
+      space_users.detect { |m| m.user_id == user_id }
+    else
+      space_users.where({ user_id: user_id }).first
+    end
+  end
+
+  def cached_pages_authored_by(user_id)
+    if pages.loaded?
+      pages.select { |p| p.user_id == user_id }
+    else
+      pages.where(user_id: user_id)
+    end
   end
 end

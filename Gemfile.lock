@@ -89,7 +89,7 @@ GEM
     multi_json (1.10.1)
     multi_xml (0.5.5)
     multipart-post (2.0.0)
-    newrelic_rpm (3.9.4.245)
+    newrelic_rpm (3.8.1.221)
     nokogiri (1.6.3.1)
       mini_portile (= 0.6.0)
     oauth2 (1.0.0)
@@ -229,7 +229,7 @@ DEPENDENCIES
   kaminari (= 0.15.1)
   mail_view
   moneta
-  newrelic_rpm
+  newrelic_rpm (= 3.8.1.221)
   omniauth (~> 1.2)
   omniauth-github
   pagehub-markdown (>= 0.2.0)

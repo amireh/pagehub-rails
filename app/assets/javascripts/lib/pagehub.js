@@ -5,7 +5,6 @@ define([
   'bootstrap',
   'shortcut',
   'jquery.ui',
-  'modernizr',
   'canvas-loader'
 ], function(_, $, ConnectivityIssueDlg) {
   var __init = false,
@@ -249,10 +248,6 @@ define([
     if (__init) {
       return true;
     }
-
-    // if (!Modernizr.draganddrop) {
-    //   ui.modal.as_alert($("#html5_compatibility_notice"))
-    // }
 
     $(document.body).tooltip({
       selector: '[rel=tooltip]',

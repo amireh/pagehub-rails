@@ -14,26 +14,32 @@
         </tr>
       </thead>
       <% labels = { 'member' => '', 'editor' => '', 'admin' => 'label-inverse', 'creator' => 'label-important' } %>
-      <% @__space = @space %>
-      <% current_user.spaces.each do |s| %>
-        <% @space = s %>
-        <tr data-space="<%= s.id %>">
-          <td><a href="<%= user_space_url(s.user, s) %>"><%= fq_space_title s %></a></td>
-          <td><%= pluralize(s.pages({ creator: current_user }).count, "page" ) %></td>
-          <td><span class="label span1 text-center <%= labels[s.role_of(current_user)] %>"><%= s.role_of(current_user).capitalize %></span></td>
+
+      <% @spaces.each do |space| %>
+        <tr data-space="<%= space.id %>">
+          <td>
+            <a href="<%= user_space_url(space.user, space) %>">
+              <%= fq_space_title space %>
+            </a>
+          </td>
+          <td><%= pluralize(space.cached_pages_authored_by(current_user.id).size, "page" ) %></td>
+          <td>
+            <span class="label span1 text-center <%= labels[space.role_of(current_user)] %>">
+              <%= space.role_of(current_user).capitalize %>
+            </span>
+          </td>
           <td>
             <div class="btn-group">
-            <% if can? :update, @space %>
-              <a href="<%= s.settings_url %>" class="btn btn-small">Manage</a>
+            <% if can? :update, space %>
+              <a href="<%= space.settings_url %>" class="btn btn-small">Manage</a>
             <% end %>
-            <% unless s.is_creator?(current_user) %>
+            <% unless space.is_creator?(current_user) %>
               <button data-role="leave_space" class="btn btn-danger btn-small">Leave</button>
             <% end %>
           </div>
           </td>
         </tr>
       <% end %>
-      <% @space = @__space %>
     </table>
 
   </fieldset>

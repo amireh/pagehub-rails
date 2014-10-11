@@ -1,7 +1,7 @@
 requirejs.config({
   baseUrl: '/assets/javascripts',
   paths: {
-    'jquery':                 'vendor/jquery-1.9.1.min',
+    'jquery':                 'vendor/jquery-1.11.1',
     'jquery.ui':              'vendor/jquery-ui/jquery-ui-1.10.1.custom.min',
     'jquery.tinysort':        'vendor/jquery.tinysort.min',
     'underscore':             'vendor/underscore-min',
@@ -11,7 +11,6 @@ requirejs.config({
     'Handlebars':             'vendor/handlebars',
     'hbs':                    'vendor/hbs/hbs',
     'hbs/i18nprecompile':     'vendor/hbs/i18nprecompile',
-    'modernizr':              'vendor/modernizr',
     'shortcut':               'vendor/shortcut',
     'bootstrap':              'vendor/bootstrap/bootstrap',
     'pagehub':                'lib/pagehub',

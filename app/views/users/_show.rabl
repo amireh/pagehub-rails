@@ -16,7 +16,7 @@ end
 # node(:nr_folders) do |u| u.folders.count end
 
 node(:spaces) do
-  partial "/spaces/index", object: @user.spaces
+  partial "/spaces/index", object: @user.spaces.includes(:space_users, :user)
 end
 
 node(:preferences) do |s|

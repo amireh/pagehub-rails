@@ -16,11 +16,7 @@ function( $, Backbone, UI, TimedOp ) {
       _.implode(this, data);
 
       // Make it draggable
-      if (Modernizr.draganddrop) {
-        this.space.folders.on('add', this.bind_folder_pages, this);
-      } else {
-        console.log("No dragndrop support, ignoring...");
-      }
+      this.space.folders.on('add', this.bind_folder_pages, this);
 
       this.drag_opener = new TimedOp(this, this.switch_to_target_folder, {
         pulse: 1000

@@ -6,13 +6,13 @@ node(:meta) do |s|
   {
     # nr_pages:   s.pages.count,
     # nr_folders: s.folders.count,
-    nr_members: s.users.count
+    nr_members: s.space_users.size
   }
 end
 
 node(:media) do |space|
   {
-    href: user_space_url(space.user, space),
+    href: user_space_url(space.user.nickname, space),
     url:  user_space_url(space.user, space),
 
     actions: {
