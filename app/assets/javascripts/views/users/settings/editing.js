@@ -1,6 +1,4 @@
-define(
-'views/users/settings/editing',
-[
+define([
   'views/shared/settings/setting_view',
   'views/spaces/editor',
   'jquery'

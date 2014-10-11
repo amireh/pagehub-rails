@@ -1,5 +1,4 @@
-define('views/spaces/browser/finder_navigator',
-[
+define([
   'jquery',
   'backbone',
   'shortcut'

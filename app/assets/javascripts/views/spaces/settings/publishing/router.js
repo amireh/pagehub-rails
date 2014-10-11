@@ -1,5 +1,4 @@
-define('views/spaces/settings/publishing/router',
-[
+define([
   'backbone'
 ], function(Backbone) {
 

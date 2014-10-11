@@ -12,7 +12,7 @@ function(Backbone, Folder, UI, Shortcut) {
     initialize: function(data) {
       var view = this;
 
-      _.implode(this, data);
+      _.extend(this, data);
 
       this.$el.find('#new_page').attr("href", this.space.get('media').pages.url + '/new');
 

@@ -1,5 +1,4 @@
-define('views/spaces/page_actionbar',
-[ 'animable_view', 'hbs!templates/move_folder_link', 'hbs!templates/dialogs/destroy_page', 'shortcut', 'pagehub', 'timed_operation' ],
+define([ 'views/shared/animable_view', 'hbs!templates/move_folder_link', 'hbs!templates/dialogs/destroy_page', 'shortcut', 'pagehub', 'timed_operation' ],
 function(AnimableView, MoveFolderLinkTemplate, DestroyPageTmpl, Shortcut, UI, TimedOp) {
   return AnimableView.extend({
     el: $("#page_actions"),
@@ -18,7 +17,7 @@ function(AnimableView, MoveFolderLinkTemplate, DestroyPageTmpl, Shortcut, UI, Ti
     //   },
 
     //   initialize: function(data) {
-    //     _.implode(this, data);
+    //     _.extend(this, data);
 
     //     this.space.folders.on('add',    this.add_link, this);
     //     this.space.folders.on('remove', this.rm_link, this);

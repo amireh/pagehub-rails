@@ -1,5 +1,4 @@
-define('views/spaces/browser/_impl',
-[
+define([
   'backbone'
 ],
 function( Backbone ) {

@@ -14,11 +14,11 @@ requirejs.config({
     'shortcut':               'vendor/shortcut',
     'bootstrap':              'vendor/bootstrap/bootstrap',
     'pagehub':                'lib/pagehub',
+    'timed_operation':        "lib/timed_operation",
     'pagehub.config':         'config',
     'pagehub.state':          'state',
     'inflection':             'vendor/inflection',
     'md5':                    "vendor/md5",
-    'timed_operation':        "lib/timed_operation",
     'animable_view':          'views/shared/animable_view',
     'canvas-loader':          'vendor/heartcode-canvasloader-min',
 
@@ -93,7 +93,6 @@ require([
   'collections/pages',
   'collections/spaces',
   'helpers/handlebars',
-  'helpers/underscore',
   'helpers/jquery',
   'views/flash',
   'views/header',
@@ -108,13 +107,6 @@ require([
   'views/users/settings/index',
   'views/welcome/landing_page'
 ], function(application) {
-  try       { if (pagehub_hooks); }
-  catch(e)  { pagehub_hooks = []; }
-
-  if (pagehub_hooks.length) {
-    throw new Error("Deprecated: stop using pagehub_hooks!");
-  }
-
   console.log("PageHub dependencies loaded. Booting up...");
 
   require([ 'boot' ], function() {

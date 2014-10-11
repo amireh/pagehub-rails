@@ -1,6 +1,4 @@
-define(
-'views/shared/settings/director',
-[
+define([
   'backbone',
   'jquery',
   'shortcut',
@@ -14,7 +12,7 @@ function(Backbone, $, Shortcut, UI) {
 
     initialize: function(model, state) {
       var director  = this;
-      // _.implode(this, data);
+      // _.extend(this, data);
 
       this.model    = model;
       this.state    = state;

@@ -1,4 +1,4 @@
-define('pagehub.config', [ 'jquery', 'jquery.tinysort' ], function($) {
+define([ 'jquery', 'jquery.tinysort' ], function($) {
   $.ajaxSetup({
     headers: {
       Accept : "application/json; charset=utf-8",

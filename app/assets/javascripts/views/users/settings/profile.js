@@ -1,6 +1,4 @@
-define(
-'views/users/settings/profile',
-[ 'views/shared/settings/setting_view', 'jquery', 'pagehub', 'hbs!templates/users/settings/profile_gravatar' ],
+define([ 'views/shared/settings/setting_view', 'jquery', 'pagehub', 'hbs!templates/users/settings/profile_gravatar' ],
 function(SettingView, $, UI, GravatarTmpl) {
   return SettingView.extend({
     el: $("#user_profile_settings"),

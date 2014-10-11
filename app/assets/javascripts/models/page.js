@@ -1,6 +1,4 @@
-define(
-  'models/page',
-  [ 'jquery', 'underscore', 'backbone', 'backbone.nested' ],
+define([ 'jquery', 'underscore', 'backbone', 'backbone.nested' ],
   function($, _, Backbone) {
 
   var Page = Backbone.DeepModel.extend({

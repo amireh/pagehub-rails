@@ -1,5 +1,4 @@
 define([ 'backbone', 'collections/spaces' ], function(Backbone, Spaces) {
-
   var User = Backbone.DeepModel.extend({
     defaults: {
       nickname: "",

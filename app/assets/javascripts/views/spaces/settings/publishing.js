@@ -1,6 +1,4 @@
-define(
-'views/spaces/settings/publishing',
-[
+define([
   'backbone',
   'jquery',
   'pagehub',
@@ -17,7 +15,7 @@ function(Backbone, $, UI, Director, ThemeSettings, LayoutSettings, NavigationLin
 
     initialize: function(data) {
       Director.prototype.initialize.call(this, data.space, data.state);
-      _.implode(this, data);
+      _.extend(this, data);
 
       this.add_alias('space');
 

@@ -1,6 +1,4 @@
-define('collections/pages',
-[ 'jquery', 'backbone', 'models/page' ],
-function($, Backbone, Page) {
+define([ 'jquery', 'backbone', 'models/page' ], function($, Backbone, Page) {
   return Backbone.Collection.extend({
     model: Page,
 
@@ -13,7 +11,7 @@ function($, Backbone, Page) {
     // },
 
     initialize: function(models, data) {
-      _.implode(this, data);
+      _.extend(this, data);
 
       this.on('add', this.attach_to_folder, this);
       this.on('add', this.configure_path, this);

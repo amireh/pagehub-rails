@@ -1,6 +1,4 @@
-define(
-'views/users/settings/spaces',
-[
+define([
   'views/shared/settings/setting_view',
   'jquery',
   'pagehub',

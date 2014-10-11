@@ -1,6 +1,4 @@
-define(
-'views/spaces/settings/publishing/layout',
-[
+define([
   'backbone',
   'jquery',
   'pagehub',

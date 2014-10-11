@@ -1,6 +1,4 @@
-define(
-'views/spaces/settings/publishing/custom_css',
-[
+define([
   'jquery',
   'views/shared/settings/setting_view',
   'views/spaces/editor'

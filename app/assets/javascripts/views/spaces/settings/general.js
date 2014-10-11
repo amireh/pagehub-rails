@@ -1,6 +1,4 @@
-define(
-'views/spaces/settings/general',
-[ 'views/shared/settings/setting_view', 'jquery', 'pagehub',
+define([ 'views/shared/settings/setting_view', 'jquery', 'pagehub',
 'hbs!templates/dialogs/destroy_space',
 'hbs!templates/spaces/settings/dialog_change_title_warning',
 'hbs!templates/messages/relocation_error',

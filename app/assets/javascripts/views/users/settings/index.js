@@ -1,6 +1,4 @@
-define(
-'views/users/settings/index',
-[
+define([
   'views/shared/settings/director',
   'jquery',
   'pagehub',

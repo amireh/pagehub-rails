@@ -1,6 +1,4 @@
-define('collections/folders',
-[ 'jquery', 'backbone', 'models/folder' ],
-function($, Backbone, Folder) {
+define([ 'jquery', 'backbone', 'models/folder' ], function($, Backbone, Folder) {
   return Backbone.Collection.extend({
     defaults: {
       space: null
@@ -17,7 +15,7 @@ function($, Backbone, Folder) {
     },
 
     initialize: function(models, data) {
-      _.implode(this, data);
+      _.extend(this, data);
 
     }
 

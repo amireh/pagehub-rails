@@ -1,5 +1,4 @@
-define('views/flash',
-[
+define([
   'timed_operation'
 ], function(TimedOp) {
   return Backbone.View.extend({

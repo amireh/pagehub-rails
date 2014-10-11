@@ -1,4 +1,4 @@
-define('timed_operation', [ 'underscore', 'backbone' ], function(_, Backbone) {
+define([ 'underscore', 'backbone' ], function(_, Backbone) {
   return Backbone.Model.extend({
 
     initialize: function(object, callback, options) {
@@ -8,7 +8,7 @@ define('timed_operation', [ 'underscore', 'backbone' ], function(_, Backbone) {
 
       this.options = {};
 
-      _.implode(this.options, $.extend({}, {
+      _.extend(this.options, $.extend({}, {
         pulse: 250,
         with_flag: false,
         autoqueue: false

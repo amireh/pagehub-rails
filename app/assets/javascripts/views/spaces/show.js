@@ -1,5 +1,4 @@
-define('views/spaces/show',
-[
+define([
   'backbone',
   'views/spaces/workspace/router',
   'views/spaces/resource_actions',

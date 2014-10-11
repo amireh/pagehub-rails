@@ -1,8 +1,8 @@
-define([ 'backbone', 'backbone.nested' ], function(Backbone) {
+define([ 'underscore', 'backbone', 'backbone.nested' ], function(_, Backbone) {
   var singleton;
   var State = Backbone.DeepModel.extend({
     initialize: function(data) {
-      return _.implode(this, data || {});
+      return _.extend(this, data || {});
     }
   });
 

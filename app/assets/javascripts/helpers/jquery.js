@@ -1,4 +1,4 @@
-define('helpers/jquery', ['jquery'], function($) {
+define(['jquery'], function($) {
 
   $.fn.serializeObject = function(){
 

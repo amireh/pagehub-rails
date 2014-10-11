@@ -1,7 +1,7 @@
-define('animable_view', [ 'backbone', 'jquery', 'jquery.ui' ], function(Backbone, $) {
+define([ 'backbone', 'jquery', 'jquery.ui' ], function(Backbone, $) {
   return Backbone.View.extend({
     initialize: function(data) {
-      _.implode(this, data);
+      _.extend(this, data);
 
       this.anime_length = 350;
     },

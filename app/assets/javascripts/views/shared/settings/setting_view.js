@@ -1,10 +1,8 @@
-define(
-'views/shared/settings/setting_view',
-[ 'backbone', 'jquery' ],
+define([ 'backbone', 'jquery' ],
 function(Backbone, $) {
   return Backbone.View.extend({
     initialize: function(data) {
-      _.implode(this, data);
+      _.extend(this, data);
     },
 
     render: function() {

@@ -1,5 +1,4 @@
-define('views/spaces/finder',
-[ 'animable_view', 'pagehub', 'shortcut' ],
+define([ 'views/shared/animable_view', 'pagehub', 'shortcut' ],
 function(AnimableView, UI, Shortcut) {
   return AnimableView.extend({
     el: $("#page_finder"),
@@ -10,7 +9,7 @@ function(AnimableView, UI, Shortcut) {
     initialize: function(data) {
       var view = this;
 
-      _.implode(this, data);
+      _.extend(this, data);
 
       Shortcut.add("ctrl+alt+p", function() { view.show(); })
 

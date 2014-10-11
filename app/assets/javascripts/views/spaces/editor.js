@@ -99,7 +99,7 @@ define([
     ctx: { },
 
     initialize: function(data) {
-      _.implode(this, data);
+      _.extend(this, data);
 
       this.config = $.extend({
         el: "#page_editor",

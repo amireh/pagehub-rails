@@ -6,6 +6,7 @@ module.exports = function(grunt) {
 
   var jsRoot = path.join(__dirname, 'app', 'assets', 'javascripts');
   var cssRoot = path.join(__dirname, 'app', 'assets', 'stylesheets');
+  var compiledJsPath = path.join(__dirname, 'public', 'javascripts', 'compiled', 'app.js');
 
   grunt.loadNpmTasks('grunt-contrib-requirejs');
   grunt.loadNpmTasks('grunt-contrib-watch');
@@ -20,15 +21,26 @@ module.exports = function(grunt) {
       compile: {
         options: {
           baseUrl:  "app/assets/javascripts",
-          out: "public/js/compiled/app.js",
+          out: compiledJsPath,
           mainConfigFile: 'app/assets/javascripts/main.js',
-          optimize: "uglify",
-          uglify: {
-            toplevel:   true,
-            ascii_only: true,
-            beautify:   false,
-            max_line_length: 1000,
-            no_mangle: false
+          optimize: "uglify2",
+
+          uglify2: {
+            warnings: true,
+            mangle:   true,
+
+            output: {
+              beautify: false
+            },
+
+            compress: {
+              sequences:  true,
+              dead_code:  true,
+              loops:      true,
+              unused:     true,
+              if_return:  true,
+              join_vars:  true
+            }
           },
 
           pragmasOnSave: {
@@ -42,7 +54,7 @@ module.exports = function(grunt) {
           preserveLicenseComments: false,
 
           name: "main",
-          include: [ 'main' ]
+          include: [ 'main', 'boot', 'helpers/underscore' ]
         }
       }
     },
@@ -75,7 +87,6 @@ module.exports = function(grunt) {
   });
 
   grunt.registerTask('development', function() {
-    var compiledJsPath = path.join(__dirname, 'public', 'javascripts', 'compiled', 'app.js');
     var rawJsPath = path.join(jsRoot, 'main.js');
 
     if (fs.existsSync(compiledJsPath)) {

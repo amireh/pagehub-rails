@@ -1,5 +1,4 @@
-define('views/spaces/browser/finder',
-[
+define([
   'jquery',
   'backbone',
   'views/spaces/browser/_impl',

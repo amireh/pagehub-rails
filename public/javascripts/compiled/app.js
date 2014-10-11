@@ -1,1 +1,0 @@
-/home/kandie/Workspace/Projects/rails/pagehub/app/assets/javascripts/main.js

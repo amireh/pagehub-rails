@@ -1,5 +1,4 @@
-define('views/welcome/landing_page',
-[
+define([
   'backbone', 'jquery'
 ], function(Backbone, $) {
   return Backbone.View.extend({

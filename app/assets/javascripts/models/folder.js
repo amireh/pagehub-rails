@@ -1,8 +1,10 @@
-define('models/folder',
-  [ 'jquery', 'underscore', 'backbone', 'collections/pages', 'backbone.nested' ],
-  function($, _, Backbone, Pages) {
-
-var moo = false;
+define([
+  'jquery',
+  'underscore',
+  'backbone',
+  'collections/pages',
+  'backbone.nested'
+], function($, _, Backbone, Pages) {
   var Folder = Backbone.DeepModel.extend({
     defaults: {
       title:        "",

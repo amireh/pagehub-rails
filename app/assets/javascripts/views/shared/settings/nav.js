@@ -1,4 +1,4 @@
-define('views/shared/settings/nav', [ 'jquery' ], function($) {
+define([ 'jquery' ], function($) {
   var current_section = current_section || '';
   $(function() {
     $(".settings > nav a[href*='" + current_section + "']")

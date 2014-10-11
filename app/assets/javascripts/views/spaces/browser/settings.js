@@ -1,5 +1,4 @@
-define('views/spaces/browser/settings',
-[ 'backbone', 'hbs!templates/browser/settings' ], function(Backbone, Tmpl) {
+define([ 'backbone', 'hbs!templates/browser/settings' ], function(Backbone, Tmpl) {
   return Backbone.View.extend({
     el:       $("#browser_settings"),
     events: {

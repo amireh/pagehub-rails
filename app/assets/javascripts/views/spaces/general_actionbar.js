@@ -1,5 +1,4 @@
-define('views/spaces/general_actionbar',
-[ 'backbone' ],
+define([ 'backbone' ],
 function(Backbone) {
   return Backbone.View.extend({
     el: $("#general_actionbar"),
@@ -12,7 +11,7 @@ function(Backbone) {
     },
 
     initialize: function(data) {
-      _.implode(this, data);
+      _.extend(this, data);
 
       this.elements = {
         switch_layout:      this.$el.find('#switch_layout'),

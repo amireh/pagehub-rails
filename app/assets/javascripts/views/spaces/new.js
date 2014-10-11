@@ -1,6 +1,4 @@
-define(
-'views/spaces/new',
-[ 'backbone', 'jquery', 'pagehub' ],
+define([ 'backbone', 'jquery', 'pagehub' ],
 
 function(Backbone, $, UI) {
 

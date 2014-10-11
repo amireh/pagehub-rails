@@ -1,5 +1,4 @@
-define('views/spaces/browser/drag_manager',
-[
+define([
   'jquery',
   'backbone',
   'pagehub',
@@ -13,7 +12,7 @@ function( $, Backbone, UI, TimedOp ) {
     },
 
     initialize: function(data) {
-      _.implode(this, data);
+      _.extend(this, data);
 
       // Make it draggable
       this.space.folders.on('add', this.bind_folder_pages, this);

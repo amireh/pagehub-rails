@@ -1,6 +1,4 @@
-define(
-'views/spaces/settings/publishing/navigation_links',
-[
+define([
   'backbone',
   'views/shared/settings/setting_view',
   'hbs!templates/spaces/settings/navigation_link'

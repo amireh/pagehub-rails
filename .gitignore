@@ -23,5 +23,7 @@
 /dumps
 /kits
 /node_modules
+/public/javascripts/compiled
+/public/stylesheets/compiled
 
 npm-debug.log

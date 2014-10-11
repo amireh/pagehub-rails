@@ -1,5 +1,4 @@
-define('views/header',
-[
+define([
   'hbs!templates/header_path'
 ], function(PathTmpl) {
   return Backbone.View.extend({

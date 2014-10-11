@@ -1,6 +1,4 @@
-define(
-'views/spaces/settings/browsability',
-[ 'views/shared/settings/setting_view', 'jquery', 'pagehub' ],
+define([ 'views/shared/settings/setting_view', 'jquery', 'pagehub' ],
 function(SettingView, $, UI, DestroySpaceDlgTmpl) {
 
   var SpaceGeneralSettingsView = SettingView.extend({

@@ -1,5 +1,4 @@
-define('views/spaces/browser/browser',
-[
+define([
   'jquery',
   'backbone',
   'views/spaces/browser/drag_manager',
@@ -35,7 +34,7 @@ function( $, Backbone, DragManager, ActionBar, Settings, BrowserImplementation, 
     initialize: function(data) {
       var view = this;
 
-      _.implode(this, data);
+      _.extend(this, data);
 
       this.offset = 145;
 

@@ -1,5 +1,4 @@
-define('views/spaces/browser/actionbar',
-[
+define([
   'jquery',
   'backbone',
   'hbs!templates/dialogs/destroy_folder',
