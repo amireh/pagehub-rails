@@ -16,7 +16,6 @@ requirejs.config({
     'pagehub':                'lib/pagehub',
     'pagehub.config':         'config',
     'pagehub.state':          'state',
-    'jquery.gridster':        'vendor/jquery/jquery.gridster.min',
     'inflection':             'vendor/inflection',
     'md5':                    "vendor/md5",
     'timed_operation':        "lib/timed_operation",
@@ -30,7 +29,6 @@ requirejs.config({
   shim: {
     'jquery': { exports: '$' },
     'jquery.ui': [ 'jquery' ],
-    'jquery.gridster': [ 'jquery' ],
     'jquery.tinysort': [ 'jquery' ],
 
     'canvas-loader': { exports: 'canvas-loader' },

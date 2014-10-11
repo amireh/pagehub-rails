@@ -4,9 +4,9 @@ attributes :id, :title, :brief, :is_public
 
 node(:meta) do |s|
   {
-    # nr_pages:   s.pages.count,
-    # nr_folders: s.folders.count,
-    nr_members: s.space_users.size
+    # nr_pages:   s.pages.size,
+    # nr_folders: s.folders.size,
+    # nr_members: s.space_users.size
   }
 end
 

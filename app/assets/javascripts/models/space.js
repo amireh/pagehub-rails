@@ -1,5 +1,4 @@
-define('models/space',
-  [ 'jquery', 'underscore', 'backbone', 'collections/folders' ],
+define([ 'jquery', 'underscore', 'ext/backbone', 'collections/folders' ],
   function($, _, Backbone, Folders) {
   var Space = Backbone.DeepModel.extend({
     defaults: {

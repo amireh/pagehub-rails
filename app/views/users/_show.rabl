@@ -12,11 +12,11 @@ node(:media) do |user|
   }
 end
 
-# node(:nr_pages) do |u| u.pages.count end
+node(:nr_pages) do |user| user.pages.count end
 # node(:nr_folders) do |u| u.folders.count end
 
 node(:spaces) do
-  partial "/spaces/index", object: @user.spaces.includes(:space_users, :user)
+  partial "/spaces/index", object: @user.spaces.includes(:space_users, :folders, :pages, :user)
 end
 
 node(:preferences) do |s|
