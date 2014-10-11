@@ -18,7 +18,6 @@ node(:media) do |space|
     actions: {
       edit: user_space_editor_url(space.user, space),
       settings: user_space_settings_url(space.user, space),
-      # name_availability: space.user.url + '/spaces/name'
     },
 
     # pages:  {

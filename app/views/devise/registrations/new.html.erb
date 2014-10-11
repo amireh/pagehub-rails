@@ -1,18 +1,62 @@
-<h2>Sign up</h2>
-
 <%= form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f| %>
-  <%= devise_error_messages! %>
+<div class="row-fluid">
+  <fieldset class="form-horizontal">
+    <legend>Sign up for a PageHub account</legend>
 
-  <div><%= f.label :email %><br />
-  <%= f.email_field :email, autofocus: true %></div>
+    <div class="control-group">
+      <label class="control-label" for="nickname">Name</label>
+      <div class="controls">
+        <input
+          type="text"
+          name="name"
+          autofocus />
+        <span class="help-inline"></span>
+      </div>
+    </div>
 
-  <div><%= f.label :password %><br />
-    <%= f.password_field :password, autocomplete: "off" %></div>
+    <div class="control-group">
+      <label class="control-label" for="nickname">Nickname</label>
+      <div class="controls">
+        <input
+          type="text"
+          placeholder="gorilla-fighter"
+          name="nickname"
+          autofocus />
+        <span class="help-inline"></span>
+      </div>
+    </div>
 
-  <div><%= f.label :password_confirmation %><br />
-    <%= f.password_field :password_confirmation, autocomplete: "off" %></div>
+    <div class="control-group">
+      <label class="control-label" for="email">Email</label>
+      <div class="controls">
+        <input type="email" placeholder="your@email.com" name="email" />
+        <span class="help-inline"></span>
+      </div>
+    </div>
 
-  <div><%= f.submit "Sign up" %></div>
+    <div class="control-group">
+      <label class="control-label" for="password">Your password</label>
+      <div class="controls">
+        <input type="password" autocomplete="off" name="password" />
+        <span class="help-inline"></span>
+      </div>
+    </div>
+
+    <div class="control-group">
+      <label class="control-label" for="password_confirmation">Your password, again</label>
+      <div class="controls">
+        <input type="password" autocomplete="off" name="password_confirmation" />
+        <span class="help-inline"></span>
+      </div>
+    </div>
+
+    <div class="control-group">
+      <div class="controls">
+        <%= f.submit "Create account", class: 'btn btn-primary btn-large' %>
+      </div>
+    </div>
+  </fieldset>
+</div>
 <% end %>
 
 <%= render "devise/shared/links" %>

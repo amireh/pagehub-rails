@@ -1,0 +1,15 @@
+Hello <%= @resource.first_name %>,
+
+You've entered [<%= @resource.email %>] as the email address for your Pagehub
+account. To complete the process, we just need to verify that this email address
+belongs to you. You can do that by visiting the URL below using a web browser.
+
+<%= confirmation_url(@resource, confirmation_token: @token) %>
+
+Thanks,
+-The PageHub Team
+
+---
+
+PS: if you are not <%= @resource.name %> or didn't request this verification,
+you can safely ignore this email.

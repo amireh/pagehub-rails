@@ -15,13 +15,23 @@ module DeviseUserValidatable
     assert_validations_api!(base)
 
     base.class_eval do
-      validates_presence_of   :email, if: :email_required?
-      validates_uniqueness_of :email, scope: [ :provider ], allow_blank: true, if: :email_changed?
-      validates_format_of     :email, with: email_regexp, allow_blank: true, if: :email_changed?
+      validates_presence_of :email, if: :email_required?,
+        message: 'We need your email address.'
 
-      validates_presence_of     :password, if: :password_required?
-      validates_confirmation_of :password, if: :password_required?
-      validates_length_of       :password, within: password_length, allow_blank: true
+      validates_uniqueness_of :email, scope: [ :provider ], allow_blank: true, if: :email_changed?,
+        message: 'That email address is not available.'
+
+      validates_format_of :email, with: email_regexp, allow_blank: true, if: :email_changed?,
+        message: 'Email address format does not look right.'
+
+      validates_presence_of     :password, if: :password_required?,
+        message: 'You must provide a password.'
+
+      validates_confirmation_of :password, if: :password_required?,
+        message: 'You must confirm the passowrd.'
+
+      validates_length_of :password, within: password_length, allow_blank: true,
+        message: 'A password must be at least 7 characters long.'
     end
   end
 

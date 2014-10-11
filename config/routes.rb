@@ -4,11 +4,9 @@ Rails.application.routes.draw do
     sign_out: 'logout',
     password: 'password',
     confirmation: 'verification',
-    unlock: 'unblock',
-    # registration: 'register',
-    # sign_up: 'cmon_let_me_in'
   }, controllers: {
-    :omniauth_callbacks => "users/omniauth_callbacks"
+    omniauth_callbacks: 'users/omniauth_callbacks',
+    registrations: 'users/registrations'
   }
 
   root 'application#landing'
@@ -19,20 +17,37 @@ Rails.application.routes.draw do
   get '/welcome', controller: :guests, action: :index
 
   scope '/users', controller: :users do
-    post '/nickname_availability', action: :nickname_availability, as: :nickname_availability
-    post '/resend_confirmation_instructions', {
-      action: :resend_confirmation_instructions,
-      as: :resend_confirmation_instructions
-    }
-
-    scope '/:nickname' do
+    scope '/:user_nickname' do
       get '/', action: :show, as: :user
-      patch '/', action: :update
 
       scope '/:space', controller: :spaces do
         get '/', action: :show, as: :user_space
         get '/edit', action: :edit, as: :user_space_editor
         get '/settings', action: :settings, as: :user_space_settings
+      end
+    end
+  end
+
+  scope '/api/v1' do
+    scope '/users', controller: :users_api do
+      post '/nickname_availability', {
+        action: :nickname_availability,
+        as: :api_user_nickname_availability
+      }
+
+      post '/resend_confirmation_instructions', {
+        action: :resend_confirmation_instructions,
+        as: :api_user_resend_confirmation_instructions
+      }
+
+      scope '/:id' do
+        get '/', action: :show, as: :api_user
+        patch '/', action: :update
+
+        scope '/spaces', controller: :api_spaces do
+          get '/', action: :index, as: :api_user_spaces
+          get '/:id', action: :show, as: :api_user_space
+        end
       end
     end
   end

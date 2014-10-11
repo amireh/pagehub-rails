@@ -133,7 +133,7 @@ function(SettingView, $, NicknameWarningDialogTemplate, UI) {
       }
 
       $.ajax({
-        url: view.model.get("media").name_availability_url,
+        url: view.model.get("media").name_availability,
         type: "POST",
         data: JSON.stringify({ name: name }),
 

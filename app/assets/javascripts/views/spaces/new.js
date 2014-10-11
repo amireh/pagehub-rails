@@ -61,7 +61,7 @@ function(Backbone, $, UI) {
       }
 
       $.ajax({
-        url: view.space.get("media").name_availability_url,
+        url: view.space.get("media").name_availability,
         type: "POST",
         data: JSON.stringify({ name: name }),
 

@@ -9,7 +9,11 @@ define([ 'backbone', 'collections/spaces' ], function(Backbone, Spaces) {
     },
 
     urlRoot: function() {
-      return '/users';
+      return '/api/v1/users';
+    },
+
+    url: function() {
+      return this.get('media.url');
     },
 
     parse: function(payload) {

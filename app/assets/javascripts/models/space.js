@@ -13,7 +13,7 @@ define('models/space',
     },
 
     urlRoot: function() {
-      return this.creator.get('media.spaces.url');
+      return this.creator.get('media.spaces');
     },
 
     initialize: function(data) {

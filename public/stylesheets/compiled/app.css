@@ -6854,9 +6854,6 @@ body.guest {
     clear: both; }
   body.guest .features h2 {
     text-transform: capitalize; }
-  body.guest form#user_signup {
-    display: inline-block;
-    vertical-align: top; }
   body.guest span#login_buttons a {
     display: inline-block;
     width: 195px;

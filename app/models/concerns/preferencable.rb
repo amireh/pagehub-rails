@@ -22,7 +22,14 @@ module Preferencable
       prefs = preferences
 
       if path && path.is_a?(String)
-        path.split('.').each { |key| prefs = prefs[key] }
+        path.split('.').each do |key|
+          if prefs.is_a?(Hash)
+            prefs = prefs[key]
+          else
+            prefs = nil
+            break
+          end
+        end
       end
 
       prefs
@@ -38,7 +45,8 @@ module Preferencable
         model_prefs = '{}' if model_prefs.empty?
         model_prefs = JSON.parse(model_prefs)
 
-        @cached_preferences = Hash.new{ |h,k| h[k] = Hash.new(&h.default_proc) }
+        # @cached_preferences = Hash.new{ |h,k| h[k] = Hash.new(&h.default_proc) }
+        @cached_preferences = {}.with_indifferent_access
         @cached_preferences.merge!(default_prefs.deep_merge(model_prefs))
       end
     end

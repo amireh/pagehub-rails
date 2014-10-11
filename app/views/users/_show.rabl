@@ -2,15 +2,13 @@ object @user
 
 attributes :id, :name, :nickname, :email, :gravatar_email
 
-node(:media) do |u|
+node(:media) do |user|
   {
-    href:   user_url(u),
-    url:    user_path(u),
-    spaces: {
-      url:  user_path(u) + '/spaces'
-    },
-    name_availability_url: nickname_availability_url(),
-    resend_confirmation_instructions: resend_confirmation_instructions_url()
+    href: user_url(user.nickname),
+    url: api_user_url(user.id),
+    spaces: api_user_spaces_url(user.id),
+    name_availability: api_user_nickname_availability_url(),
+    resend_confirmation_instructions: api_user_resend_confirmation_instructions_url()
   }
 end
 
