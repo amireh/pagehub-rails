@@ -1,6 +1,4 @@
 class UsersController < ApplicationController
-  include Rack::API::Parameters
-
   respond_to :html
 
   before_filter :require_user

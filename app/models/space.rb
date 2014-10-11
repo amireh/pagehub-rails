@@ -23,6 +23,10 @@ class Space < ActiveRecord::Base
   validates_uniqueness_of :title, :scope => [ :user_id ],
     message: 'You already have a space with that title.'
 
+  def href
+    "#{self.user.href}/#{self.pretty_title}"
+  end
+
   def root_folder
     self.folders.where(folder_id: nil).first
   end

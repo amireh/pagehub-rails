@@ -2,9 +2,6 @@ define([ 'jquery', 'backbone', 'models/page' ], function($, Backbone, Page) {
   return Backbone.Collection.extend({
     model: Page,
 
-    url:   function() {
-      this.space.get('media').pages_url
-    },
 
     // parse: function(data) {
     //   return data.folders;

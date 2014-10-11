@@ -11,15 +11,19 @@ node(:meta) do |s|
 end
 
 node(:media) do |space|
+  __path = [ space.user.nickname, space.pretty_title ]
+
   {
-    href: user_space_url(space.user.nickname, space),
+    href: space.href,
     url:  user_space_url(space.user, space),
 
     actions: {
-      edit: user_space_editor_url(space.user, space),
+      edit: user_space_edit_url(space.user.nickname, space.pretty_title),
       settings: user_space_settings_url(space.user, space),
     },
 
+    # pages: space_pages_url(*__path),
+    new_page: new_space_resource_url(*__path)
     # pages:  {
     #   url: space.url(true) + '/pages'
     # },

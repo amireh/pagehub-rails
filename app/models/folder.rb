@@ -37,6 +37,10 @@ class Folder < ActiveRecord::Base
     self.pages.where(title: [ 'Home', Page::README_PAGE ]) || pages.first
   end
 
+  def href
+    folder ? folder.href + "/#{pretty_title}" : space.href
+  end
+
   # def deny_reserved_titles
   #   if in_root_folder? && !PageHub.resource_title_available?(self.title)
   #     errors.add :title, "That title is reserved for internal usage."

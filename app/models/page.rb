@@ -24,6 +24,10 @@ class Page < ActiveRecord::Base
     end
   end
 
+  def href
+    "#{folder.href}/#{pretty_title}"
+  end
+
   def in_root_folder?
     self.folder.in_root_folder?
   end

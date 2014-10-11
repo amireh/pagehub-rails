@@ -19,7 +19,7 @@
     <% end %>
   <% end %>
 
-  <% if @space.present? %>
+  <% if false && @space.present? %>
     ENV.space = <%= render_json_object "/spaces/show", object: @space %>;
     ENV.space_creator = <%= render_json_object("/users/show", object: @space.user) %>;
   <% end %>

@@ -7,8 +7,13 @@ define([ 'jquery', 'underscore', 'ext/backbone', 'collections/folders' ],
       brief:        "",
     },
 
-    parse: function(data) {
-      return data.space;
+    parse: function(payload) {
+      if (payload.hasOwnProperty('space')) {
+        return payload.space;
+      }
+      else {
+        return payload;
+      }
     },
 
     urlRoot: function() {

@@ -10,13 +10,22 @@ define([ 'jquery', 'underscore', 'backbone', 'backbone.nested' ],
       revisions:    []
     },
 
-    parse: function(data) {
-      return data.page;
+    parse: function(payload) {
+      if (payload.hasOwnProperty('page')) {
+        return payload.page;
+      }
+      else {
+        return payload;
+      }
+    },
+
+    url: function() {
+      return this.get('media.url');
     },
 
     initialize: function() {
       this.ctx      = {};
-      this.urlRoot  = this.collection.space.get('media.pages.url');
+      this.urlRoot  = this.collection.space.get('media.pages');
 
       if (this.get('title').length == 0) {
         this.set('title', 'Untitled#' + this.cid.toString().replace('c', ''));

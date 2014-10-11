@@ -44,7 +44,8 @@ class User < ActiveRecord::Base
     self.uid = UUID.generate if self.provider == 'pagehub'
   end
 
-  def href(*args)
+  def href
+    "/#{self.nickname}"
   end
 
   def url(*args)

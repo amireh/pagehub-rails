@@ -16,18 +16,6 @@ Rails.application.routes.draw do
 
   get '/welcome', controller: :guests, action: :index
 
-  scope '/users', controller: :users do
-    scope '/:user_nickname' do
-      get '/', action: :show, as: :user
-
-      scope '/:space', controller: :spaces do
-        get '/', action: :show, as: :user_space
-        get '/edit', action: :edit, as: :user_space_editor
-        get '/settings', action: :settings, as: :user_space_settings
-      end
-    end
-  end
-
   scope '/api/v1' do
     scope '/users', controller: :users_api do
       post '/nickname_availability', {
@@ -50,10 +38,41 @@ Rails.application.routes.draw do
         end
       end
     end
+
+    scope '/spaces', controller: :api_spaces do
+      scope '/:space_id' do
+        scope '/folders', controller: :api_folders do
+          get '/', action: :show, as: :api_space_folder
+        end
+
+        scope '/pages', controller: :api_pages do
+          get '/', action: :show, as: :api_space_page
+        end
+      end
+    end
   end
 
   scope '/settings', controller: :settings do
     get '/', action: :index, as: :settings
+  end
+
+  scope '/:user_nickname', controller: :users do
+    get '/', action: :show, as: :user
+
+    scope '/:space_pretty_title', controller: :spaces do
+      get '/', action: :show, as: :user_space
+      get '/new', action: :new_resource, as: :new_space_resource
+      get '/edit', action: :edit, as: :user_space_edit
+      get '/settings', action: :settings, as: :user_space_settings
+
+      scope '/:folder_pretty_title', controller: :folders do
+        get '/', action: :show, as: :space_folder
+
+        scope '/:page_pretty_title', controller: :pages do
+          get '/', action: :show, as: :folder_page
+        end
+      end
+    end
   end
 
   match '*path' => 'application#rogue_route', via: :all

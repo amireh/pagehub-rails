@@ -4,7 +4,7 @@ attributes :id, :name, :nickname, :email, :gravatar_email
 
 node(:media) do |user|
   {
-    href: user_url(user.nickname),
+    href: user.href,
     url: api_user_url(user.id),
     spaces: api_user_spaces_url(user.id),
     name_availability: api_user_nickname_availability_url(),
@@ -13,12 +13,12 @@ node(:media) do |user|
 end
 
 node(:nr_pages) do |user| user.pages.count end
-# node(:nr_folders) do |u| u.folders.count end
+node(:nr_folders) do |user| user.folders.count end
 
-node(:spaces) do
-  partial "/spaces/index", object: @user.spaces.includes(:space_users, :folders, :pages, :user)
+node(:spaces) do |user|
+  partial "/spaces/index", object: user.spaces.includes(:space_users, :folders, :pages, :user)
 end
 
-node(:preferences) do |s|
-  s.preferences
+node(:preferences) do |user|
+  user.preferences
 end
