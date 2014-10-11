@@ -6004,7 +6004,7 @@ div.CodeMirror span.CodeMirror-nonmatchingbracket {
           /*text-align: center;*/ }
         #content.settings nav > ul li.sticky-bottom {
           position: fixed;
-          bottom: 40px;
+          bottom: 65px;
           border: none; }
         #content.settings nav > ul li .subnav {
           /*position: absolute;*/
@@ -6816,7 +6816,6 @@ body.guest {
     margin: 0;
   }*/ }
   body.guest .content-wrapper {
-    /*width: 800px;*/
     margin: 0 auto; }
   body.guest header {
     padding: 5px 0 6px 0;
@@ -6841,16 +6840,14 @@ body.guest {
     body.guest header img {
       margin-left: -15px; }
   body.guest .block {
-    width: 45%;
+    width: 33%;
     clear: none;
-    vertical-align: top; }
+    vertical-align: top;
+    display: inline-block; }
   body.guest .block.left {
     float: left; }
   body.guest .block.right {
     float: right; }
-  body.guest .block {
-    width: 45%;
-    display: inline-block; }
   body.guest .spanner {
     display: block;
     width: 100%;
@@ -6878,6 +6875,11 @@ body.guest {
       color: #aaa;
       /*position: absolute;*/
       /*left: 10px;*/ }
+  body.guest .landing-page .hero-unit {
+    padding: 30px 0;
+    background: none; }
+  body.guest .landing-page .actions {
+    text-align: center; }
   body.guest .landing-page .pagination {
     background: black; }
     body.guest .landing-page .pagination a {
@@ -6886,7 +6888,8 @@ body.guest {
       display: inline-block; }
 
 .type-small {
-  font-size: smaller; }
+  font-size: smaller;
+  line-height: 1.4; }
 
 body.light {
   /*.icon.delete_page   { background-position: -24px  12px; }*/
@@ -6987,7 +6990,7 @@ body {
   margin: 0;
   padding: 0;
   color: #615B4E;
-  margin: 0 0 24px;
+  margin: 0 0 50px;
   /* bottom = footer height */ }
   body * {
     -webkit-box-sizing: border-box;
@@ -7126,14 +7129,14 @@ header {
   margin-top: 10px; }
 
 footer {
-  margin: 10px auto 0 auto;
+  margin: 15px auto 0 auto;
   border-top: 1px dotted #ddd;
-  padding: 0;
+  padding: 15px 0;
   line-height: 20px;
   position: absolute;
   left: 0;
   bottom: 0;
-  height: 24px;
+  height: 50px;
   width: 100%; }
   footer p {
     width: 960px;
@@ -7458,30 +7461,7 @@ ol.listlike {
   width: 960px;
   margin: 0 auto;
   position: relative;
-  padding: 0;
-  /*overflow: hidden;*/ }
-  .stuff ::-webkit-scrollbar {
-    width: 10px;
-    height: 10px; }
-  .stuff ::-webkit-scrollbar-button:start:decrement, .stuff ::-webkit-scrollbar-button:end:increment {
-    height: 0px;
-    display: block;
-    background-color: transparent; }
-  .stuff ::-webkit-scrollbar-track-piece {
-    background-color: rgba(0, 0, 0, 0.05);
-    -webkit-border-radius: 0; }
-  .stuff ::-webkit-scrollbar-thumb:vertical {
-    height: 30px;
-    background-color: rgba(0, 0, 0, 0.25);
-    border: 1px solid rgba(255, 255, 255, 0.075);
-    -webkit-border-radius: 0; }
-    .stuff ::-webkit-scrollbar-thumb:vertical:hover {
-      background-color: rgba(0, 0, 0, 0.35); }
-  .stuff ::-webkit-scrollbar-thumb:horizontal {
-    width: 30px;
-    background-color: rgba(0, 0, 0, 0.25);
-    border: 1px solid rgba(255, 255, 255, 0.075);
-    -webkit-border-radius: 0; }
+  padding: 0; }
 
 body.fluid .stuff, body.fluid footer p {
   max-width: 100%;

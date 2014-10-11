@@ -70,7 +70,7 @@
 
         &.sticky-bottom {
           position: fixed;
-          bottom: 40px;
+          bottom: $footer_height + $whitespace;
           border: none;
         }
 

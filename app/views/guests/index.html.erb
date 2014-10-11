@@ -2,16 +2,16 @@
 
 <div id="landing_page" class="landing-page">
   <div class="greeting hero-unit">
-    <h1>Writing gone awesome.</h1>
+    <h1>Write like a pro.</h1>
 
     <p>
-      An editing platform that makes <strong>writing</strong> and
-      <strong>publishing</strong> documents a super experience.
+      An editing platform that makes writing, publishing, and sharing documents
+      really easy.
     </p>
 
     <p class="type-small">
       Whether you're a software developer documenting your software,
-      a student taking notes, or you're just looking for a place to
+      a student taking notes, or just looking for a place to
       <em>write</em>, PageHub's <a href="/explore">loaded features</a> and
       <a href="/explore/workspace">intuitive interface</a>
       will hit the spot right on for you.
@@ -19,12 +19,21 @@
 
     <hr />
 
-    <%= link_to 'Sign up', :new_user_registration, class: 'btn btn-large btn-success' %>
-    <a href="/demo" class="btn btn-large btn-warning">Try out a demo</a>
-    <a href="<%= user_omniauth_authorize_url(:github) %>" class="btn" rel="tooltip" title="Sign in using your GitHub account"><i class="icon github icon16"></i> </a>
+    <div class="actions">
+      <a href="<%= new_user_registration_url %>" class="btn btn-large btn-success">
+        Sign up
+      </a>
+
+      <a
+        href="<%= user_omniauth_authorize_url(:github) %>"
+        class="btn"
+        rel="tooltip"
+        title="Sign in using your GitHub account"><i class="icon github icon16"></i>
+      </a>
+    </div>
   </div>
 
-  <div class="row text-center">
+  <div class="row-fluid text-center">
 
     <div class="span4">
       <img src="/assets/icons/landing_page/screen.png" />

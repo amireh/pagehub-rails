@@ -1,9 +1,7 @@
 @import "fonts";
 @import "vendor/jquery-ui/pagehub-jqueryui/jquery-ui-1.10.1.custom";
 @import "vendor/bootstrap/bootstrap";
-// @import "vendor/jquery.gridster";
 @import "icons";
-// @import "codemirror";
 @import "vendor/codemirror";
 @import "vendor/codemirror/addon/search/match_highlighter";
 @import "../javascripts/vendor/codemirror-4.5/addon/dialog/dialog";
@@ -40,7 +38,7 @@ body {
   margin: 0;
   padding: 0;
   color: $foreground;
-  margin: 0 0 24px; /* bottom = footer height */
+  margin: 0 0 $footer_height; /* bottom = footer height */
 
   * {
     -webkit-box-sizing: border-box;
@@ -199,14 +197,14 @@ header {
 }
 
 footer {
-  margin: 10px auto 0 auto;
+  margin: $whitespace auto 0 auto;
   border-top: 1px dotted $low_contrast_border;
-  padding: 0;
+  padding: $whitespace 0;
   line-height: 20px;
   position: absolute;
   left: 0;
   bottom: 0;
-  height: 24px;
+  height: $footer_height;
   width: 100%;
 
   p {
@@ -595,12 +593,6 @@ ol.listlike {
   margin: 0 auto;
   position: relative;
   padding: 0;
-
-  /*overflow: hidden;*/
-
-  @include webkit-scrollbars();
-
-
 }
 
 body.fluid {
