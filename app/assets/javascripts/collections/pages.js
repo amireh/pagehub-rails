@@ -19,6 +19,10 @@ define([ 'backbone', 'models/page' ], function(Backbone, Page) {
       this.space = folder.collection.space;
       this.folder = folder;
       this.folder.on('change:folder_id', this.configurePagePaths, this);
+
+      this.on('remove', function(page) {
+        page.folder = this.folder;
+      }.bind(this));
     },
 
     configurePath: function(page) {

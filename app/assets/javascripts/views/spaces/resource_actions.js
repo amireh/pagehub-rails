@@ -37,7 +37,6 @@ function($, Backbone, Folder, UI, Shortcut) {
       page.save().then(function() {
         UI.status.show("Created!", "good");
       }, function(error) {
-        page.folder = folder;
         folder.pages.remove(page);
         workspace.trigger('reset');
       });

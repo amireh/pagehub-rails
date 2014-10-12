@@ -53,6 +53,7 @@ Rails.application.routes.draw do
         get '/:page_id', action: :show, as: :folder_page
         post '/', action: :create
         patch '/:page_id', action: :update
+        delete '/:page_id', action: :destroy
       end
     end # namespace :v1
   end # namespace :api

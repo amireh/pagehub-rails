@@ -75,4 +75,16 @@ class Api::V1::PagesController < ApiController
 
     expose page
   end
+  def destroy
+    page = Page.find(params[:page_id])
+
+    authorize! :delete, page,
+      message: "You can not remove pages authored by someone else."
+
+    unless page.destroy
+      halt! 500, page.errors
+    end
+
+    no_content!
+  end
 end

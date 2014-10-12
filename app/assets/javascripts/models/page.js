@@ -38,8 +38,10 @@ define([ 'jquery', 'underscore', 'backbone', 'backbone.nested' ],
         return this.collection.folder;
       }
       // no collection means that we were just destroyed/removed so we're
-      // assuming the caller had nicely kept a reference to the folder before
-      // they destroyed us!
+      // assuming somebody (maybe our collection) had nicely kept a reference
+      // to the folder for us before we were gibbed!
+      //
+      // Oh KVO, how I love.
       else {
         return this.folder;
       }
