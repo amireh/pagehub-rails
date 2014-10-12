@@ -41,14 +41,21 @@ class ApplicationController < ActionController::Base
   end
 
   def js_env(hash)
+    return if json_request?
+
     @js_env ||= {}
     @js_env.merge!(hash)
   end
 
   def expose_preferences
-    js_env({
-      app_preferences: PageHub::Config.defaults
-    })
+    if current_user
+      current_user_json = ams_render_object current_user, UserSerializer
+
+      js_env({
+        app_preferences: PageHub::Config.defaults,
+        current_user: current_user_json
+      })
+    end
   end
 
   # Halt the execution of the current controller handler and respond with

@@ -6,6 +6,7 @@ gem 'uuid'
 gem 'pg'
 gem 'addressable'
 gem 'composite_primary_keys', '~> 7.x'
+gem 'active_model_serializers', "~> 0.8.0"
 
 # Use ActiveModel has_secure_password
 gem 'bcrypt', '~> 3.1.7'
@@ -30,7 +31,6 @@ gem 'gravatarify', ">= 3.1.0"
 gem 'pagehub-markdown', '>= 0.2.0', :require => 'pagehub-markdown'
 gem 'rack-cors', :require => 'rack/cors'
 gem 'moneta', :require => 'rack/session/moneta'
-gem 'rabl'
 gem 'cancan'
 gem 'zipruby'
 gem 'redis', '~> 3.0.7', :require => 'redis'

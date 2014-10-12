@@ -28,7 +28,11 @@ class Space < ActiveRecord::Base
   end
 
   def root_folder
-    self.folders.where(folder_id: nil).first
+    if self.folders.loaded?
+      self.folders.detect { |folder| folder.folder_id == nil }
+    else
+      self.folders.where(folder_id: nil).first
+    end
   end
 
   def create_root_folder

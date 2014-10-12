@@ -7,6 +7,8 @@ module FolderContainable
     base.class_eval do
       belongs_to :folder
 
+      attr_writer :href
+
       validate :deny_reserved_titles, if: :title_changed?
       validate :ensure_hierarchical_resource_title_uniqueness, if: :title_changed?
     end

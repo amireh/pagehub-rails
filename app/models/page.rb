@@ -11,6 +11,7 @@ class Page < ActiveRecord::Base
 
   has_many :revisions, class_name: 'PageRevision', dependent: :destroy
   has_one :carbon_copy, class_name: 'PageCarbonCopy', dependent: :destroy
+  has_one :space, through: :folder
 
   before_validation :generate_default_title
   before_save :set_defaults
@@ -55,14 +56,10 @@ class Page < ActiveRecord::Base
     end
 
     if !new_content
-      return true
+      return false
     end
 
-    rv = revisions.build
-    rv.context = { content: new_content }
-    rv.user = user
-
-    unless rv.save
+    unless rv = revisions.create({ new_content: new_content, user: user })
       errors.add :revisions, rv.errors
       return false
     end

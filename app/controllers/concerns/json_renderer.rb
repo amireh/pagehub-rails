@@ -29,4 +29,44 @@ module JsonRenderer
     })
   end
 
+  def ams_expose_object(object, options={})
+    includes = []
+
+    if params.has_key?(:include)
+      includes = if params[:include].is_a?(String)
+        params[:include].split(',')
+      else
+        Array(params[:include])
+      end
+
+      includes = includes.map(&:strip).map(&:to_sym)
+      includes = ['*'] if includes == [:all]
+    end
+
+    render options.merge({
+      json: object,
+      root: false,
+      includes: true,
+      scope: {
+        current_user: current_user,
+        controller: self,
+        includes: includes,
+        params: params,
+        options: options
+      }
+    })
+  end
+
+  def ams_render_object(object, serializer, options={})
+    serializer.new(object, {
+      root: false,
+      includes: true,
+      scope: {
+        controller: self,
+        current_user: current_user,
+        includes: Array(options[:include]),
+        options: {}
+      }
+    }).as_json
+  end
 end

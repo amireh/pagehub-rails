@@ -38,29 +38,18 @@ class Folder < ActiveRecord::Base
   end
 
   def href
-    folder ? folder.href + "/#{pretty_title}" : space.href
+    if @href
+      @href
+    elsif self.association(:space).loaded? && !@href
+      build_href(self, space.folders, space.href)
+    else
+      if root_folder?
+        space.href
+      else
+        "#{folder.href}/#{pretty_title}"
+      end
+    end
   end
-
-  # def deny_reserved_titles
-  #   if in_root_folder? && !PageHub.resource_title_available?(self.title)
-  #     errors.add :title, "That title is reserved for internal usage."
-  #     return false
-  #   end
-  # end
-
-  # def ensure_hierarchical_resource_title_uniqueness
-  #   puts "Checking if #{self.title} is available in #{self.folder}"
-
-  #   return if root_folder?
-
-  #   unless self.folder.title_available?(self.title)
-  #     errors.add :title,
-  #       "You already have a similarily named page (or folder) in that folder."
-
-  #     return false
-  #   end
-  # end
-
 
   def root_folder?
     self.folder_id == nil
@@ -203,5 +192,27 @@ class Folder < ActiveRecord::Base
     end
 
     self.reload
+  end
+
+  # A heavily optimized href builder that will utilize an eagerly loaded set of
+  # folders (e.g, Space#folders).
+  #
+  # This will set the @href attribute on this folder and its ancestry chain.
+  #
+  # @return [String]
+  def build_href(folder, folder_set, base)
+    parent_id = folder[:folder_id]
+
+    if parent_id.present?
+      parent = folder_set.detect { |folder| folder[:id] == parent_id }
+
+      if parent
+        base = build_href(parent, folder_set, base)
+      end
+
+      folder.href = [ base, folder[:pretty_title] ].join('/')
+    else
+      folder.href = base
+    end
   end
 end

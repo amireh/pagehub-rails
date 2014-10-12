@@ -31,7 +31,12 @@ module Rack::API::Serializer::Hypermedia
     options = self.class._hypermedia
     resolver = PathResolver.new(self, options)
 
-    hsh[:href] = resolver.url_for(resolver.path_for_object(object))
+    hsh[:href] = if object.respond_to?(:href)
+      generic_resource_url(object.href)
+    else
+      resolver.url_for(resolver.path_for_object(object))
+    end
+
     hsh[:links] ||= {}
 
     # links for associations:
@@ -44,7 +49,7 @@ module Rack::API::Serializer::Hypermedia
       end
     end
 
-    associations = if whitelist.any?
+    associations = if options.has_key?(:only)
       whitelist
     else
       self.class._associations.map(&:first)

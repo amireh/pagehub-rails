@@ -1,23 +1,31 @@
 require 'spec_helper'
 
 describe PageRevision do
-  before(:all) do
-    Fixtures.teardown
-
+  before do
     @user = valid! fixture(:user)
     @space = @user.create_default_space
     @root_folder = @space.create_root_folder
-
-    Fixtures.skip_teardown = true
   end
 
-  after(:all) do
-    @user.destroy!
-    Fixtures.skip_teardown = false
-  end
+  # before(:all) do
+  #   Fixtures.teardown
+
+  #   @user = valid! fixture(:user)
+  #   @space = @user.create_default_space
+  #   @root_folder = @space.create_root_folder
+
+  #   Fixtures.skip_teardown = true
+  # end
+
+  # after(:all) do
+  #   @user.destroy!
+  #   Fixtures.skip_teardown = false
+  # end
 
   context "generation" do
     before do
+      pending
+
       @user.pages.destroy
       @page = fixture(:page, @root_folder)
     end
@@ -67,20 +75,23 @@ describe PageRevision do
   end
 
   describe "instance methods" do
-    before(:all) do
+    before do
       @page = fixture(:page, @root_folder)
       @page.generate_revision('foobar', @page.user).should be_true
       @page.generate_revision('barfoo', @page.user).should be_true
 
+      @page.reload
       @page.revisions.count.should == 2
 
       @rv1 = @page.revisions.first
+      @rv1.blob.should_not be_nil
       @rv2 = @page.revisions.last
+      @rv2.blob.should_not be_nil
     end
 
-    after(:all) do
-      @user.pages.destroy
-    end
+    # after(:all) do
+    #   @user.pages.destroy
+    # end
 
     it "#info" do
       @rv1.info.should == "1 addition and 0 deletions."
@@ -98,6 +109,8 @@ describe PageRevision do
     end
 
     it '#roll' do
+      @page.revisions.pluck(:blob).should_not include(nil)
+
       @rv1.send(:roll, :backward, 'foobar').should == ''
       @rv2.send(:roll, :backward, 'barfoo').should == 'foobar'
 
@@ -128,6 +141,5 @@ describe PageRevision do
 
       @rv1.update!({ blob: old_blob })
     end
-
   end
 end

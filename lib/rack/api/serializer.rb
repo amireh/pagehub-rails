@@ -22,6 +22,15 @@ class Rack::API::Serializer < ActiveModel::Serializer
 
   class_attribute :_stringifiables
 
+  def initialize(object, options={})
+    super.tap do
+      if !options.key?(:embedded)
+        options[:embedded] = true
+        @root_serializer = true
+      end
+    end
+  end
+
   # @override
   # Attach Hypermedia links to the serializer output.
   def serializable_hash
@@ -61,6 +70,14 @@ class Rack::API::Serializer < ActiveModel::Serializer
   # You can use this flag inside your attribute serializers.
   def compact?
     scope && scope[:params] && scope[:params][:compact].present?
+  end
+
+  def embedded?
+    !@root_serializer && @options[:embedded]
+  end
+
+  def requesting?(association)
+    scope && scope[:includes] && scope[:includes].include?(association.to_sym)
   end
 
   private

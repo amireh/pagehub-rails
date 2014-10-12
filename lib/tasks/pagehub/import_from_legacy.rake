@@ -160,10 +160,6 @@ namespace :pagehub do
       logger.debug "\tPage imported successfully."
     end
 
-    PageRevision.class_eval do
-      attr_accessor :blob, :version
-    end
-
     def import_page_revision(data)
       logger.debug "\tPageRevision: #{data['id']} for Page #{data['page_id']}"
 

@@ -1,4 +1,4 @@
-class SessionsController < ApplicationController
+class SessionsController < Devise::SessionsController
   before_filter :require_user, only: [ :logout ]
 
   def logout

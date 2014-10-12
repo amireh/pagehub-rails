@@ -1,8 +1,10 @@
-class UsersApiController < ApiController
-  before_filter :require_user
+class Api::V1::UsersController < ::ApiController
+  before_filter :require_user, only: [ :show, :update ]
 
   def show
-    expose current_user
+    authorized_action! :read, @user
+
+    ams_expose_object @user
   end
 
   def nickname_availability

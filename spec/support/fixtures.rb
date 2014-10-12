@@ -17,12 +17,11 @@ module Fixtures
     end
 
     def teardown
-
       User.destroy_all
 
-      [ User, Space, SpaceUser ].each do |r|
+      [ User, Space, SpaceUser, Folder, Page, PageRevision, PageCarbonCopy ].each do |r|
         unless r.count == 0
-          raise "Fixture teardown: expected #{r} to contain 0 resources, but got #{r.count}"
+          raise "Fixture teardown: expected #{r} to get cleared, but it still contains #{r.count} records."
         end
       end
     end

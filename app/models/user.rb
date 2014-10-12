@@ -22,6 +22,13 @@ class User < ActiveRecord::Base
     end
   end
 
+  attr_reader :ability
+
+  def can?(*args)
+    @ability ||= Ability.new(self)
+    @ability.can?(*args)
+  end
+
   has_many :owned_spaces, class_name: 'Space', dependent: :destroy
   has_many :space_users, dependent: :destroy
   has_many :spaces, {
@@ -45,7 +52,7 @@ class User < ActiveRecord::Base
   end
 
   def href
-    "/#{self.nickname}"
+    "#{self.nickname}"
   end
 
   def url(*args)
@@ -60,9 +67,9 @@ class User < ActiveRecord::Base
     self.name.split(/\s/).first
   end
 
-  def to_param
-    nickname
-  end
+  # def to_param
+  #   nickname
+  # end
 
   def create_default_space
     default_space || begin

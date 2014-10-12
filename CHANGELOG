@@ -6,3 +6,6 @@
     - ReservedSpaceTitles
     - ReservedUsernames
     - FontMap => ApplicationHelper::FONT_MAP
+- API attribute changes:
+  - Page:
+    - nr_revisions => revision_count

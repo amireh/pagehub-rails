@@ -6,8 +6,7 @@ class Ability
 
     user_id = user.id
 
-    # can :browse, [ Space, Page, Folder ] do |r|
-    can :browse, [ Space ] do |r|
+    can :browse, [ Space, Page, Folder ] do |r|
       r.browsable_by?(user)
     end
 
@@ -15,8 +14,7 @@ class Ability
       u.id == user.id
     end
 
-    # can :read, [ Space, Page, Folder ] do |r|
-    can :read, [ Space ] do |r|
+    can :read, [ Space, Page, Folder ] do |r|
       r.browsable_by?(user)
     end
 
@@ -28,10 +26,10 @@ class Ability
     can :author, Space do |s| s.editor?(user) end
     can :author_more, Space
 
-    # can :update, [ Page, Folder ] do |r| r.space.editor?(user) end
-    # can :delete, [ Page, Folder ] do |r|
-    #   r.creator.id == user.id || r.space.admin?(user)
-    # end
+    can :update, [ Page, Folder ] do |r| r.space.editor?(user) end
+    can :delete, [ Page, Folder ] do |r|
+      r.creator.id == user.id || r.space.admin?(user)
+    end
 
     # spaces
     can :create, Space

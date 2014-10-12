@@ -6,6 +6,7 @@ Rails.application.routes.draw do
     confirmation: 'verification',
   }, controllers: {
     omniauth_callbacks: 'users/omniauth_callbacks',
+    sessions: 'sessions',
     registrations: 'users/registrations'
   }
 
@@ -17,37 +18,41 @@ Rails.application.routes.draw do
   get '/welcome', controller: :guests, action: :index
 
   scope '/api/v1' do
-    scope '/users', controller: :users_api do
-      post '/nickname_availability', {
-        action: :nickname_availability,
-        as: :api_user_nickname_availability
-      }
 
-      post '/resend_confirmation_instructions', {
-        action: :resend_confirmation_instructions,
-        as: :api_user_resend_confirmation_instructions
-      }
+  end # /api/v1
 
-      scope '/:id' do
-        get '/', action: :show, as: :api_user
-        patch '/', action: :update
+  namespace :api do
+    namespace :v1 do
+      scope '/users', controller: :users do
+        post '/nickname_availability', {
+          action: :nickname_availability,
+          as: :user_nickname_availability
+        }
 
-        scope '/spaces', controller: :api_spaces do
-          get '/', action: :index, as: :api_user_spaces
-          get '/:id', action: :show, as: :api_user_space
+        post '/resend_confirmation_instructions', {
+          action: :resend_confirmation_instructions,
+          as: :user_resend_confirmation_instructions
+        }
+
+        scope '/:user_id' do
+          get '/', action: :show, as: :user
+          patch '/', action: :update
         end
       end
-    end
 
-    scope '/spaces', controller: :api_spaces do
-      scope '/:space_id' do
-        scope '/folders', controller: :api_folders do
-          get '/', action: :show, as: :api_space_folder
-        end
+      scope '/users/:user_id/spaces', controller: :apces do
+        get '/', action: :index, as: :user_spaces
+        get '/:space_id', action: :show, as: :user_space
+      end
 
-        scope '/pages', controller: :api_pages do
-          get '/', action: :show, as: :api_space_page
-        end
+      scope '/spaces/:space_id/folders', controller: :folders do
+        get '/', action: :index, as: :space_folders
+        get '/:folder_id', action: :show, as: :space_folder
+      end
+
+      scope '/folders/:folder_id/pages', controller: :pages do
+        get '/', action: :index, as: :folder_pages
+        get '/:page_id', action: :show, as: :folder_page
       end
     end
   end
@@ -75,6 +80,6 @@ Rails.application.routes.draw do
     end
   end
 
-  match '*path' => 'application#rogue_route', via: :all
+  match '*path' => 'application#rogue_route', via: :all, as: :generic_resource
   match '/' => 'application#rogue_route', via: :all
 end

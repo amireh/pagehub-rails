@@ -60,10 +60,10 @@ Devise.setup do |config|
   # given strategies, for example, `config.http_authenticatable = [:database]` will
   # enable it only for database authentication. The supported strategies are:
   # :database      = Support basic authentication with authentication key + password
-  # config.http_authenticatable = false
+  config.http_authenticatable = false
 
   # If http headers should be returned for AJAX requests. True by default.
-  # config.http_authenticatable_on_xhr = true
+  config.http_authenticatable_on_xhr = false
 
   # The realm used in Http Basic Authentication. 'Application' by default.
   # config.http_authentication_realm = 'Application'
@@ -231,8 +231,13 @@ Devise.setup do |config|
   # ==> OmniAuth
   # Add a new OmniAuth provider. Check the wiki for more information on setting
   # up on your models and hooks.
-  oauth = Rails.application.config.oauth
+  oauth = Rails.application.config.oauth || {}
   github = oauth['github']
+
+  unless github.present?
+    raise "Missing GitHub OAuth configuration. Did you supply it in config/oauth.yml?"
+  end
+
   config.omniauth :github, github['key'], github['secret'], scope: github['scope']
 
   # ==> Warden configuration
