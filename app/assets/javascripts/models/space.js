@@ -1,12 +1,7 @@
 define([ 'jquery', 'underscore', 'ext/backbone', 'collections/folders' ],
   function($, _, Backbone, Folders) {
+  var ajax = $.ajax;
   var Space = Backbone.DeepModel.extend({
-    defaults: {
-      title:        "",
-      pretty_title: "",
-      brief:        "",
-    },
-
     parse: function(payload) {
       if (payload.hasOwnProperty('space')) {
         return payload.space;
@@ -16,18 +11,14 @@ define([ 'jquery', 'underscore', 'ext/backbone', 'collections/folders' ],
       }
     },
 
-    urlRoot: function() {
-      return this.creator.get('media.spaces');
+    url: function() {
+      return this.get('url');
     },
 
     initialize: function(data) {
-      var self = this;
-
-      this.folders = new Folders(null, { space: this });
-      // this.folders.on('add', this.attach_to_space, this);
-
-      _.each(data.folders, function(fdata) {
-        self.folders.add(fdata);
+      this.folders = new Folders(data.folders || [], {
+        space: this,
+        parse: true
       });
     },
 
@@ -41,13 +32,22 @@ define([ 'jquery', 'underscore', 'ext/backbone', 'collections/folders' ],
       return this.__root_folder;
     },
 
-    modify_membership: function(user_id, role, options) {
-      this.save({
-         memberships: [{
-          user_id: user_id,
-          role:    role
-        }]
-      }, $.extend(true, (options || {}), { patch: true, wait: true }))
+    modify_membership: function(user_id, role) {
+      return ajax({
+        url: this.get('links.memberships'),
+        type: 'PATCH',
+        dataType: 'json',
+        contentType: 'json',
+        processData: false,
+        data: JSON.stringify({
+          memberships: [{
+            user_id: user_id,
+            role: role
+          }]
+        })
+      }).then(function(resp) {
+        this.set(resp, { validate: false });
+      }.bind(this));
     },
 
     is_admin: function(user) {

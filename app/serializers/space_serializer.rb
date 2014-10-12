@@ -22,7 +22,8 @@ class SpaceSerializer < Rack::API::Serializer
   has_many :space_users, key: 'memberships'
 
   hypermedia only: [], links: {
-    folders: -> { api_v1_space_folders_url(object) }
+    folders: -> { api_v1_space_folders_url(object) },
+    memberships: -> { api_v1_user_space_memberships_url(object.user_id, object) }
   }
 
   user_content_attributes :title, :pretty_title, :brief

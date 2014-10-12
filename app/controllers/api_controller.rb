@@ -34,7 +34,11 @@ class ApiController < ApplicationController
     halt! 401 unless current_user.present?
   end
 
-  def authorized_action!(sought_permission, object)
-    halt! 403 unless can? sought_permission.to_sym, object
+  def authorized_action!(sought_permission, object, options={})
+    if current_ability.cannot?(sought_permission.to_sym, object)
+      halt! 403, options[:message]
+    end
   end
+
+  alias_method :authorize!, :authorized_action!
 end

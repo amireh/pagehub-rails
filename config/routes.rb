@@ -3,7 +3,7 @@ Rails.application.routes.draw do
     sign_in: 'login',
     sign_out: 'logout',
     password: 'password',
-    confirmation: 'verification',
+    confirmation: '/users/verifications',
   }, controllers: {
     omniauth_callbacks: 'users/omniauth_callbacks',
     sessions: 'sessions',
@@ -16,10 +16,6 @@ Rails.application.routes.draw do
   get '/logout', controller: :sessions, action: :logout, as: :logout
 
   get '/welcome', controller: :guests, action: :index
-
-  scope '/api/v1' do
-
-  end # /api/v1
 
   namespace :api do
     namespace :v1 do
@@ -40,9 +36,11 @@ Rails.application.routes.draw do
         end
       end
 
-      scope '/users/:user_id/spaces', controller: :apces do
+      scope '/users/:user_id/spaces', controller: :spaces do
         get '/', action: :index, as: :user_spaces
         get '/:space_id', action: :show, as: :user_space
+        patch '/:space_id', action: :update
+        patch '/:space_id/memberships', action: :update_memberships, as: :user_space_memberships
       end
 
       scope '/spaces/:space_id/folders', controller: :folders do
@@ -54,8 +52,8 @@ Rails.application.routes.draw do
         get '/', action: :index, as: :folder_pages
         get '/:page_id', action: :show, as: :folder_page
       end
-    end
-  end
+    end # namespace :v1
+  end # namespace :api
 
   scope '/settings', controller: :settings do
     get '/', action: :index, as: :settings

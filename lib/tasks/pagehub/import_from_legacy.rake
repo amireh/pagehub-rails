@@ -72,7 +72,7 @@ namespace :pagehub do
       user.password = 'temporary'
       user.password_confirmation = 'temporary'
       user.preferences = data['preferences']
-
+      user.skip_confirmation!
       user.save!
 
       if data['provider'] == 'pagehub'
@@ -111,7 +111,7 @@ namespace :pagehub do
       SpaceUser.create!({
         user: user,
         space: space,
-        role: [ 0, data['role'].to_i - 1 ].max
+        role: [ 0, SpaceUser.weigh(data['role']) ].max
       })
 
       logger.debug "\tSpaceUser imported successfully."

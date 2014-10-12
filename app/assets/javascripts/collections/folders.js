@@ -14,9 +14,8 @@ define([ 'jquery', 'backbone', 'models/folder' ], function($, Backbone, Folder) 
       return data.folders;
     },
 
-    initialize: function(models, data) {
-      _.extend(this, data);
-
+    initialize: function(models, options) {
+      this.space = options.space;
     }
 
     // add: function(models, options) {

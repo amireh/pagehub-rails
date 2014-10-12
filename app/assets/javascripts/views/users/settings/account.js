@@ -133,7 +133,7 @@ function(SettingView, $, NicknameWarningDialogTemplate, UI) {
       }
 
       $.ajax({
-        url: view.model.get("media").name_availability,
+        url: view.model.get('links.name_availability'),
         type: "POST",
         data: JSON.stringify({ name: name }),
 
@@ -157,7 +157,7 @@ function(SettingView, $, NicknameWarningDialogTemplate, UI) {
 
       $.ajax({
         type: 'POST',
-        url: this.user.get('media.resend_confirmation_instructions')
+        url: this.user.get('links.resend_confirmation_instructions')
       }).then(function() {
         UI.status.show("Instructions have been re-sent to your email address. " +
           "Please check your inbox shortly.", "good");

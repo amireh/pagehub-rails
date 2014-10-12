@@ -41,27 +41,25 @@ function(SettingView, $, UI, LeaveSpaceWarningDlgTmpl) {
           Confirm: function() {
             $(this).dialog("close");
 
-            view.leave_space(space_id)
+            view.leaveSpace(space_id);
           }
         }
       })
     },
 
-    leave_space: function(space_id) {
-      var view  = this;
-      var space = this.model.spaces.get(space_id);
+    leaveSpace: function(spaceId) {
+      var space = this.model.spaces.get(spaceId);
+      var $list = this.$el;
+
       if (!space) {
-        console.log("really bad, no such space");
-        return this;
+        console.warn('Space with id %s could not be found!!!', spaceId);
+        return;
       }
 
-      space.modify_membership(this.user.get('id'), null, {
-        success: function() {
-          UI.status.show("You are no longer a member of " + space.get('title') + ".", "good");
-          view.$el.find("[data-space=" + space.get('id') + ']').remove();
-        }
-      })
-      return this;
+      space.modify_membership(this.user.get('id'), null).then(function() {
+        UI.status.show("You are no longer a member of " + space.get('title') + ".", "good");
+        $list.find('[data-space=' + space.get('id') + ']').remove();
+      });
     },
 
     serialize: function() {

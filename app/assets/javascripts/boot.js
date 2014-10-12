@@ -11,7 +11,9 @@ define(function(require) {
     global.App = application;
   }
 
-  application.set('preferences', ENV.app_preferences.app);
+  if (ENV.hasOwnProperty('app_preferences')) {
+    application.set('preferences', ENV.app_preferences.app);
+  }
 
   application.on('bootstrapped', function() {
     application._bootstrapped = true;

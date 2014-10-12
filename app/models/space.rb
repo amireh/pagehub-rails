@@ -115,9 +115,10 @@ class Space < ActiveRecord::Base
     }
   end
 
-  def role_of(user)
+  def role_of(user, pluralize=false)
     if membership = cached_find_membership(user.id)
-      SpaceUser.role_name(membership.role)
+      role_name = SpaceUser.role_name(membership.role)
+      pluralize ? role_name.pluralize : role_name
     else
       nil
     end

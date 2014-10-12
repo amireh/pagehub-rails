@@ -12,7 +12,7 @@ define([ 'backbone', 'collections/spaces' ], function(Backbone, Spaces) {
     },
 
     url: function() {
-      return this.get('media.url');
+      return this.get('url');
     },
 
     parse: function(payload) {
