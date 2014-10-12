@@ -3,6 +3,7 @@
 <% content_for :deferred_js do %>
 <script>
   require([ 'views/users/dashboard/director' ], function(Dashboard) {
+    application.current_user.spaces.reset(ENV.spaces, { parse: true });
     application.view = new Dashboard(application);
   });
 </script>

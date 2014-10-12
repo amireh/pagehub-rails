@@ -128,7 +128,7 @@ function(AnimableView, UI, Shortcut) {
 
       this.page_titles.push({
         label:      this.labelize(page),
-        folder_id:  page.folder.get('id'),
+        folder_id:  page.get('folder_id'),
         page_id:    page.get('id')
       });
 

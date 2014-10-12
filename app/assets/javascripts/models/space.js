@@ -24,6 +24,7 @@ define([ 'jquery', 'underscore', 'ext/backbone', 'collections/folders' ],
       }
 
       if (data.folders) {
+        console.log('Parsing folders:', data.id, data.title, data.folders.length);
         this.parseFolders(data.folders);
       }
 
@@ -35,10 +36,14 @@ define([ 'jquery', 'underscore', 'ext/backbone', 'collections/folders' ],
           var folder = folders.get(folderId);
 
           if (folder) {
-            folder.pages.reset(folderPages[folderId], {
+            folder.pages.reset([].slice.call(folderPages[folderId]), {
               parse: true,
-              validate: false
+              validate: false,
+              silent: true
             });
+
+            // debugger
+            console.debug('\tFolder %s has %d pages.', folderId, folder.pages.length);
           }
         }.bind(this));
 
@@ -50,10 +55,6 @@ define([ 'jquery', 'underscore', 'ext/backbone', 'collections/folders' ],
 
     url: function() {
       return this.get('url');
-    },
-
-    initialize: function(data) {
-      this.parseFolders(data.folders);
     },
 
     root_folder: function() {
@@ -111,12 +112,18 @@ define([ 'jquery', 'underscore', 'ext/backbone', 'collections/folders' ],
     },
 
     parseFolders: function(data) {
+      console.log('\tParsing folders:', data);
+
       if (!this.folders) {
         this.folders = new Folders();
         this.folders.space = this;
       }
 
       this.folders.reset(data, { parse: true });
+    },
+
+    getCreator: function() {
+      return this.collection.user;
     }
   });
 

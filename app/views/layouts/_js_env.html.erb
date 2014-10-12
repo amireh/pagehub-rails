@@ -1,25 +1,9 @@
 <script>
-  var ENV = {};
+  var ENV;
   var global = this;
 
-  <% if @js_env %>
-    ENV = <%= @js_env.to_json.html_safe %>;
-  <% end %>
-
+  ENV = <%= (@js_env || {}).to_json.html_safe %>;
   ENV.DEBUG = <%= Rails.env.development? %>;
-
-  <% if @user.present? && @user.id.present? %>
-    <% if @user == current_user %>
-      ENV.user = ENV.current_user;
-    <% else %>
-      ENV.user = <%= render_json_object("/users/show", object: @user) %>;
-    <% end %>
-  <% end %>
-
-  <% if false && @space.present? %>
-    ENV.space = <%= render_json_object "/spaces/show", object: @space %>;
-    ENV.space_creator = <%= render_json_object("/users/show", object: @space.user) %>;
-  <% end %>
 
   // Expose it.
   global.ENV = ENV;

@@ -37,6 +37,6 @@ class FolderSerializer < Rack::API::Serializer
   end
 
   def include_pages?
-    requesting?(:pages) || (!compact? && !embedded?)
+    !compact? && !embedded?
   end
 end

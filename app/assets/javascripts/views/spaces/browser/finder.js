@@ -90,7 +90,7 @@ function( $, Backbone, BrowserImplementation, DragManager, FinderNavigator, UI) 
         this.elements.go_up
           .attr('data-folder', f.get_parent().get('id'))
           .find('a')
-          .attr('href', '#' + f.get_parent().path())
+          .attr('href', '#' + f.get_parent().getPath())
           .end()
           .show()
           .children().show();

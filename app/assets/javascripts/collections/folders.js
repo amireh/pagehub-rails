@@ -7,7 +7,7 @@ define([ 'jquery', 'backbone', 'models/folder' ], function($, Backbone, Folder) 
     model: Folder,
 
     url: function() {
-      this.space.get('media.folders_url')
+      this.space.get('links.folders')
     },
 
     parse: function(data) {

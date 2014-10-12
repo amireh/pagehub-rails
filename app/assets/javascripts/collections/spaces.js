@@ -5,8 +5,8 @@ define([ 'jquery', 'backbone', 'models/space' ], function($, Backbone, Space) {
 
     model: Space,
 
-    url:   function() {
-      this.creator.get('media').spaces_url
+    url: function() {
+      this.user.get('links.spaces');
     },
 
     parse: function(data) {
@@ -16,10 +16,6 @@ define([ 'jquery', 'backbone', 'models/space' ], function($, Backbone, Space) {
       else {
         return data;
       }
-    },
-
-    initialize: function() {
-      this.creator = null;
     }
   });
 })

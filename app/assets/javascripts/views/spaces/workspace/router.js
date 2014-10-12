@@ -45,7 +45,7 @@ define([
     },
 
     proxy_resource: function(resource) {
-      return Backbone.history.navigate(resource.path(), { trigger: true })
+      return Backbone.history.navigate(resource.getPath(), { trigger: true })
     },
 
     resource: function(path) {

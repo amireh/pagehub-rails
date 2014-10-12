@@ -24,7 +24,7 @@ module DeviseUserValidatable
       validates_format_of :email, with: email_regexp, allow_blank: true, if: :email_changed?,
         message: 'Email address format does not look right.'
 
-      validates_presence_of     :password, if: :password_required?,
+      validates_presence_of :password, if: :password_required?,
         message: 'You must provide a password.'
 
       validates_confirmation_of :password, if: :password_required?,

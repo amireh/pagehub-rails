@@ -1,62 +1,30 @@
-define([ 'jquery', 'backbone', 'models/page' ], function($, Backbone, Page) {
+define([ 'backbone', 'models/page' ], function(Backbone, Page) {
   return Backbone.Collection.extend({
     model: Page,
 
-
-    // parse: function(data) {
-    //   return data.folders;
-    // },
-
     initialize: function(models, data) {
-      _.extend(this, data);
-
-      this.on('add', this.attach_to_folder, this);
-      this.on('add', this.configure_path, this);
-      this.on('change:folder_id', this.configure_path, this);
-      this.folder.on('change:folder_id', this.configure_page_paths, this);
+      this.on('add', this.configurePath, this);
+      this.on('change:folder_id', this.configurePath, this);
     },
 
-    attach_to_folder: function(page) {
-      page.folder = this.folder;
-      // page.set('folder', this.folder);
-      // page.set('folder_id', this.folder.get('id'));
+    configureWithFolder: function(folder) {
+      this.space = folder.collection.space;
+      this.folder = folder;
+      this.folder.on('change:folder_id', this.configurePagePaths, this);
     },
 
-    configure_path: function(page) {
-      page.set('path', page.path());
+    configurePath: function(page) {
+      page.set('path', page.getPath());
+
       return this;
     },
 
-    configure_page_paths: function() {
-      this.every(function(p) { return this.configure_path(p); }, this);
+    configurePagePaths: function() {
+      this.every(function(p) {
+        return this.configurePath(p);
+      }, this);
+
       return this;
     },
-
-    // reset: function(data) {
-    //   console.log("\tfolder page collection reset with " + data.length)
-    //   return Backbone.Collection.prototype.reset.apply(this, data);
-    // },
-    // reset: function(models, options) {
-    //   var out = Backbone.Collection.prototype.reset.apply(this, models, options);
-    //   var self = this;
-
-    //   // console.log(models)
-    //   // _.each(models, function(page) {
-    //   //   page.folder = self.folder;
-    //   //   page.space  = self.folder.get('space');
-    //   // });
-
-    //   console.log(this.models)
-    //   return out;
-    // },
-
-    // add: function(models, options) {
-      // var self = this;
-      // var out = Backbone.Collection.prototype.add.apply(this, models, options);
-
-    //   console.log("adding " + JSON.stringify(models))
-
-      // return out;
-    // }
   });
 })

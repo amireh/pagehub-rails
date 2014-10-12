@@ -221,7 +221,7 @@ function( $, Backbone, DragManager, ActionBar, Settings, BrowserImplementation, 
 
     resource_data: function(resource) {
       return $.extend(true, resource.toJSON(), {
-        path: resource.path()
+        path: resource.getPath()
       });
     },
 
@@ -288,7 +288,7 @@ function( $, Backbone, DragManager, ActionBar, Settings, BrowserImplementation, 
       page.ctx.browser.el.remove();
 
       // is the last folder empty now?
-      page.folder.ctx.browser.empty_label.toggle(page.folder.pages.length == 0);
+      page.getFolder().ctx.browser.empty_label.toggle(page.folder.pages.length == 0);
 
       // TODO: the conditional is redundant since only the current
       // page can be destroyed anyway
@@ -372,15 +372,17 @@ function( $, Backbone, DragManager, ActionBar, Settings, BrowserImplementation, 
       return this;
     },
 
-    update_meta: function(r) {
-      if (!r.ctx.browser) { return null; }
+    update_meta: function(resource) {
+      if (!resource.ctx.browser) { // not rendered?
+        return null;
+      }
 
-      console.log("updating resource meta: " + r.get('title'));
+      console.log("updating resource meta: " + resource.get('title'));
 
-      var icon = r.ctx.browser.title_icon.detach();
+      var icon = resource.ctx.browser.title_icon.detach();
 
-      r.ctx.browser.title.html(r.get('title')).prepend(icon);
-      r.ctx.browser.anchor.attr('href', '#' + r.path());
+      resource.ctx.browser.title.html(resource.get('title')).prepend(icon);
+      resource.ctx.browser.anchor.attr('href', '#' + resource.getPath());
 
       return true;
     },

@@ -28,30 +28,29 @@ define(function(require) {
   }
 
   if (ENV.user) {
-    if (ENV.user === ENV.current_user) {
-      application.user = application.current_user;
-    }
-    else {
-      application.user = new User(ENV.user, { parse: true });
-    }
+    application.user = new User(ENV.user, { parse: true });
+  }
+  else {
+    application.user = application.current_user;
   }
 
   (function exposeSpace() {
     var creator;
 
     if (ENV.space) {
-      if (ENV.space_creator === ENV.user) {
+      ENV.space_creator = ENV.space_creator || {};
+
+      if (ENV.user && ENV.space_creator.id === ENV.user.id) {
         creator = application.user;
       }
-      else if (ENV.space_creator === ENV.current_user) {
+      else if (ENV.space_creator.id === ENV.current_user.id) {
         creator = application.current_user;
       }
       else {
         creator = new User(ENV.space_creator, { parse: true });
       }
 
-      application.space = new Space(ENV.space, { parse: true });
-      application.space.creator = creator;
+      application.space = creator.spaces.push(ENV.space, { parse: true });
     }
   }());
 

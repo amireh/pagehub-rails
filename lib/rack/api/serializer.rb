@@ -99,6 +99,14 @@ class Rack::API::Serializer < ActiveModel::Serializer
 
   private
 
+  def can?(*args)
+    if scope[:controller]
+      scope[:controller].can?(*args)
+    else
+      super
+    end
+  end
+
   def stringify_ids(hsh, associations)
     hsh[:id] = "#{hsh[:id]}" if hsh[:id]
 

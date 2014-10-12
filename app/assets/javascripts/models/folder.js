@@ -8,20 +8,20 @@ define([
   var Folder = Backbone.DeepModel.extend({
     initialize: function(data) {
       this.ctx      = {};
-      this.urlRoot  = this.collection.space.get('media.folders.url');
+      this.urlRoot  = this.collection.space.get('links.folders');
 
-      this.pages = new Pages(null, { folder: this, space: this.collection.space });
-      this.pages.reset(data.pages);
+      this.pages = new Pages();
+      this.pages.configureWithFolder(this);
 
-      this.on('change:folder_id', this.configure_path, this);
-      this.on('change:title', this.configure_path, this);
+      this.on('change:folder_id', this.configurePath, this);
+      this.on('change:title', this.configurePath, this);
     },
 
-    configure_path: function() {
-      this.set('path', this.path());
+    configurePath: function() {
+      this.set('path', this.getPath());
 
-      _.each(this.children(), function(f) {
-        return f.configure_path();
+      _.each(this.children(), function(subFolder) {
+        return subFolder.configurePath();
       });
 
       return this;
@@ -60,7 +60,7 @@ define([
       }
     },
 
-    path: function() {
+    getPath: function() {
       var parts = _.
         reject(_.collect(this.ancestors(), function(f) {
           return f.get('pretty_title');
@@ -72,7 +72,6 @@ define([
 
       return parts.join('/');
     },
-
   });
 
   return Folder;

@@ -15,9 +15,10 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 class UserSerializer < Rack::API::Serializer
-  attributes :id, :name, :nickname, :email, :gravatar_email, :url, :href
+  attributes :id, :name, :nickname, :email, :gravatar_email, :url,
+    :href, :preferences
 
-  has_many :spaces, embed: :objects
+  # has_many :spaces, embed: :objects
 
   hypermedia only: [], links: {
     spaces: -> {
@@ -42,11 +43,11 @@ class UserSerializer < Rack::API::Serializer
   end
 
   def include_preferences?
-    self_access?
+    can? :view_preferences, object
   end
 
   def include_email?
-    self_access?
+    can? :view_private_data, object
   end
 
   def include_spaces?

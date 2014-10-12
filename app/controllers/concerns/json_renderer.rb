@@ -16,17 +16,7 @@ module JsonRenderer
   end
 
   def expose_object(object, options={})
-    includes = if params[:include]
-      includes = params[:include].split(',').map(&:strip).map(&:to_sym)
-    else
-      []
-    end
-
-    includes = ['*'] if includes == [:all]
-
-    render options.merge({
-      json: object
-    })
+    ams_expose_object(object, options)
   end
 
   def ams_expose_object(object, options={})
@@ -61,6 +51,20 @@ module JsonRenderer
     serializer.new(object, {
       root: false,
       includes: true,
+      scope: {
+        controller: self,
+        current_user: current_user,
+        includes: Array(options[:include]),
+        options: {}
+      }
+    }).as_json
+  end
+
+  def json_render_set(set, each_serializer, options={})
+    ActiveModel::ArraySerializer.new(set, {
+      root: false,
+      includes: true,
+      each_serializer: each_serializer,
       scope: {
         controller: self,
         current_user: current_user,

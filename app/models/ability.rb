@@ -10,7 +10,7 @@ class Ability
       r.browsable_by?(user)
     end
 
-    can :manage, User do |u|
+    can [ :manage, :view_preferences, :view_private_data ], User do |u|
       u.id == user.id
     end
 

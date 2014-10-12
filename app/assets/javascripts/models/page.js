@@ -4,10 +4,10 @@ define([ 'jquery', 'underscore', 'backbone', 'backbone.nested' ],
   var Page = Backbone.DeepModel.extend({
     defaults: {
       title:        "",
-      pretty_title: "",
-      content:      "",
-      creator:      null,
-      revisions:    []
+    //   pretty_title: "",
+    //   content:      "",
+    //   creator:      null,
+    //   revisions:    []
     },
 
     parse: function(payload) {
@@ -25,9 +25,9 @@ define([ 'jquery', 'underscore', 'backbone', 'backbone.nested' ],
 
     initialize: function() {
       this.ctx      = {};
-      this.urlRoot  = this.collection.space.get('media.pages');
+      this.urlRoot  = this.collection.space.get('links.pages');
 
-      if (this.get('title').length == 0) {
+      if (this.get('title').length === 0) {
         this.set('title', 'Untitled#' + this.cid.toString().replace('c', ''));
       }
 
@@ -35,20 +35,16 @@ define([ 'jquery', 'underscore', 'backbone', 'backbone.nested' ],
       // this.collection.on('add', this.set_folder, this);
     },
 
-    // get_folder: function() {
-    //   return this.collection.space.folders.get(this.get('folder_id'));
-    // },
-
-    set_folder: function() {
-      console.log('folder changed!!!')
-      // var space = this.collection.space,
-      //     folder = space.folders.get(this.get('folder_id'));
-
-      // this.folder = folder || space.root_folder();
+    getFolder: function() {
+      return this.collection.folder;
     },
 
-    path: function() {
-      var parts = this.collection.folder.path().split('/');
+    set_folder: function() {
+      console.warn('Deprecated');
+    },
+
+    getPath: function() {
+      var parts = this.collection.folder.getPath().split('/');
       parts.push(this.get('pretty_title'));
       return parts.join('/');
     },

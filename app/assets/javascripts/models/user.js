@@ -25,12 +25,9 @@ define([ 'backbone', 'collections/spaces' ], function(Backbone, Spaces) {
         data = payload;
       }
 
-      if (data) {
-        if (data.spaces) {
-          this.spaces = this.spaces || new Spaces();
-          this.spaces.reset(data.spaces, { parse: true });
-          this.spaces.creator = this;
-        }
+      if (data.spaces) {
+        this.parseSpaces(data.spaces);
+        delete data.spaces;
       }
 
       return data;
@@ -38,10 +35,17 @@ define([ 'backbone', 'collections/spaces' ], function(Backbone, Spaces) {
 
     initialize: function(data) {
       this.ctx = {};
+      this.parseSpaces();
+    },
 
+    parseSpaces: function(data) {
       if (!this.spaces) {
-        this.spaces = new Spaces(data.spaces || [], { parse: true });
-        this.spaces.creator = this;
+        this.spaces = new Spaces(null);
+        this.spaces.user = this;
+      }
+
+      if (data) {
+        this.spaces.reset(data, { parse: true, validate: false });
       }
     }
   });

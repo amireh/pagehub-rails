@@ -4,7 +4,7 @@ class Api::V1::UsersController < ::ApiController
   def show
     authorized_action! :read, @user
 
-    ams_expose_object @user
+    expose @user
   end
 
   def nickname_availability

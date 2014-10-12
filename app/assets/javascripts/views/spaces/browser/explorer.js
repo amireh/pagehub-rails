@@ -129,13 +129,13 @@ function( $, _, Backbone, BrowserImplementation, DragManager, UI ) {
     highlight_page: function(page) {
       BrowserImplementation.prototype.highlight_page.apply(this, arguments);
 
-      return this.highlight_folder(page.folder);
+      return this.highlight_folder(page.getFolder());
     },
 
     highlight_current_page: function(page) {
       BrowserImplementation.prototype.highlight_current_page.apply(this, arguments);
 
-      return this.highlight_current_folder(page.folder);
+      return this.highlight_current_folder(page.getFolder());
     },
 
     collapse: function(evt) {

@@ -6,14 +6,17 @@ class SpacesController < ApplicationController
   def edit
     @space = current_user.spaces.
       where(pretty_title: params[:space_pretty_title]).
-      includes(:user).first
+      includes(:user, :folders, :pages).first
 
     halt! 404 if @space.nil?
 
     js_env({
       space: ams_render_object(@space, SpaceSerializer, {
         include: [ :pages ]
-      })
+      }),
+      space_creator: {
+        id: @space.user.id.to_s
+      }
     })
 
     respond_with @space
