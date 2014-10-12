@@ -1,19 +1,21 @@
 Rails.application.routes.draw do
   devise_for :users, path: '/', path_names: {
     sign_in: 'login',
-    sign_out: 'logout',
     password: 'password',
     confirmation: '/users/verifications',
   }, controllers: {
     omniauth_callbacks: 'users/omniauth_callbacks',
-    sessions: 'sessions',
     registrations: 'users/registrations'
   }
+
+  devise_scope :user do
+    get '/logout', to: 'sessions#logout', as: :logout
+  end
 
   root 'application#landing'
 
   get '/dashboard', controller: :users, action: :dashboard, as: :user_dashboard
-  get '/logout', controller: :sessions, action: :logout, as: :logout
+  # get '/logout', controller: :sessions, action: :logout, as: :logout
 
   get '/welcome', controller: :guests, action: :index
 

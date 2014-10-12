@@ -1,10 +1,15 @@
 <!DOCTYPE html>
 <html>
 <head>
+  <meta charset="utf-8">
+  <%= csrf_meta_tags %>
+
   <title>PageHub</title>
 
   <%= stylesheet_link_tag 'compiled/app', media: 'all' %>
-  <%= csrf_meta_tags %>
+  <%= yield :css %>
+
+  <link rel="shortcut icon" href="/favicon.ico">
 
   <script src="/javascripts/vendor/require.js"></script>
   <%= render "layouts/js_env" %>

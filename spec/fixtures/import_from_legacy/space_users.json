@@ -3,7 +3,7 @@
     {
       "user_id": 1,
       "space_id": 1,
-      "role": 3
+      "role": "admin"
     }
   ]
 }
