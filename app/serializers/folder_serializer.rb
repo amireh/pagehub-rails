@@ -18,6 +18,7 @@ class FolderSerializer < Rack::API::Serializer
   attributes :id, :title, :pretty_title, :browsable, :folder_id, :url, :href
 
   has_many :pages
+  user_content_attributes :title, :pretty_title
 
   hypermedia only: [], links: {
     pages: -> {

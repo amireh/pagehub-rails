@@ -19,6 +19,7 @@ class PageSerializer < Rack::API::Serializer
     :revision_count
 
   stringify_attributes :folder_id
+  user_content_attributes :title, :pretty_title
 
   def url
     api_v1_folder_page_url(object.folder.space_id, object)

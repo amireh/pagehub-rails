@@ -25,6 +25,8 @@ class SpaceSerializer < Rack::API::Serializer
     folders: -> { api_v1_space_folders_url(object) }
   }
 
+  user_content_attributes :title, :pretty_title, :brief
+
   def url
     api_v1_user_space_url(object.user, object)
   end

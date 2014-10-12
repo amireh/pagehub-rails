@@ -31,6 +31,8 @@ class UserSerializer < Rack::API::Serializer
     }
   }
 
+  user_content_attributes :name
+
   def url
     api_v1_user_url(object.id)
   end
