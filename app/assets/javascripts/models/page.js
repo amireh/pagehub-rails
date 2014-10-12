@@ -3,11 +3,7 @@ define([ 'jquery', 'underscore', 'backbone', 'backbone.nested' ],
 
   var Page = Backbone.DeepModel.extend({
     defaults: {
-      title:        "",
-    //   pretty_title: "",
-    //   content:      "",
-    //   creator:      null,
-    //   revisions:    []
+      title: ""
     },
 
     parse: function(payload) {
@@ -20,7 +16,12 @@ define([ 'jquery', 'underscore', 'backbone', 'backbone.nested' ],
     },
 
     url: function() {
-      return this.get('url');
+      if (this.isNew()) {
+        return this.collection.url();
+      }
+      else {
+        return this.get('url');
+      }
     },
 
     initialize: function() {
@@ -30,17 +31,18 @@ define([ 'jquery', 'underscore', 'backbone', 'backbone.nested' ],
       if (this.get('title').length === 0) {
         this.set('title', 'Untitled#' + this.cid.toString().replace('c', ''));
       }
-
-      this.on('change:folder_id', this.set_folder, this);
-      // this.collection.on('add', this.set_folder, this);
     },
 
     getFolder: function() {
-      return this.collection.folder;
-    },
-
-    set_folder: function() {
-      console.warn('Deprecated');
+      if (this.collection) {
+        return this.collection.folder;
+      }
+      // no collection means that we were just destroyed/removed so we're
+      // assuming the caller had nicely kept a reference to the folder before
+      // they destroyed us!
+      else {
+        return this.folder;
+      }
     },
 
     getPath: function() {

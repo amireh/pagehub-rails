@@ -51,7 +51,7 @@ function(Backbone, $, Shortcut, UI) {
     },
 
     go: function(path) {
-      path = '/' + this.model.get('media.url') + path;
+      path = '/' + this.model.get('url') + path;
 
       Backbone.history.start({
         pushState: false,

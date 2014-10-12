@@ -289,13 +289,6 @@ function( $, Backbone, DragManager, ActionBar, Settings, BrowserImplementation, 
 
       // is the last folder empty now?
       page.getFolder().ctx.browser.empty_label.toggle(page.folder.pages.length == 0);
-
-      // TODO: the conditional is redundant since only the current
-      // page can be destroyed anyway
-      // if (this.workspace.current_page == page) {
-      //   this.workspace.trigger('reset');
-      //   this.workspace.current_folder = page.collection.folder;
-      // }
     },
 
     // reset selections

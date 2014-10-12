@@ -2,6 +2,14 @@ define([ 'backbone', 'models/page' ], function(Backbone, Page) {
   return Backbone.Collection.extend({
     model: Page,
 
+    url: function() {
+      return this.folder.get('links.pages');
+    },
+
+    comparator: function(model) {
+      return model.get('title');
+    },
+
     initialize: function(models, data) {
       this.on('add', this.configurePath, this);
       this.on('change:folder_id', this.configurePath, this);

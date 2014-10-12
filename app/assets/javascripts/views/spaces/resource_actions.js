@@ -1,5 +1,5 @@
-define([ 'backbone', 'models/folder', 'pagehub', 'shortcut' ],
-function(Backbone, Folder, UI, Shortcut) {
+define([ 'jquery', 'backbone', 'models/folder', 'pagehub', 'shortcut' ],
+function($, Backbone, Folder, UI, Shortcut) {
   return Backbone.View.extend({
     el: $("#pages .actions"),
 
@@ -14,10 +14,10 @@ function(Backbone, Folder, UI, Shortcut) {
 
       _.extend(this, data);
 
-      this.$el.find('#new_page').attr("href", this.space.get('media.pages') + '/new');
+      this.$el.find('#new_page').attr("href", this.space.get('links.new_page'));
 
-      Shortcut.add("ctrl+alt+c", function() { view.create_page(); });
-      Shortcut.add("ctrl+alt+f", function() { view.create_folder(); });
+      Shortcut.add("ctrl+alt+c", this.create_page.bind(this));
+      Shortcut.add("ctrl+alt+f", this.create_folder.bind(this));
     },
 
     consume: function(e) {
@@ -30,15 +30,16 @@ function(Backbone, Folder, UI, Shortcut) {
 
       var workspace = this.workspace;
       var folder  = workspace.current_folder || this.space.root_folder();
-      var page = folder.pages.push({ folder_id: folder.get('id') }, { silent: true });
+      var page = folder.pages.add({});
 
-      page.save({}, {
-        wait: true,
-        success: function() {
-          page.collection.trigger('add', page);
-          workspace.trigger('load_page', page);
-          UI.status.show("Created!", "good");
-        }
+      workspace.trigger('load_page', page);
+
+      page.save().then(function() {
+        UI.status.show("Created!", "good");
+      }, function(error) {
+        page.folder = folder;
+        folder.pages.remove(page);
+        workspace.trigger('reset');
       });
 
       return false;
@@ -56,7 +57,7 @@ function(Backbone, Folder, UI, Shortcut) {
       $.ajax({
         type:   "GET",
         headers: { Accept: "text/html" },
-        url:    space.get('media').folders.url + '/new',
+        url:    space.get('links.folders') + '/new',
         success: function(dialog_html) {
           var dialog = $('<div>' + dialog_html + '</div>').dialog({
             title: "Creating a folder",

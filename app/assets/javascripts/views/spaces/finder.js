@@ -140,7 +140,7 @@ function(AnimableView, UI, Shortcut) {
     stop_tracking_page_title: function(page) {
       // console.log("no longer tracking page: " + page.get('title') + '@' + page.ctx.finder_index);
 
-      if (typeof page.ctx.finder_index === undefined) {
+      if (page.ctx.finder_index === undefined) {
         return UI.report_error("Page context is missing finder index, I can't un-track it!");
       }
 

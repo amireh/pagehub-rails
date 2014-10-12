@@ -41,9 +41,6 @@ define([ 'jquery', 'underscore', 'ext/backbone', 'collections/folders' ],
               validate: false,
               silent: true
             });
-
-            // debugger
-            console.debug('\tFolder %s has %d pages.', folderId, folder.pages.length);
           }
         }.bind(this));
 
@@ -112,8 +109,6 @@ define([ 'jquery', 'underscore', 'ext/backbone', 'collections/folders' ],
     },
 
     parseFolders: function(data) {
-      console.log('\tParsing folders:', data);
-
       if (!this.folders) {
         this.folders = new Folders();
         this.folders.space = this;

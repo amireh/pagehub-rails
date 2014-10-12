@@ -36,7 +36,9 @@ function(Director, $, UI, Shortcut, Router, GeneralView, MembershipsView, Publis
       this.register(PublishingView,   'publishing');
       this.register(BrowsabilityView, 'browsability');
 
-      Shortcut.add("ctrl+alt+v", function() { window.open(director.space.get('media.href'), '_preview'); });
+      Shortcut.add("ctrl+alt+v", function() {
+        window.open(director.space.get('href'), '_preview');
+      });
 
       Shortcut.add("ctrl+alt+s",   function() { state.current_director.save(); });
       this.save_button.on('click', function() { state.current_director.save(); });

@@ -48,9 +48,11 @@ Rails.application.routes.draw do
         get '/:folder_id', action: :show, as: :space_folder
       end
 
-      scope '/folders/:folder_id/pages', controller: :pages do
+      scope '/folders/:current_folder_id/pages', controller: :pages do
         get '/', action: :index, as: :folder_pages
         get '/:page_id', action: :show, as: :folder_page
+        post '/', action: :create
+        patch '/:page_id', action: :update
       end
     end # namespace :v1
   end # namespace :api

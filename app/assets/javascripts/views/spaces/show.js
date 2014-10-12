@@ -92,10 +92,9 @@ define([
 
     go: function() {
       this.state.router =  new Router(this, this.space);
-
       Backbone.history.start({
-        pushState:  false,
-        root:       this.space.get('media.actions.edit') + '/'
+        pushState: false,
+        root: ''
       });
     },
 

@@ -147,7 +147,7 @@ function(AnimableView, MoveFolderLinkTemplate, DestroyPageTmpl, Shortcut, UI, Ti
     preview_page: function() {
       if (this.disabled) { return false; }
 
-      window.open(this.workspace.current_page.get('media').href, "_preview")
+      window.open(this.workspace.current_page.get('href'), '_preview')
     },
 
     destroy_page: function() {
@@ -188,6 +188,8 @@ function(AnimableView, MoveFolderLinkTemplate, DestroyPageTmpl, Shortcut, UI, Ti
       if (this.disabled) { return false; }
 
       var view = this;
+
+      console.warn('TODO: port the editor page to some Handlebars template...');
 
       $.ajax({
         headers: {
