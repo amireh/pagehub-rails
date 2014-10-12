@@ -15,8 +15,8 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 class PageSerializer < Rack::API::Serializer
-  attributes :id, :title, :pretty_title, :browsable, :folder_id, :url, :href,
-    :revision_count
+  attributes :id, :title, :pretty_title, :browsable, :folder_id,
+    :content, :url, :href, :revision_count
 
   stringify_attributes :folder_id
   user_content_attributes :title, :pretty_title
@@ -34,6 +34,10 @@ class PageSerializer < Rack::API::Serializer
   end
 
   def include_revision_count?
+    !embedded?
+  end
+
+  def include_content?
     !embedded?
   end
 end

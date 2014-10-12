@@ -20,7 +20,7 @@ define([ 'jquery', 'underscore', 'backbone', 'backbone.nested' ],
     },
 
     url: function() {
-      return this.get('media.url');
+      return this.get('url');
     },
 
     initialize: function() {
@@ -31,12 +31,12 @@ define([ 'jquery', 'underscore', 'backbone', 'backbone.nested' ],
         this.set('title', 'Untitled#' + this.cid.toString().replace('c', ''));
       }
 
-      this.on('change:folder.id', this.set_folder, this);
+      this.on('change:folder_id', this.set_folder, this);
       // this.collection.on('add', this.set_folder, this);
     },
 
     // get_folder: function() {
-    //   return this.collection.space.folders.get(this.get('folder.id'));
+    //   return this.collection.space.folders.get(this.get('folder_id'));
     // },
 
     set_folder: function() {

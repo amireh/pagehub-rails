@@ -56,7 +56,7 @@ define([
       }, this);
 
       // this.space.folders.every(function(f) {
-      //   return this.space.folders.trigger('change:parent.id', f);
+      //   return this.space.folders.trigger('change:folder_id', f);
       // }, this);
 
       state.on('sync_runtime_preferences', this.queue_preferences_sync, this);
@@ -135,15 +135,15 @@ define([
     },
 
     track_folder: function(folder) {
-      folder.pages.on('change:folder.id', this.reparent_page, this);
+      folder.pages.on('change:folder_id', this.reparent_page, this);
       folder.pages.on('remove', this.reset_if_current_page_is_destroyed, this);
     },
 
     reparent_page: function(page) {
-      var new_folder = this.space.folders.get(page.get('folder.id'));
+      var new_folder = this.space.folders.get(page.get('folder_id'));
 
       if (!page.isNew() && page._previousAttributes.folder) {
-        var old_folder = this.space.folders.get(page._previousAttributes.folder.id);
+        var old_folder = this.space.folders.get(page._previousAttributes.folder_id);
 
         if (!old_folder) {
           UI.report_error("[workspace]: page reparenting failed; unable to locate old folder of page " + page.get('id'));

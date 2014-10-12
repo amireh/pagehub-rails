@@ -1,14 +1,51 @@
 define([ 'jquery', 'underscore', 'ext/backbone', 'collections/folders' ],
   function($, _, Backbone, Folders) {
   var ajax = $.ajax;
+  var groupBy = _.groupBy;
+  var keys = Object.keys;
+
   var Space = Backbone.DeepModel.extend({
     parse: function(payload) {
+      var data;
+
       if (payload.hasOwnProperty('space')) {
-        return payload.space;
+        data = payload.space;
       }
       else {
-        return payload;
+        data = payload;
       }
+
+      if (data.memberships) {
+        data.nr_pages = data.memberships.reduce(function(sum, membership) {
+          return sum += membership.page_count || 0;
+        }, 0);
+
+        data.nr_members = data.memberships.length;
+      }
+
+      if (data.folders) {
+        this.parseFolders(data.folders);
+      }
+
+      if (data.pages) {
+        var folderPages = groupBy(data.pages, 'folder_id');
+        var folders = this.folders;
+
+        keys(folderPages).forEach(function(folderId) {
+          var folder = folders.get(folderId);
+
+          if (folder) {
+            folder.pages.reset(folderPages[folderId], {
+              parse: true,
+              validate: false
+            });
+          }
+        }.bind(this));
+
+        delete data.pages;
+      }
+
+      return data;
     },
 
     url: function() {
@@ -16,10 +53,7 @@ define([ 'jquery', 'underscore', 'ext/backbone', 'collections/folders' ],
     },
 
     initialize: function(data) {
-      this.folders = new Folders(data.folders || [], {
-        space: this,
-        parse: true
-      });
+      this.parseFolders(data.folders);
     },
 
     root_folder: function() {
@@ -27,7 +61,7 @@ define([ 'jquery', 'underscore', 'ext/backbone', 'collections/folders' ],
         return this.__root_folder;
       }
 
-      this.__root_folder = this.folders.where({ parent: null })[0];
+      this.__root_folder = this.folders.where({ folder_id: '' })[0];
 
       return this.__root_folder;
     },
@@ -58,10 +92,14 @@ define([ 'jquery', 'underscore', 'ext/backbone', 'collections/folders' ],
     find_page_by_fully_qualified_title: function(fqpt) {
       var folder = this.root_folder();
       var parts = fqpt.reverse();
+
       while (parts.length > 1) {
         var folder_title = parts.pop();
 
-        folder = this.folders.where({ title: folder_title, 'parent.id': folder.get('id') })[0];
+        folder = this.folders.where({
+          title: folder_title,
+          folder_id: folder.get('id')
+        })[0];
 
         if (!folder) {
           console.log("no such folder: " + folder_title);
@@ -70,6 +108,15 @@ define([ 'jquery', 'underscore', 'ext/backbone', 'collections/folders' ],
       }
 
       return folder.pages.where({ title: parts[0] })[0];
+    },
+
+    parseFolders: function(data) {
+      if (!this.folders) {
+        this.folders = new Folders();
+        this.folders.space = this;
+      }
+
+      this.folders.reset(data, { parse: true });
     }
   });
 

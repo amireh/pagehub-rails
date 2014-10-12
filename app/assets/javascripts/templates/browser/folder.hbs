@@ -1,11 +1,11 @@
 <li data-url="{{media.url}}"
-    data-parent="{{parent.id}}"
+    data-parent="{{folder_id}}"
     data-collapsible
     id="folder_{{id}}"
-    class="folder{{#unless parent.id}} general-folder{{/unless}}">
+    class="folder{{#unless folder_id}} general-folder{{/unless}}">
 
   <button data-collapse></button>
-  <a href="#{{path}}" class="folder-title"{{#if parent.id}} draggable="true"{{/if}}>
+  <a href="#{{path}}" class="folder-title"{{#if folder_id}} draggable="true"{{/if}}>
     <i class="icon-folder-close"></i>{{{title}}}
   </a>
 

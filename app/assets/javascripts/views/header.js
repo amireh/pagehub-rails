@@ -51,14 +51,14 @@ define([
       if (this.user) {
         data.user = {
           nickname: this.user.get('nickname'),
-          media:    this.user.get('media')
+          links:    this.user.get('links')
         }
       }
 
       if (this.space) {
         data.space = {
           title: this.space.get('title'),
-          media: this.space.get('media')
+          links: this.space.get('links')
         };
 
         data.space_admin = this.space.is_admin(this.state.current_user);

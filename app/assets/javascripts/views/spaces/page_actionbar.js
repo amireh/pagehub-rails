@@ -182,8 +182,8 @@ function(AnimableView, MoveFolderLinkTemplate, DestroyPageTmpl, Shortcut, UI, Ti
 
     on_page_loaded: function(page) {
       this.enable();
-      this.anchors.preview.attr("href", page.get('media').href);
-      this.anchors.revisions.attr("href", page.get('media').revisions.url);
+      this.anchors.preview.attr("href", page.get('href'));
+      this.anchors.revisions.attr("href", page.get('links.revisions'));
 
       if (page.get('nr_revisions') == 1) {
         this.anchors.revisions.addClass('disabled').attr("href", null);

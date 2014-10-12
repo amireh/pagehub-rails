@@ -62,8 +62,8 @@ function( $, Backbone, DragManager, ActionBar, Settings, BrowserImplementation, 
       this.space.folders.on('change:title', this.update_meta, this);
       this.space.folders.on('change:path', this.update_meta, this);
       this.space.folders.on('change:title', this.reorder_folder, this);
-      this.space.folders.on('change:parent.id', this.refresh_folder_pages, this);
-      this.space.folders.on('change:parent.id', this.reorder_folder, this);
+      this.space.folders.on('change:folder_id', this.refresh_folder_pages, this);
+      this.space.folders.on('change:folder_id', this.reorder_folder, this);
 
       this.state.current_user.on('change:preferences.workspace.browser.type', this.render, this);
       this.state.current_user.on('change:preferences.workspace.scrolling', this.resize, this);
@@ -206,13 +206,14 @@ function( $, Backbone, DragManager, ActionBar, Settings, BrowserImplementation, 
 
     // -- utility -- //
     page_from_title: function(el) {
-      var el = $(el).parents(".page:first"),
-          folder_id = null,
-          page_id   = null;
+      var $el = $(el).parents('.page:first');
+      var folderId = $el.attr('data-folder');
+      var pageId = $el.attr('data-page');
 
-      var folder = this.space.folders.get(el.attr('data-folder'));
+      var folder = this.space.folders.get(folderId);
+
       if (folder) {
-        return folder.pages.get(el.attr('data-page'));
+        return folder.pages.get(pageId);
       }
 
       return null;

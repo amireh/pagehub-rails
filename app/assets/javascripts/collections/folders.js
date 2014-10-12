@@ -11,11 +11,19 @@ define([ 'jquery', 'backbone', 'models/folder' ], function($, Backbone, Folder) 
     },
 
     parse: function(data) {
-      return data.folders;
+      if (data.folders) {
+        return data.folders;
+      }
+      else {
+        return data;
+      }
     },
 
     initialize: function(models, options) {
-      this.space = options.space;
+      if (options) {
+        console.warn('Deprecated: stop passing references in the options hash.');
+      }
+      // this.space = options.space;
     }
 
     // add: function(models, options) {

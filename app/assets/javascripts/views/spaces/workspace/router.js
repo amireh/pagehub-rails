@@ -64,7 +64,7 @@ define([
       if (parts.length > 1) {
         for (var i = 0; i < parts.length - 1; ++i) {
           var folder_title = parts[i];
-          var child = this.space.folders.where({ pretty_title: folder_title, 'parent.id': folder.get('id') })[0];
+          var child = this.space.folders.where({ pretty_title: folder_title, 'folder_id': folder.get('id') })[0];
 
           if (!child) {
             console.log('routing failed; no such folder with title ' + folder_title + ' in parent ' + folder.get('id'))
@@ -90,7 +90,7 @@ define([
         this.director.trigger('load_page', resource);
       } else {
         // is it a folder?
-        resource = this.space.folders.where({ pretty_title: title, 'parent.id': folder.get('id') })[0];
+        resource = this.space.folders.where({ pretty_title: title, 'folder_id': folder.get('id') })[0];
 
         if (resource) {
           // console.log('found folder, navigating...');

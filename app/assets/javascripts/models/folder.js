@@ -6,11 +6,6 @@ define([
   'backbone.nested'
 ], function($, _, Backbone, Pages) {
   var Folder = Backbone.DeepModel.extend({
-    defaults: {
-      title:        "",
-      pretty_title: "",
-    },
-
     initialize: function(data) {
       this.ctx      = {};
       this.urlRoot  = this.collection.space.get('media.folders.url');
@@ -18,7 +13,7 @@ define([
       this.pages = new Pages(null, { folder: this, space: this.collection.space });
       this.pages.reset(data.pages);
 
-      this.on('change:parent.id', this.configure_path, this);
+      this.on('change:folder_id', this.configure_path, this);
       this.on('change:title', this.configure_path, this);
     },
 
@@ -33,38 +28,45 @@ define([
     },
 
     has_parent: function() {
-      return !!(this.get('parent'))
+      return !!(this.get('folder_id'))
     },
 
     get_parent: function() {
-      if (this.has_parent())
-        return this.collection.get(this.get('parent').id);
-      else
-        return null;
+      return this.collection.get(this.get('folder_id'));
     },
 
     ancestors: function() {
       var ancestors = [ this ];
+
       if (this.has_parent()) {
         ancestors.push( this.get_parent().ancestors() );
       }
 
-      return _.reject(_.uniq(_.flatten(ancestors)), function(f) { return f == null; });
+      return _.uniq(_.flatten(ancestors)).filter(function(folder) {
+        return !!folder;
+      });
     },
 
     children: function() {
-      return this.collection.where({ 'parent.id': this.get('id') });
+      return this.collection.where({ 'folder_id': this.get('id') });
     },
 
     parse: function(data) {
-      return data.folder;
+      if (data.folder) {
+        return data.folder;
+      }
+      else {
+        return data;
+      }
     },
 
     path: function() {
-      var parts =
-        _.reject(_.collect(this.ancestors(), function(f) { return f.get('pretty_title'); }),
-          function(t) { return t == 'none'; })
-        .reverse();
+      var parts = _.
+        reject(_.collect(this.ancestors(), function(f) {
+          return f.get('pretty_title');
+        }), function(t) {
+          return t == 'none';
+        }).reverse();
 
       // parts.push(this.get('pretty_title'));
 

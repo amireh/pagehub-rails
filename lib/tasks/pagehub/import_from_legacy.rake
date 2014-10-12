@@ -154,6 +154,7 @@ namespace :pagehub do
       page.user_id = data['creator_id']
       page.title = data['title']
       page.pretty_title = data['pretty_title']
+      page.content = data['content']
       page.created_at = Time.parse(data['created_at'])
       page.save!
 

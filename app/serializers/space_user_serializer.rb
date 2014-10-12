@@ -21,6 +21,8 @@ class SpaceUserSerializer < Rack::API::Serializer
     :page_count,
     :folder_count
 
+  stringify_attributes :user_id, :space_id
+
   def role
     SpaceUser.role_name(object.role)
   end

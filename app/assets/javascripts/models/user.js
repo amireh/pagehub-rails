@@ -28,7 +28,8 @@ define([ 'backbone', 'collections/spaces' ], function(Backbone, Spaces) {
       if (data) {
         if (data.spaces) {
           this.spaces = this.spaces || new Spaces();
-          this.spaces.reset(data.spaces, { parse: false });
+          this.spaces.reset(data.spaces, { parse: true });
+          this.spaces.creator = this;
         }
       }
 
@@ -39,10 +40,9 @@ define([ 'backbone', 'collections/spaces' ], function(Backbone, Spaces) {
       this.ctx = {};
 
       if (!this.spaces) {
-        this.spaces = new Spaces(data.spaces || []);
+        this.spaces = new Spaces(data.spaces || [], { parse: true });
+        this.spaces.creator = this;
       }
-
-      this.spaces.creator = this;
     }
   });
 

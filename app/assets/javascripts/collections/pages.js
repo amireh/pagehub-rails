@@ -12,8 +12,8 @@ define([ 'jquery', 'backbone', 'models/page' ], function($, Backbone, Page) {
 
       this.on('add', this.attach_to_folder, this);
       this.on('add', this.configure_path, this);
-      this.on('change:folder.id', this.configure_path, this);
-      this.folder.on('change:parent.id', this.configure_page_paths, this);
+      this.on('change:folder_id', this.configure_path, this);
+      this.folder.on('change:folder_id', this.configure_page_paths, this);
     },
 
     attach_to_folder: function(page) {

@@ -1,3 +1,12 @@
+<%
+  labels = {
+    'member' => '',
+    'editor' => '',
+    'admin' => 'label-inverse',
+    'creator' => 'label-important'
+  }
+%>
+
 <form id="user_spaces_settings">
   <fieldset>
     <legend>Space memberships</legend>
@@ -13,12 +22,11 @@
           <th>Actions</th>
         </tr>
       </thead>
-      <% labels = { 'member' => '', 'editor' => '', 'admin' => 'label-inverse', 'creator' => 'label-important' } %>
 
       <% @spaces.each do |space| %>
         <tr data-space="<%= space.id %>">
           <td>
-            <a href="<%= user_space_url(space.user, space) %>">
+            <a href="<%= space.href %>">
               <%= fq_space_title space %>
             </a>
           </td>

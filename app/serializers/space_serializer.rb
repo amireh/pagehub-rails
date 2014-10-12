@@ -15,13 +15,14 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 class SpaceSerializer < Rack::API::Serializer
-  attributes :id, :title, :pretty_title, :brief, :is_public, :url
+  attributes :id, :title, :pretty_title, :brief, :is_public, :url, :creator
 
   has_many :folders
   has_many :pages
   has_many :space_users, key: 'memberships'
 
   hypermedia only: [], links: {
+    edit: -> { user_space_edit_url(object.user.nickname, object.pretty_title) },
     folders: -> { api_v1_space_folders_url(object) },
     memberships: -> { api_v1_user_space_memberships_url(object.user_id, object) }
   }
@@ -42,5 +43,12 @@ class SpaceSerializer < Rack::API::Serializer
 
   def include_space_users?
     !compact?
+  end
+
+  def creator
+    {
+      id: object.user.id.to_s,
+      nickname: object.user.nickname.to_s
+    }
   end
 end

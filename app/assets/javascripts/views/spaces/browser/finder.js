@@ -50,7 +50,7 @@ function( $, Backbone, BrowserImplementation, DragManager, FinderNavigator, UI) 
 
       this.navigator.setup();
 
-      this.space.folders.on('change:parent.id', this.show_folder_if_applicable, this);
+      this.space.folders.on('change:folder_id', this.show_folder_if_applicable, this);
 
       return this;
     },
@@ -58,7 +58,7 @@ function( $, Backbone, BrowserImplementation, DragManager, FinderNavigator, UI) 
     cleanup: function() {
       var view = this;
 
-      this.space.folders.off('change:parent.id', this.show_folder_if_applicable, this);
+      this.space.folders.off('change:folder_id', this.show_folder_if_applicable, this);
 
       this.navigator.cleanup();
 

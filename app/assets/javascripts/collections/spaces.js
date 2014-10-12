@@ -10,7 +10,12 @@ define([ 'jquery', 'backbone', 'models/space' ], function($, Backbone, Space) {
     },
 
     parse: function(data) {
-      return data.spaces;
+      if (data.spaces) {
+        return data.spaces;
+      }
+      else {
+        return data;
+      }
     },
 
     initialize: function() {

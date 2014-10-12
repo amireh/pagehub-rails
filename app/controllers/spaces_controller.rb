@@ -11,14 +11,15 @@ class SpacesController < ApplicationController
     halt! 404 if @space.nil?
 
     js_env({
-      space: Rabl.render(@space, 'spaces/show', {
-        format: :hash,
-        scope: self,
-        include_json_root: false,
-        include_child_root: false
+      space: ams_render_object(@space, SpaceSerializer, {
+        include: [ :pages ]
       })
     })
 
+    respond_with @space
+  end
+
+  def show
     respond_with @space
   end
 end
