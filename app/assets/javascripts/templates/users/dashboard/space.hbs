@@ -13,7 +13,12 @@
   </div>
 
   <div class="meta">
-    <a href="{{links.edit}}"><strong>{{{title}}}</strong></a>
+    {{#if isGuest}}
+      <a href="{{href}}"><strong>{{{title}}}</strong></a>
+    {{else}}
+      <a href="{{links.edit}}"><strong>{{{title}}}</strong></a>
+    {{/if}}
+
     <p>{{{brief}}}</p>
   </div>
 

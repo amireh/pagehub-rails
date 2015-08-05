@@ -6,16 +6,16 @@ define([
   return Backbone.View.extend({
     el: $("#dashboard"),
 
-    currentUserId: null,
+    // currentUserId: null,
 
     initialize: function(application) {
       this.$spaceListing = this.$el.find('#user_space_listing');
       this.$emptyListingMarker = this.$el.find('#no_spaces_marker');
 
+      this.currentUserId = application.current_user.get('id');
       this.render(application.user.spaces);
-      application.trigger('bootstrapped');
 
-      this.currentUserId = application.user.get('id');
+      application.trigger('bootstrapped');
     },
 
     render: function(collection) {
@@ -28,7 +28,7 @@ define([
         var role;
         var data  = space.toProps();
         var membership = data.memberships.filter(function(membership) {
-          return membership.userId === currentUserId;
+          return membership.user_id === currentUserId;
         })[0] || {};
 
         role = membership.role;
@@ -36,7 +36,7 @@ define([
         if (role === 'creator') {
           data.isOwner = true;
         }
-        else if (role !== null) {
+        else if (!!role) {
           data.isMember = true;
         }
         else {
