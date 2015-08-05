@@ -19,6 +19,7 @@
 @import "skins/light";
 @import "regions/header";
 @import "regions/content";
+@import "colors";
 
 /* a hack for drag and drop in Safari */
 [draggable=true] {
@@ -571,3 +572,34 @@ div.loader-overlay {
 .left   { float: left; }
 .right  { float: right;}
 .inline { display: inline-block; }
+
+.flash-messages {
+  position: fixed;
+  right: 1em;
+  top: 1em;
+  bottom: 0;
+  width: 320px;
+  overflow: auto;
+}
+
+.flash {
+  padding: 1em;
+  box-shadow: 0 0 3px 1px rgba(0,0,0,0.5);
+  font-size: 0.85em;
+  border-radius: 3px;
+  position: relative;
+
+  &:hover {
+    opacity: 0.85;
+  }
+
+  &--error {
+    background: $red;
+    color: white;
+  }
+
+  &--notice {
+    background: $green;
+    color: white;
+  }
+}

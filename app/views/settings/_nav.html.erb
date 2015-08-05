@@ -1,11 +1,12 @@
 <% content_for :section do %> users settings <% end %>
 <nav>
-  <ul>
-    <li><a data-placement="top" rel="tooltip" title="Your public profile" href="profile">Profile</a></li>
-    <li><a data-placement="top" rel="tooltip" title="Nickname, password, etc." href="account">Account</a></li>
-    <li><a href="editing">Editing</a></li>
-    <li><a data-placement="top" rel="tooltip" title="Your space memberships" href="spaces">Spaces</a></li>
-    <li class="sticky-bottom">
+  <ul class="settings-nav">
+    <li class="settings-nav__item"><a data-placement="top" rel="tooltip" title="Your public profile" href="profile">Profile</a></li>
+    <li class="settings-nav__item"><a data-placement="top" rel="tooltip" title="Nickname, password, etc." href="account">Account</a></li>
+    <li class="settings-nav__item"><a href="editing">Editing</a></li>
+    <li class="settings-nav__item"><a data-placement="top" rel="tooltip" title="Your space memberships" href="spaces">Spaces</a></li>
+
+    <li class="settings-nav__save-button">
       <button data-role="save" class="btn btn-block btn-primary">Save</button>
       <span class="shortcut">Ctrl+Alt+S</span>
     </li>

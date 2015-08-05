@@ -1,19 +1,14 @@
 <% unless flash.empty? %>
-  <% flash.each do |ctx, messages| %>
-    <% ctx = 'error' if ctx == 'alert' %>
-    <div id="flash" class="hidden flashes <%= ctx %>">
-      <% if messages.is_a?(Array) && messages.size > 1 %>
-        <ol>
-          <% messages.each do |m| %>
-            <li class="flash <%= ctx %>"><%= m.is_a?(Array) ? m.first.to_s : m %></li>
-          <% end %>
-        </ol>
-      <% else %>
-        <% messages = messages.first if messages.is_a?(Array) %>
-        <span class="flash <%= ctx %>"><%= messages %></span>
-      <% end %>
-      <button id="hide_flash" class="close">&times;</button>
-    </div>
-
-  <% end %>
+  <div id="flash-messages" class="flash-messages">
+    <% flash.each do |ctx, messages| %>
+      <% ctx = 'error' if ctx == 'alert' %>
+      <div class="flash flash--<%= ctx %>">
+        <% Array(messages).each do |message| %>
+          <span class="flash--<%= ctx %>__message">
+            <%= message.is_a?(Array) ? message.first.to_s : message %>
+          </span>
+        <% end %>
+      </div>
+    <% end %>
+  </div>
 <% end %>

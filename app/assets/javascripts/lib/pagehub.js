@@ -1,4 +1,5 @@
 define([
+  'backbone',
   'underscore',
   'jquery',
   'hbs!templates/dialogs/connectivity_issue',
@@ -6,7 +7,7 @@ define([
   'shortcut',
   'jquery.ui',
   'canvas-loader'
-], function(_, $, ConnectivityIssueDlg) {
+], function(Backbone, _, $, ConnectivityIssueDlg) {
   var __init = false,
       timers = {
         flash: null,
