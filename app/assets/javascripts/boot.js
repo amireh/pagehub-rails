@@ -7,9 +7,20 @@ define(function(require) {
   var global = this;
   var ENV = this.ENV;
 
+  //>>excludeStart("production", pragmas.production);
   if (ENV.DEBUG) {
     global.App = application;
+
+    var injectScript = function(src) {
+      var node = document.createElement('script');
+      node.type = 'text/javascript';
+      node.src = src;
+      document.body.appendChild(node);
+    };
+
+    injectScript("http://localhost:9135/livereload.js");
   }
+  //>>excludeEnd("production");
 
   if (ENV.hasOwnProperty('app_preferences')) {
     application.set('preferences', ENV.app_preferences.app);

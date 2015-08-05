@@ -1,6 +1,7 @@
 define([
+  'backbone',
   'hbs!templates/header_path'
-], function(HeaderPath) {
+], function(Backbone, HeaderPath) {
   return Backbone.View.extend({
     el: $("#header"),
 

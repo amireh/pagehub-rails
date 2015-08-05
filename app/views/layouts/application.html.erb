@@ -16,6 +16,7 @@
 </head>
 
 <body class="<%= logged_in? ? 'member' : 'guest' %> light">
+  <%= yield  :wraps %>
   <%= render "layouts/header" %>
 
   <div class="status-wrap">

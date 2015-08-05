@@ -11,6 +11,7 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-contrib-requirejs');
   grunt.loadNpmTasks('grunt-contrib-watch');
   grunt.loadNpmTasks('grunt-sass');
+  grunt.loadNpmTasks('grunt-concurrent');
 
   grunt.initConfig({
     meta: {
@@ -76,14 +77,36 @@ module.exports = function(grunt) {
 
     watch: {
       options: {
-        spawn: false,
+        spawn: false
       },
 
       css: {
         files: cssRoot + '/**/*',
         tasks: [ 'sass' ]
+      },
+
+      compiled_css: {
+        options: {
+          livereload: {
+            port: 9135
+          }
+        },
+
+        files: [ 'public/stylesheets/compiled/app.css' ],
+        tasks: []
       }
-    }
+    },
+
+    concurrent: {
+      options: {
+        logConcurrentOutput: true,
+      },
+
+      watch: [
+        'watch:css',
+        'watch:compiled_css',
+      ],
+    },
   });
 
   grunt.registerTask('development', function() {
@@ -97,5 +120,5 @@ module.exports = function(grunt) {
   });
 
   grunt.registerTask('build', [ 'requirejs', 'sass' ]);
-  grunt.registerTask('default', [ 'watch' ]);
+  grunt.registerTask('default', [ 'concurrent' ]);
 };
