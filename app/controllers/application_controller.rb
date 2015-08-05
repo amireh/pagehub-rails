@@ -86,4 +86,12 @@ class ApplicationController < ActionController::Base
   def json_request?
     (request.headers['HTTP_ACCEPT'] || '') =~ /json/
   end
+
+  def with_service(svc, &block)
+    unless svc.successful?
+      halt! 400, svc.error
+    end
+
+    yield(svc.output)
+  end
 end

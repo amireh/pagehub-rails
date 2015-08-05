@@ -3,6 +3,24 @@ class SpacesController < ApplicationController
 
   before_filter :require_user
 
+  def new
+    authorize! :create, Space, message: "You can not create new spaces as a demo user."
+
+    @user  = current_user
+    @space = current_user.owned_spaces.new
+
+    js_env({
+      user: ams_render_object(@user, UserSerializer),
+      links: {
+        create_space: api_v1_create_user_space_url(current_user)
+      }
+    })
+
+    respond_with @space do |format|
+      format.html
+    end
+  end
+
   def edit
     @space = current_user.spaces.
       where(pretty_title: params[:space_pretty_title]).

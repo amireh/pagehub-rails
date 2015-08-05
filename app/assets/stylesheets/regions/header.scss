@@ -3,7 +3,8 @@
 #header {
   position: relative;
   background: #f4f4f4;
-  font-size: 1.25em;
+  // font-size: 1.25em;
+  font-weight: 700;
 
   letter-spacing: 1px;
   // padding: 1.25em 0;
@@ -17,7 +18,6 @@
   // text-shadow: 0 1px 0 white;
 
   a {
-    font-weight: 100;
     color: inherit;
   }
 
@@ -75,14 +75,15 @@
   }
 
   .avatar {
-    position: relative;
+    display: none;
+    // position: relative;
+
      img.gravatar {
-      position: absolute;
-      left: -38px;
-      box-shadow: 0 0 0 1px white inset;
-      border: 1px solid #ddd;
-      padding: 1px;
-      top: -6px;
+      vertical-align: middle;
+      // position: absolute;
+      // left: -38px;
+      // padding: 1px;
+      // top: -6px;
     }
   }
 

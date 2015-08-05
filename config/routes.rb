@@ -16,7 +16,7 @@ Rails.application.routes.draw do
 
   get '/dashboard', controller: :users, action: :dashboard, as: :user_dashboard
   # get '/logout', controller: :sessions, action: :logout, as: :logout
-
+  get '/new', controller: :spaces, action: :new, as: :new_space
   get '/welcome', controller: :guests, action: :index
 
   namespace :api do
@@ -40,6 +40,7 @@ Rails.application.routes.draw do
 
       scope '/users/:user_id/spaces', controller: :spaces do
         get '/', action: :index, as: :user_spaces
+        post '/', action: :create, as: :create_user_space
         get '/:space_id', action: :show, as: :user_space
         patch '/:space_id', action: :update
         patch '/:space_id/memberships', action: :update_memberships, as: :user_space_memberships

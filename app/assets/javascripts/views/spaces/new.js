@@ -1,13 +1,13 @@
-define([ 'backbone', 'jquery', 'pagehub' ],
-
-function(Backbone, $, UI) {
-
+define([ 'backbone', 'jquery', 'pagehub', 'core/Notification', 'utils/ajax',
+'utils/serializeForm', 'core/APIError' ],
+function(Backbone, $, UI, Notification, ajax, serializeForm, APIError) {
   var NewSpaceView = Backbone.View.extend({
-    el: $("#new_space"),
+    el: $("body"),
 
     events: {
       'click #check_availability': 'check_availability',
-      'keyup input[type=text][name=title]': 'queue_availability_check'
+      'keyup input[type=text][name=title]': 'queue_availability_check',
+      'submit form': 'save'
     },
 
     initialize: function(app) {
@@ -75,6 +75,25 @@ function(Backbone, $, UI) {
       return false;
     }, // check_availability
 
+    save: function(e) {
+      e.preventDefault();
+
+      var params = serializeForm(this.$('form')[0]);
+
+      ajax({
+        url: ENV.links.create_space,
+        type: 'POST',
+        data: JSON.stringify(params)
+      }).then(function(space) {
+        Notification.spawn('Great! Will take you now to your new space.', 'notice');
+        window.location = space.links.edit;
+      }, function(xhrError) {
+        var error = new APIError(xhrError);
+        var notification = new Notification(error.messages[0], 'error');
+      });
+
+      return false;
+    }
   });
 
   return NewSpaceView;

@@ -25,6 +25,7 @@ module Rack::API::Parameters
     def parameters(params = {})
       self.optional.deep_merge(self.required).deep_merge(params)
     end
+    alias_method :params, :parameters
 
     # Lookup a parsed (and possibly processed) API parameter.
     #

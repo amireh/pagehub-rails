@@ -8,6 +8,22 @@ class Api::V1::SpacesController < ::ApiController
     ams_expose_object @user.spaces.includes(:user)
   end
 
+  def create
+    authorized_action! :create, Space
+
+    svc = SpaceService.new
+
+    parameter :title, type: :string, required: true
+    parameter :brief, type: :string
+    parameter :is_public, type: :boolean, default: true
+
+    # params.permit!
+
+    with_service svc.create(current_user, api.params) do |space|
+      ams_expose_object space
+    end
+  end
+
   def show
     authorized_action! :read, @space
 

@@ -47,7 +47,7 @@ body {
   margin: 0;
   padding: 0;
   color: $foreground;
-  margin: 0 0 $footer_height; /* bottom = footer height */
+  margin: 0 0 64px; /* bottom = footer height */
   -webkit-font-smoothing: antialiased;
 }
 
@@ -584,10 +584,12 @@ div.loader-overlay {
 
 .flash {
   padding: 1em;
-  box-shadow: 0 0 3px 1px rgba(0,0,0,0.5);
+  box-shadow: 0 1px 3px 0px rgba(0,0,0,0.5);
   font-size: 0.85em;
   border-radius: 3px;
   position: relative;
+  margin-bottom: 1em;
+  word-wrap: break-word;
 
   &:hover {
     opacity: 0.85;
