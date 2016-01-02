@@ -18,6 +18,8 @@ Rails.application.routes.draw do
   # get '/logout', controller: :sessions, action: :logout, as: :logout
   get '/new', controller: :spaces, action: :new, as: :new_space
   get '/welcome', controller: :guests, action: :index
+  get '/features', controller: :guests, action: :features
+  get '/open-source', controller: :guests, action: :open_source
 
   namespace :api do
     namespace :v1 do

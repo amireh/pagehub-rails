@@ -1,0 +1,69 @@
+<%= render "/shared/editor" %>
+<% content_for :section do %>space_editor<% end %>
+<% content_for :wraps do %>
+  <div class="action_bar_wrap"></div>
+<% end %>
+
+<% content_for :deferred_js do %>
+<script>
+  require([ 'views/spaces/show' ],function(SpaceView) {
+    application.view = new SpaceView(application);
+  })
+</script>
+<% end %>
+
+<div id="workspace" class="workspace resizable-content" style="display: none;">
+
+  <%= render "spaces/browser" %>
+
+  <div class="editor-container">
+    <!-- Page Actionbar -->
+    <div id="page_actions" class="page-actionbar actions">
+      <a class="icon save" rel="tooltip" title="Save page (Ctrl+Alt+S)" id="save_page">Save</a>
+
+      <a target="PageHub - Preview"
+         class="icon preview"
+         rel="tooltip"
+         title="Preview the page in HTML mode in a new tab (Ctrl+Alt+V)"
+         id="preview">Preview</a>
+
+      <a id="edit_page" class="icon edit_page" rel="tooltip" title="Modify the page properties">Edit</a>
+      <a id="destroy_page" class="icon delete_page" rel="tooltip" title="Delete the page (Ctrl+Alt+D)">Delete</a>
+
+      <a id="revisions" target="PageHub" class="icon history" rel="tooltip" title="View the history of this page">Revisions</a>
+
+<!--       <a class="listlike icon folder" data-placement="top" rel="tooltip" title="Move this page to a different folder"></a>
+      <ol class="listlike" id="movement_listing">
+      </ol> -->
+
+    </div>
+
+    <!-- Finder Widget -->
+    <div class="input-prepend page-finder">
+      <label class="btn"><i class="icon-search"></i> </label>
+      <input type="text" id="page_finder" class="input-xxlarge" autocomplete="off" />
+    </div>
+
+    <!-- Workspace Actionbar -->
+    <div id="general_actionbar" class="general-actionbar actions">
+      <a class="listlike icon more" data-placement="bottom" rel="tooltip" title="Workspace settings and actions">Workspace Actions</a>
+      <ol class="listlike sticky">
+        <li><span class="title"><strong>Workspace</strong></span></li>
+        <li><a id="switch_layout" rel="tooltip" data-placement="left" title="Make the workspace span the entire screen">Fluid workspace</a>
+        </li>
+        <li>
+          <a id="switch_scrolling" rel="tooltip" data-placement="left" title="Disable scrolling in the browser and the editor">No scrolling</a>
+        </li>
+        <li>
+          <a id="switch_animability" rel="tooltip" data-placement="left" title="Widgets will update faster but will no longer be animated">No animations</a>
+        </li>
+        <li><span class="title"><strong>Editor</strong></span></li>
+        <li><a data-placement="left" rel="tooltip" title="Refresh the editor if it's stuck or acting funny (Ctrl+Alt+R)" id="refresh_editor">Refresh</a></li>
+      </ol>
+    </div>
+
+    <!-- Editor Widget -->
+    <textarea id="page_editor" class='editor-widget'>Load or create a new page to begin.</textarea>
+  </div>
+
+</div>

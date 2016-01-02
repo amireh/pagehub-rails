@@ -28,6 +28,8 @@ class SpacesController < ApplicationController
 
     halt! 404 if @space.nil?
 
+    authorize! :edit, @space
+
     js_env({
       space: ams_render_object(@space, SpaceSerializer, {
         include: [ :pages ]
@@ -41,6 +43,25 @@ class SpacesController < ApplicationController
   end
 
   def show
+    user = User.find_by(nickname: params[:user_nickname])
+
+    halt! 404 if user.nil?
+
+    @space = user.spaces.
+      where(pretty_title: params[:space_pretty_title]).
+      includes(:user, :folders, :pages).first
+
+    halt! 404 if @space.nil?
+
+    js_env({
+      space: ams_render_object(@space, SpaceSerializer, {
+        include: [ :pages ]
+      }),
+      space_creator: {
+        id: @space.user.id.to_s
+      }
+    })
+
     respond_with @space
   end
 end

@@ -1,60 +1,56 @@
 <% content_for :deferred_js do %>
-<script>
-  require(['views/header'], function(View) {
-    application.header = new View(application);
-    application.header.render();
-  })
-</script>
+  <script>
+    require(['views/header'], function(View) {
+      application.header = new View(application);
+      application.header.render();
+    })
+  </script>
 <% end %>
 
 <% if !logged_in? %>
-<header id="header">
-  <div class="stuff">
-    <!-- <span class="beta label label-important">BETA</span> -->
-    <strong class="path"><a href="/">PageHub</a></strong>
-    <nav>
-      <a>&nbsp;</a>
-    </nav>
-    <nav>
-      <a class="btn btn-small" href="<%= new_user_session_url %>">Sign in</a>
-    </nav>
-  </div>
-</header>
+  <header id="header">
+    <div class="stuff">
+      <strong class="path"><a href="/">PageHub</a></strong>
+
+      <nav>
+        <a class="btn btn-small" href="<%= new_user_session_url %>">Sign in</a>
+      </nav>
+    </div>
+  </header>
 <% end %>
 
 <% if logged_in? %>
-<header id="header">
-  <div class="stuff">
-    <!-- <span class="beta label label-important">BETA</span> -->
+  <header id="header">
+    <div class="stuff">
 
-    <div id="path" class="path"></div>
+      <div id="path" class="path"></div>
 
-    <nav>
-      <span class="avatar">
-        <%= gravatar_tag (current_user.gravatar_email || current_user.email), :icon, { secure: true, html: { rel: "tooltip", title: current_user.nickname } } %>
-      </span>
+      <nav>
+        <span class="avatar">
+          <%= gravatar_tag (current_user.gravatar_email || current_user.email), :icon, { secure: true, html: { rel: "tooltip", title: current_user.nickname } } %>
+        </span>
 
-      <a
-        class="<%= nav_highlight 'dashboard' %>"
-        rel="tooltip"
-        title="Your dashboard"
-        href="<%= user_dashboard_url %>">Dashboard
-      </a>
+        <a
+          class="<%= nav_highlight 'dashboard' %>"
+          rel="tooltip"
+          title="Your dashboard"
+          href="<%= user_dashboard_url %>">Dashboard
+        </a>
 
-      <a
-        href="<%= settings_url %>"
-        class="<%= nav_highlight 'settings' %>"
-        rel="tooltip"
-        title="Account settings">Settings
-      </a>
+        <a
+          href="<%= settings_url %>"
+          class="<%= nav_highlight 'settings' %>"
+          rel="tooltip"
+          title="Account settings">Settings
+        </a>
 
-      <a
-        href="<%= logout_url %>"
-        class=""
-        rel="tooltip"
-        title="Sign out">Sign out
-      </a>
-    </nav>
-  </div>
-</header>
+        <a
+          href="<%= logout_url %>"
+          class=""
+          rel="tooltip"
+          title="Sign out">Sign out
+        </a>
+      </nav>
+    </div>
+  </header>
 <% end %>

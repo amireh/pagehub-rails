@@ -9,7 +9,7 @@ class UsersController < ApplicationController
     respond_to do |format|
       format.html do
         @can_create_spaces = true
-        @user = user
+        @user = current_user
 
         js_env({
           spaces: json_render_set(spaces, SpaceSerializer)

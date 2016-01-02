@@ -4,7 +4,10 @@
   <meta charset="utf-8">
   <%= csrf_meta_tags %>
 
-  <title>PageHub</title>
+  <title>
+    <%= yield :title if content_for?(:title) %>
+    <%= "PageHub" unless content_for?(:title) %>
+  </title>
 
   <%= stylesheet_link_tag 'compiled/app', media: 'all' %>
   <%= yield :css %>
