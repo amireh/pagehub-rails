@@ -2,9 +2,10 @@ define([
   'jquery',
   'underscore',
   'backbone',
+  'utils/ajax',
   'collections/pages',
-  'backbone.nested'
-], function($, _, Backbone, Pages) {
+  'backbone.nested',
+], function($, _, Backbone, ajax, Pages) {
   var Folder = Backbone.DeepModel.extend({
     initialize: function(data) {
       this.ctx      = {};
@@ -15,6 +16,15 @@ define([
 
       this.on('change:folder_id', this.configurePath, this);
       this.on('change:title', this.configurePath, this);
+    },
+
+    url: function() {
+      if (this.isNew()) {
+        return this.collection.url();
+      }
+      else {
+        return this.get('url');
+      }
     },
 
     configurePath: function() {
@@ -58,6 +68,20 @@ define([
       else {
         return data;
       }
+    },
+
+    save: function(attrs) {
+      if (this.isNew()) {
+        return Backbone.Model.prototype.save.apply(this, arguments);
+      }
+
+      return ajax({
+        url: this.get('url'),
+        type: 'PATCH',
+        data: JSON.stringify({
+          folder: attrs
+        })
+      });
     },
 
     getPath: function() {

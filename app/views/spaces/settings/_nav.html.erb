@@ -1,0 +1,35 @@
+<% content_for :section do %> spaces settings <% end %>
+
+<nav>
+  <ul>
+    <li><a  data-placement="top"
+            <%= 'class="disabled"' unless @space.is_creator?(current_user) %>
+            rel="tooltip"
+            title="The space title, brief, and public accessibility"
+            href="general">General</a>
+    </li>
+    <li><a  data-placement="right"
+            <%= 'class="disabled"' unless @space.is_admin?(current_user) %>
+            rel="tooltip"
+            title="Manage space members, their roles, etc."
+            href="memberships">Memberships</a>
+    </li>
+    <li><a <%= 'class="disabled"' unless @space.is_admin?(current_user) %>
+           data-placement="right"
+           rel="tooltip"
+           title="Customize the public space space settings"
+           href="publishing">Publishing</a>
+        <%= render "/spaces/settings/publishing/nav" %>
+    </li>
+    <li><a  data-placement="bottom"
+            <%= 'class="disabled"' unless @space.is_admin?(current_user) %>
+            rel="tooltip"
+            title="Specify which pages or folders are publicly browsable"
+            href="browsability">Browsability</a>
+    </li>
+    <li class="sticky-bottom">
+      <button data-role="save" class="btn btn-block btn-primary">Save</button>
+      <span class="shortcut">Ctrl+Alt+S</span>
+    </li>
+  </ul>
+</nav>

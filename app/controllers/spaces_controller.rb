@@ -42,6 +42,22 @@ class SpacesController < ApplicationController
     respond_with @space
   end
 
+  def settings
+    @user = require_slugged_user
+    @space = require_slugged_space(@user)
+
+    authorize! :update, @space, message: "You must be an admin of this space to manage it."
+
+    js_env({
+      space: ams_render_object(@space, SpaceSerializer, {
+        include: [ :pages, :space_users, :folders ]
+      }),
+      space_creator: {
+        id: @space.user.id.to_s
+      }
+    })
+  end
+
   def show
     user = User.find_by(nickname: params[:user_nickname])
 
@@ -91,6 +107,22 @@ class SpacesController < ApplicationController
       format.html do
         render :"spaces/pretty_resource", layout: "layouts/print"
       end
+    end
+  end
+
+  def require_slugged_user
+    User.find_by(nickname: params[:user_nickname]).tap do |user|
+      halt! 404, "User not found." if user.nil?
+
+      authorize! :read, user
+    end
+  end
+
+  def require_slugged_space(user)
+    user.spaces.find_by(pretty_title: params[:space_pretty_title]).tap do |space|
+      halt! 404 if space.nil?
+
+      authorize! :read, space
     end
   end
 end

@@ -20,7 +20,7 @@
   <%= yield :scripts %>
   <%= yield :js %>
 
-  <% scheme = params[:theme] || @space.preference('publishing.theme.name') %>
+  <% scheme = "clean" %>
 
   <% if params[:embedded] %>
     <style>html { padding: 0 20px; overflow-x: hidden; }</style>
@@ -36,10 +36,7 @@
   <% end %>
 
   <%= stylesheet_link_tag 'compiled/print', media: 'all' %>
-
-  <% unless scheme == "None" %>
-    <%= stylesheet_link_tag "compiled/schemes/#{scheme.sanitize}", media: 'all' %>
-  <% end %>
+  <%= stylesheet_link_tag "compiled/schemes/#{scheme}", media: 'all' %>
 
   <%= yield :css %>
 
@@ -71,7 +68,7 @@
   klasses << 'with_sidebar' if content_for? :sidebar
 %>
 
-<body class="print <%= klasses.join(' ') %> <%= layout %> <%= scheme.sanitize %>">
+<body class="print <%= klasses.join(' ') %> <%= layout %> <%= scheme %>">
   <div id="top"></div>
 
   <div id="jumpers">

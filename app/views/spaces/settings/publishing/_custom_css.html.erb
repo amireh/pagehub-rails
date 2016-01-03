@@ -1,0 +1,22 @@
+<%= render "/shared/editor" %>
+
+<form id="custom_css_settings">
+  <h3>Custom CSS</h3>
+  <p>You can also customize how your space look like by writing your own CSS code below.
+    <a href="http://www.pagehub.org/pagehub/css-skinning">The skinning guide</a>
+    contains a reference of the page structure, DOM, and everything you need
+    for skinning.
+  </p>
+
+  <p>The custom CSS code is applied <em>after</em> the selected scheme is included, effectively overriding it.</p>
+
+  <%= render "/shared/editor" %>
+
+  <%
+    css = @space.preference('publishing.custom_css')
+    css = css.nil? ?
+    "/* you can write your own CSS here that will be applied to all the space public pages */" :
+    css
+  %>
+  <textarea data-untogglable name="custom_css" id="css_editor" class="blocky_editor"><%= css %></textarea>
+</form>

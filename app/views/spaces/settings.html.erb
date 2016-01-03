@@ -1,0 +1,17 @@
+<%= render "spaces/settings/nav" %>
+
+<% content_for :nav_section do %>space_settings<% end %>
+<% content_for :deferred_js do %>
+<script>
+  require([ 'views/spaces/settings/index' ], function(SettingsView) {
+    application.view = new SettingsView(application);
+  });
+</script>
+<% end %>
+
+<div id="settings" style="display: none;">
+  <%= render "spaces/settings/general" %>
+  <%= render "spaces/settings/memberships" %>
+  <%= render "spaces/settings/publishing" %>
+  <%= render "spaces/settings/browsability" %>
+</div>

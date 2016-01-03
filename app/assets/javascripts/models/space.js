@@ -83,9 +83,16 @@ define([ 'underscore', 'ext/backbone', 'collections/folders', 'utils/ajax' ],
       }.bind(this));
     },
 
-    is_admin: function(user) {
-      var m = _.select(this.get('memberships'), function(m) { return parseInt(m.id) == parseInt(user.get('id')) })[0];
-      return m && ['admin', 'creator'].indexOf(m.role) != -1;
+    is_admin: function(userId) {
+      var m = this.get('memberships').filter(function(m) {
+        return m.user_id === userId
+      })[0];
+
+      if (!m) {
+        return false;
+      }
+
+      return ['admin', 'creator'].indexOf(m.role) > -1;
     },
 
     find_page_by_fully_qualified_title: function(fqpt) {

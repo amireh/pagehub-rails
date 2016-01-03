@@ -1,0 +1,42 @@
+<%# if !@space.is_creator?(current_user) %>
+  <!-- <p>Only the space creator can manage this section.</p> -->
+<%# else %>
+<form id="space_general_settings">
+  <% if can? :update_meta, @space %>
+    <fieldset>
+      <legend>Name</legend>
+      <label>The space name must be unique (and cool, too.)
+        <br /><br />
+        <div class="input-append">
+          <input type="text" autocomplete="off" class="span4" name="title" value="<%= h @space.title %>" />
+          <button class="btn btn-success" id="check_availability"><i class="icon-ok"></i></button>
+        </div>
+        <span id="name_availability_status"></span>
+      </label>
+    </fieldset>
+
+    <fieldset>
+      <legend>Brief</legend>
+      <label>A 1-line description of what this space is for.
+        <br /><br />
+        <input type="text" name="brief" value="<%= @space.brief %>" class="span6" placeholder="Building nuclear plants with style"></textarea>
+      </label>
+    </fieldset>
+
+    <fieldset>
+      <legend>Public access</legend>
+      <label>
+        <input type="checkbox" <%= 'checked="checked"' if @space.is_public %> value="true" name="is_public" />
+        Allow people to read and browse the space documents automatically
+      </label>
+    </fieldset>
+
+    <% if can? :delete, @space %>
+      <hr />
+      <button id="destroy_space" class="btn btn-small btn-danger"><i class="icon-remove"></i> Destroy this space</button>
+    <% end %>
+  <% else %>
+    <p class="alert alert-danger">You are not authorized to manage this section.</p>
+  <% end %>
+</form>
+<%# end %>

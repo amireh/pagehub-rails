@@ -39,7 +39,7 @@ define([
 
       if (this.space) {
         data.space = this.space.toProps();
-        data.space_admin = this.space.is_admin(this.state.current_user);
+        data.space_admin = this.space.is_admin(this.state.current_user.get('id'));
       }
 
       this.$el.find('#path').html(HeaderPath(data));

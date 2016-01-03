@@ -1,0 +1,62 @@
+<% if false %>
+  <% content_for :title do %>Browsability settings<% end %>
+
+  <%= render "spaces/settings/_nav" %>
+
+  <% content_for :deferred_js do %>
+    <script>
+      pagehub_hooks.push(
+        require([ 'models/space', 'views/spaces/settings/browsability' ], function(Space, SettingsView) {
+          var space = new Space(<%= rabl :"/spaces/show", object: @space %>.space);
+          s = new SettingsView({ space: space });
+        })
+      );
+    </script>
+  <% end %>
+<% end %>
+
+<form id="space_browsability_settings">
+  <h3>Browsable Pages</h3>
+  <p>Below is a listing of all the pages and folders within your space.
+    Unchecking a resource will prevent it from being publicly browsable
+    when people are browsing your <a href="<%= @space.href%>">space</a>.
+  </p>
+
+  <% unless @space.is_browsable? %>
+    <p><span class="label label-info">Heads up!</span> These settings only make sense when your space is publicly browsable, and it currently isn't.</p>
+  <% end %>
+
+  <ul class="browsability">
+    <%
+      traverse_space(@space, {
+        on_page: lambda { |p| %>
+          <li data-folder="<%= p.folder.id %>">
+            <label>
+              <input type="checkbox" name="pages[]" value="<%= p.id %>" <%= 'checked="CHECKED"' if p.browsable %> />
+              <%= p.title %>
+            </label>
+          </li>
+        <% },
+
+        on_folder: lambda { |f| %>
+
+          <li>
+            <label>
+              <input type="checkbox" name="folders[]" value="<%= f.id %>" <%= 'checked="CHECKED"' if f.browsable %> />
+              <strong><%= f.title %></strong>
+            </label>
+          <ol>
+        <% },
+
+        on_folder_done: lambda { |f| %>
+          </ol></li>
+        <% }
+      })
+    %>
+  </ul>
+
+  <% if @space.pages.empty? && @space.folders.empty? %>
+    <p class="notice">Oops! The space has no folders or pages yet, nothing to show here.</p>
+  <% end %>
+  <!-- <input type="submit" value="Update" /> -->
+</form>

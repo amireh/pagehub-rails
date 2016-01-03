@@ -24,7 +24,8 @@ class SpaceSerializer < Rack::API::Serializer
   hypermedia only: [], links: {
     edit: -> { user_space_edit_url(object.user.nickname, object.pretty_title) },
     folders: -> { api_v1_space_folders_url(object) },
-    memberships: -> { api_v1_user_space_memberships_url(object.user_id, object) }
+    memberships: -> { api_v1_user_space_memberships_url(object.user_id, object) },
+    settings: -> { user_space_settings_url(object.user.nickname, object.pretty_title) },
   }
 
   user_content_attributes :title, :pretty_title, :brief
