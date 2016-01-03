@@ -2,8 +2,9 @@ define([ 'views/shared/settings/setting_view', 'jquery', 'pagehub',
 'hbs!templates/dialogs/destroy_space',
 'hbs!templates/spaces/settings/dialog_change_title_warning',
 'hbs!templates/messages/relocation_error',
+'utils/ajax'
 ],
-function(SettingView, $, UI, DestroySpaceDlgTmpl, ChangeTitleDlgTmpl, RelocationErrorTmpl) {
+function(SettingView, $, UI, DestroySpaceDlgTmpl, ChangeTitleDlgTmpl, RelocationErrorTmpl, ajax) {
 
   var SpaceGeneralSettingsView = SettingView.extend({
     el: $("#space_general_settings"),
@@ -78,7 +79,7 @@ function(SettingView, $, UI, DestroySpaceDlgTmpl, ChangeTitleDlgTmpl, Relocation
         return false;
       }
 
-      $.ajax({
+      ajax({
         url: view.space.get('links.name_availability'),
         type: "POST",
         data: JSON.stringify({ name: name }),

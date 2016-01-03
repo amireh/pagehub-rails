@@ -2,9 +2,10 @@ define([
   'jquery',
   'backbone',
   'hbs!templates/dialogs/destroy_folder',
-  'pagehub'
+  'pagehub',
+  'utils/ajax'
 ],
-function( $, Backbone, DestroyFolderTmpl, UI ) {
+function( $, Backbone, DestroyFolderTmpl, UI, ajax ) {
 
   return Backbone.View.extend({
     el: $("#browser_actionbar"),
@@ -80,7 +81,7 @@ function( $, Backbone, DestroyFolderTmpl, UI ) {
         return false;
       }
 
-      $.ajax({
+      ajax({
         type:   "GET",
         headers: { Accept: "text/html" },
         url:    folder.get('media').url + '/edit',

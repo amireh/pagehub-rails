@@ -220,7 +220,7 @@ define([
         return false;
       }
 
-      folder.save({ parent_id: new_parent.get('id') }, {
+      folder.save({ folder_id: new_parent.get('id') }, {
         patch: true,
         wait: true,
         success: function() {

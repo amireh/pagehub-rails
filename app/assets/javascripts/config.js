@@ -1,18 +1,5 @@
-define([ 'jquery', 'jquery.tinysort' ], function($) {
-  var csrfToken;
-
-  $.ajaxSetup({
-    headers: {
-      'Accept': "application/json; charset=utf-8",
-      'Content-Type': "application/json; charset=utf-8"
-    }
-  });
-
-  $.ajaxSetup({
-    beforeSend: function (xhr) {
-      xhr.setRequestHeader('X-CSRF-Token', csrfToken);
-    }
-  });
+define([ 'jquery', 'backbone', 'utils/ajax', 'jquery.tinysort' ], function($, Backbone, ajax) {
+  Backbone.ajax = ajax;
 
   // jQuery TinySort
   $.tinysort.defaults.sortFunction = function(a,b) {
@@ -21,10 +8,6 @@ define([ 'jquery', 'jquery.tinysort' ], function($) {
 
     return atext === btext ? 0 : (atext > btext ? 1 : -1);
   };
-
-  $(function() {
-    csrfToken = $('meta[name="csrf-token"]').attr('content');
-  });
 
   return {};
 });

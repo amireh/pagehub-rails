@@ -1,7 +1,7 @@
-define([ 'jquery', 'backbone', 'models/folder', 'pagehub', 'shortcut' ],
-function($, Backbone, Folder, UI, Shortcut) {
+define([ 'jquery', 'backbone', 'models/folder', 'pagehub', 'shortcut', 'utils/ajax' ],
+function($, Backbone, Folder, UI, Shortcut, ajax) {
   return Backbone.View.extend({
-    el: $("#pages .actions"),
+    el: $("#resource_actions"),
 
     events: {
       'click #new_page':    'create_page',
@@ -53,7 +53,7 @@ function($, Backbone, Folder, UI, Shortcut) {
           space   = parent.collection.space,
           view    = this;
 
-      $.ajax({
+      ajax({
         type:   "GET",
         headers: { Accept: "text/html" },
         url:    space.get('links.folders') + '/new',

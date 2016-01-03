@@ -58,7 +58,7 @@ function(Backbone, $, UI, Notification, ajax, serializeForm, APIError) {
         return false;
       }
 
-      $.ajax({
+      ajax({
         url: view.space.get('links.name_availability'),
         type: "POST",
         data: JSON.stringify({ name: name }),

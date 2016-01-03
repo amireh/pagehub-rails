@@ -2,9 +2,10 @@ define([
   'views/shared/settings/setting_view',
   'jquery',
   'hbs!templates/users/settings/dialog_nickname_change_warning',
-  'pagehub'
+  'pagehub',
+  'utils/ajax'
  ],
-function(SettingView, $, NicknameWarningDialogTemplate, UI) {
+function(SettingView, $, NicknameWarningDialogTemplate, UI, ajax) {
   return SettingView.extend({
     el: $("#user_account_settings"),
 
@@ -132,7 +133,7 @@ function(SettingView, $, NicknameWarningDialogTemplate, UI) {
         return false;
       }
 
-      $.ajax({
+      ajax({
         url: view.model.get('links.name_availability'),
         type: "POST",
         data: JSON.stringify({ name: name }),
@@ -155,7 +156,7 @@ function(SettingView, $, NicknameWarningDialogTemplate, UI) {
     resend_confirmation_email: function(e) {
       e.preventDefault();
 
-      $.ajax({
+      ajax({
         type: 'POST',
         url: this.user.get('links.resend_confirmation_instructions')
       }).then(function() {

@@ -1,5 +1,5 @@
-define([ 'views/shared/settings/setting_view', 'jquery', 'pagehub', 'hbs!templates/spaces/settings/membership_record' ],
-function(SettingView, $, UI, MembershipRecordTmpl) {
+define([ 'views/shared/settings/setting_view', 'jquery', 'pagehub', 'hbs!templates/spaces/settings/membership_record', 'utils/ajax' ],
+function(SettingView, $, UI, MembershipRecordTmpl, ajax) {
 
   var SpaceMembershipsSettingsView = SettingView.extend({
     el: $("#space_membership_settings"),
@@ -49,7 +49,7 @@ function(SettingView, $, UI, MembershipRecordTmpl) {
         focus: function(e) { e.preventDefault(); return false },
         // select:   this.add_user,
         source: function(request, handler) {
-          $.ajax({
+          ajax({
             url:    "/users/lookup/by_nickname",
             method: "GET",
             data: { nickname: request.term },

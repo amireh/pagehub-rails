@@ -1,5 +1,5 @@
-define([ 'views/shared/animable_view', 'hbs!templates/move_folder_link', 'hbs!templates/dialogs/destroy_page', 'shortcut', 'pagehub', 'timed_operation' ],
-function(AnimableView, MoveFolderLinkTemplate, DestroyPageTmpl, Shortcut, UI, TimedOp) {
+define([ 'views/shared/animable_view', 'hbs!templates/move_folder_link', 'hbs!templates/dialogs/destroy_page', 'shortcut', 'pagehub', 'timed_operation', 'utils/ajax' ],
+function(AnimableView, MoveFolderLinkTemplate, DestroyPageTmpl, Shortcut, UI, TimedOp, ajax) {
   return AnimableView.extend({
     el: $("#page_actions"),
 
@@ -191,14 +191,14 @@ function(AnimableView, MoveFolderLinkTemplate, DestroyPageTmpl, Shortcut, UI, Ti
 
       console.warn('TODO: port the editor page to some Handlebars template...');
 
-      $.ajax({
+      ajax({
         headers: {
           Accept : "text/html; charset=utf-8",
           "Content-Type": "text/html; charset=utf-8"
         },
         type:   "GET",
         accept: "text/html",
-        url:    page.get('media').url + '/edit',
+        url:    page.get('edit_url'),
         success: function(dialog_html) {
           var dialog = $("<div>" + dialog_html + "</div>").dialog({
             title: "Page properties",
@@ -214,9 +214,9 @@ function(AnimableView, MoveFolderLinkTemplate, DestroyPageTmpl, Shortcut, UI, Ti
                   patch: true,
                   success: function() {
                     UI.status.show("Updated.", "good");
-                    // if (page == view.workspace.current_page) {
-                    //   view.space.trigger('current_page_updated', page);
-                    // }
+                    if (page.id === (view.workspace.current_page && view.workspace.current_page.id)) {
+                      view.space.trigger('current_page_updated', page);
+                    }
                     console.log(page.toJSON());
 
                     dialog.dialog("close");

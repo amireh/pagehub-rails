@@ -15,7 +15,6 @@ requirejs.config({
     'bootstrap':              'vendor/bootstrap/bootstrap',
     'pagehub':                'lib/pagehub',
     'timed_operation':        "lib/timed_operation",
-    'pagehub.config':         'config',
     'pagehub.state':          'state',
     'inflection':             'vendor/inflection',
     'md5':                    "vendor/md5",
@@ -71,9 +70,10 @@ requirejs.config({
 });
 
 require([
+
   'pagehub.state',
   'pagehub',
-  'pagehub.config',
+  './config',
   'underscore',
   'jquery',
   'jquery.ui',

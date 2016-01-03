@@ -67,6 +67,8 @@ Rails.application.routes.draw do
     get '/', action: :index, as: :settings
   end
 
+  resources :pages, only: [ :edit ]
+
   scope '/:user_nickname', controller: :users do
     get '/', action: :show, as: :user
 

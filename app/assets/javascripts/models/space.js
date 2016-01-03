@@ -1,6 +1,5 @@
-define([ 'jquery', 'underscore', 'ext/backbone', 'collections/folders' ],
-  function($, _, Backbone, Folders) {
-  var ajax = $.ajax;
+define([ 'underscore', 'ext/backbone', 'collections/folders', 'utils/ajax' ],
+  function(_, Backbone, Folders, ajax) {
   var groupBy = _.groupBy;
   var keys = Object.keys;
 
