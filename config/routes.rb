@@ -78,13 +78,14 @@ Rails.application.routes.draw do
       get '/edit', action: :edit, as: :user_space_edit
       get '/settings', action: :settings, as: :user_space_settings
 
-      scope '/:folder_pretty_title', controller: :folders do
-        get '/', action: :show, as: :space_folder
+      get '*resource_pretty_title', action: :pretty_resource, as: :user_pretty_resource
+      # scope '/:resource_pretty_title', controller: :folders do
+      #   get '/', action: :show, as: :space_folder
 
-        scope '/:page_pretty_title', controller: :pages do
-          get '/', action: :show, as: :folder_page
-        end
-      end
+      #   scope '/:page_pretty_title', controller: :pages do
+      #     get '/', action: :show, as: :folder_page
+      #   end
+      # end
     end
   end
 

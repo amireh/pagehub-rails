@@ -69,13 +69,6 @@ describe Folder do
       @grandchild.is_child_of?(@uncle).should   be_false, "should not be a child of its parent's siblings"
     end
 
-    it "ancestors" do
-      @root.ancestors.should         == [ ]
-      @parent.ancestors.should       == [ @root ]
-      @child.ancestors.should        == [ @parent, @root ]
-      @grandchild.ancestors.should   == [ @child, @parent, @root ]
-    end
-
     it "descendants" do
       @root.descendants.should  == [ @grandchild, @child, @parent, @uncle ]
       @uncle.descendants.should == [ ]

@@ -1,0 +1,37 @@
+<% content_for :title do %> <%= @page.title %> | PageHub <% end %>
+<% content_for :section do %><%= @space.preference('publishing.layout.name') %><% end %>
+
+<% content_for :header do %>
+  <%= render "spaces/public/heading", page: @page %>
+<% end %>
+
+<% if @space %>
+  <% @folder ||= @page %>
+
+  <%= render "/spaces/public/breadcrumbs" if @space.is_on?('publishing.layout.show_breadcrumbs') %>
+
+  <% content_for :sidebar do %>
+    <%= render "/spaces/public/listing" %>
+  <% end %>
+<% end %>
+
+<% if @page.nil? || @page.content.empty? %>
+  <p>This page is a stub.</p>
+<% else %>
+  <%= render_markdown(@page.content).html_safe %>
+<% end %>
+
+<% authors = @page.revisions.map(&:user).uniq %>
+<% editors = authors - [@page.creator] %>
+<% update_timestamp = @page.updated_at || @page.created_at %>
+
+<footer class="article_info">
+  <p>
+    This page was authored by <%= @page.creator.name %>,
+    and was last updated on <%= ordinalized_date(update_timestamp) %>.
+
+    <% if editors.any? %>
+      Contributions were also made by <%= editors.map(&:name).join(', ') %>.
+    <% end %>
+  </p>
+</footer>

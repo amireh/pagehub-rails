@@ -21,6 +21,10 @@ module ApplicationHelper
     rabl(template, options).html_safe
   end
 
+  def render_markdown(string)
+    PageHub::Markdown.render! string
+  end
+
   def current_nav_section
     content_for?(:nav_section) ? content_for(:nav_section) : ''
   end
@@ -45,5 +49,43 @@ module ApplicationHelper
     if scope && scope.respond_to?(:p)
       scope.p(key)
     end
+  end
+
+  def traverse_space(space, handlers, cnd = {}, coll = nil)
+    raise InvalidArgumentError unless handlers[:on_page] && handlers[:on_page].respond_to?(:call)
+    raise InvalidArgumentError unless handlers[:on_folder] && handlers[:on_folder].respond_to?(:call)
+
+    dump_pages = nil
+    dump_pages = lambda { |coll|
+      coll.each { |p| handlers[:on_page].call(p) }
+    }
+
+    unless coll
+      dump_pages.call(@space.pages.where(cnd.merge({ folder_id: nil })).order(title: :asc).all)
+    end
+
+    dump_folder = nil
+    dump_folder = lambda { |f|
+      handlers[:on_folder].call(f)
+      dump_pages.call(f.pages.where(cnd).order(title: :asc))
+      f.folders.where(cnd).each { |cf| dump_folder.call(cf) }
+      handlers[:on_folder_done].call(f) if handlers[:on_folder_done]
+    }
+
+    (coll || get_space_folders(@space, cnd)).each { |f| dump_folder.call(f) }
+  end
+
+  def ordinalized_date(date)
+    month = date.strftime('%B')
+    day   = date.day.ordinalize
+    year  = date.year
+
+    "the #{day} of #{month}, #{year}"
+  end
+
+  private
+
+  def get_space_folders(space, query)
+    space.folders.where(query.merge({ folder_id: nil })).order(title: :asc)
   end
 end

@@ -1,0 +1,57 @@
+<% no_title ||= false %>
+<% show_homepages ||= @space.is_on?("publishing.layout.show_homepages_in_sidebar") %>
+<% coll ||= nil %>
+<% path_builder = PathBuilder.new %>
+
+<section class="group_listing">
+  <% unless no_title %><header><h1>Navigation</h1></header><% end %>
+  <ul>
+    <%
+    traverse_space(@space, {
+      on_page: lambda { |p| %>
+        <% return if !show_homepages && p.is_homepage? %>
+        <% url = user_pretty_resource_url(p.user.nickname, p.space.pretty_title, path_builder.for_page(p)) %>
+
+        <li>
+          <label>
+            <% if @page.id == p.id %>
+              <%= link_to p.title, url, class: 'selected' %>
+            <% else %>
+              <%= link_to p.title, url %>
+            <% end %>
+          </label>
+        </li>
+      <% },
+
+      on_folder: lambda { |f| %>
+        <% selected = @folder && @folder.id == f.id ? 'class="selected"' : '' %>
+        <% is_empty = f.empty?(:public) %>
+        <% folder_title = f.root_folder? ? f.space.title : f.title %>
+        <% url = f.root_folder? ?
+          user_space_url(f.user.nickname, f.space.pretty_title) :
+          user_pretty_resource_url(f.user.nickname, f.space.pretty_title, path_builder.for_folder(f))
+        %>
+
+        <li <%= 'class="root-folder"' if f.root_folder? %>>
+          <label>
+            <% if f.pages.where({ browsable:true }).empty? || !f.has_homepage? %>
+              <strong><%= folder_title %></strong>
+            <% else %>
+              <strong>
+                <%= link_to folder_title, url, class: @folder.id == f.id ? 'selected' : '' %>
+              </strong>
+            <% end %>
+          </label>
+          <ol>
+          <% if is_empty %>
+            <li><em>No pages.</em></li>
+          <% end %>
+      <% },
+
+      on_folder_done: lambda { |f| %>
+        </ol></li>
+      <% }
+    }, { browsable: true }, coll)
+   %>
+  </ul>
+</section>

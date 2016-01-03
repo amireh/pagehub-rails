@@ -71,6 +71,17 @@ module.exports = function(grunt) {
         },
         files: {
           'public/stylesheets/compiled/app.css': '<%= meta.cssRoot %>/app.scss',
+          'public/stylesheets/compiled/print.css': '<%= meta.cssRoot %>/print.scss',
+          'public/stylesheets/compiled/layouts/easy.css': '<%= meta.cssRoot %>/legacy/layouts/easy.css',
+          'public/stylesheets/compiled/layouts/fluid.css': '<%= meta.cssRoot %>/legacy/layouts/fluid.css',
+          'public/stylesheets/compiled/layouts/focused.css': '<%= meta.cssRoot %>/legacy/layouts/focused.css',
+
+          'public/stylesheets/compiled/schemes/antimatter.css': '<%= meta.cssRoot %>/legacy/schemes/antimatter.css',
+          'public/stylesheets/compiled/schemes/clean.css': '<%= meta.cssRoot %>/legacy/schemes/clean.css',
+          'public/stylesheets/compiled/schemes/dusty.css': '<%= meta.cssRoot %>/legacy/schemes/dusty.css',
+          'public/stylesheets/compiled/schemes/hazzle-dazzle.css': '<%= meta.cssRoot %>/legacy/schemes/hazzle-dazzle.css',
+
+
         }
       }
     },

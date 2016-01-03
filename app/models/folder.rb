@@ -30,11 +30,11 @@ class Folder < ActiveRecord::Base
   end
 
   def has_homepage?
-    homepage.any?
+    !!homepage
   end
 
   def homepage
-    self.pages.where(title: [ 'Home', Page::README_PAGE ]) || pages.first
+    self.pages.where(title: [ 'Home', Page::README_PAGE ]).first
   end
 
   def href
@@ -46,7 +46,7 @@ class Folder < ActiveRecord::Base
       if root_folder?
         space.href
       else
-        "#{folder.href}/#{pretty_title}"
+        "/#{folder.href}/#{pretty_title}"
       end
     end
   end
@@ -115,13 +115,6 @@ class Folder < ActiveRecord::Base
     end
 
     folder.folders.where("id != #{self.id}")
-  end
-
-  def ancestors
-    parents = []
-    p = self
-    while p = p.folder do; parents << p end
-    parents
   end
 
   def descendants(with_pages = false)
