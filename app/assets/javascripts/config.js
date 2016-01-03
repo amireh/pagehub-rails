@@ -1,8 +1,16 @@
 define([ 'jquery', 'jquery.tinysort' ], function($) {
+  var csrfToken;
+
   $.ajaxSetup({
     headers: {
-      Accept : "application/json; charset=utf-8",
-      "Content-Type": "application/json; charset=utf-8"
+      'Accept': "application/json; charset=utf-8",
+      'Content-Type': "application/json; charset=utf-8"
+    }
+  });
+
+  $.ajaxSetup({
+    beforeSend: function (xhr) {
+      xhr.setRequestHeader('X-CSRF-Token', csrfToken);
     }
   });
 
@@ -13,6 +21,10 @@ define([ 'jquery', 'jquery.tinysort' ], function($) {
 
     return atext === btext ? 0 : (atext > btext ? 1 : -1);
   };
+
+  $(function() {
+    csrfToken = $('meta[name="csrf-token"]').attr('content');
+  });
 
   return {};
 });

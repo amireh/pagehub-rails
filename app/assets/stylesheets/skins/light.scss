@@ -4,24 +4,25 @@ body.light {
 
 // background: url(/assets/images/bgs/brillant/brillant.png) repeat;
 
-#header {
+header {
+
   .icon.dashboard { background-image: url(/assets/icons/16x16/home-inverse.png);      }
   .icon.signout   { background-image: url(/assets/icons/16x16/shut_down-inverse.png); }
   .icon.settings  { background-image: url(/assets/icons/16x16/process-inverse.png);   }
   .icon.tools     { background-image: url(/assets/icons/16x16/tools-inverse.png);     }
 
-  // a, & {
-  //   text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.25);
-  // }
+  a, & {
+    text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.25);
+  }
 
-  // a:hover {
-  //   color: inherit;
-  // }
+  a:hover {
+    color: inherit;
+  }
 
-  // .selected,
-  // a.icon:hover {
-  //   background-color: rgba(0,0,0,0.25);
-  // }
+  .selected,
+  a.icon:hover {
+    background-color: rgba(0,0,0,0.25);
+  }
 }
 
 
@@ -76,8 +77,8 @@ h3 {
 }
 
 .gravatar {
-  // box-shadow: 0 0 3px 1px #555;
-  // border-color: #555;
+  box-shadow: 0 0 3px 1px #555;
+  border-color: #555;
 }
 
 } /* body.light */

@@ -23,7 +23,7 @@ class UsersController < ApplicationController
       halt! 404
     end
 
-    spaces = user.spaces.where(is_public: true)
+    spaces = user.spaces.where(is_public: true).order(pretty_title: :asc)
 
     respond_to do |format|
       format.html do

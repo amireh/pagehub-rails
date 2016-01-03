@@ -1,12 +1,13 @@
 body.guest {
+
   .content-wrapper {
-    // width: 720px;
+    /*width: 800px;*/
     margin: 0 auto;
   }
 
   header {
-    // padding: 5px 0 6px 0;
-    // height: auto;
+    padding: 5px 0 6px 0;
+    height: auto;
 
     nav {
       position: relative;
@@ -29,7 +30,7 @@ body.guest {
       &:last-of-type {
         position: absolute;
         right: 0;
-        // top: 8px;
+        top: 8px;
       }
     }
 
@@ -39,10 +40,9 @@ body.guest {
   }
 
   .block {
-    width: 33%;
+    width: 45%;
     clear: none;
     vertical-align: top;
-    display: inline-block;
   }
 
   .block.left {
@@ -52,6 +52,10 @@ body.guest {
     float: right;
   }
 
+  .block {
+    width: 45%;
+    display: inline-block;
+  }
   .spanner {
     display: block;
     width: 100%;
@@ -63,8 +67,8 @@ body.guest {
   }
 
   form#user_signup {
-    // display: inline-block;
-    // vertical-align: top;
+    display: inline-block;
+    vertical-align: top;
   }
 
   span#login_buttons a {
@@ -105,15 +109,6 @@ body.guest {
   }
 
   .landing-page {
-    .hero-unit {
-      padding: 2em 0;
-      background: none;
-    }
-
-    .actions {
-      text-align: center;
-    }
-
     .pagination {
       background: black;
       a {

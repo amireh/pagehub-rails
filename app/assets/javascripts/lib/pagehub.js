@@ -182,14 +182,6 @@ define([
     StatusDelegate.mark_pending();
   });
 
-  var csrfToken;
-
-  $.ajaxSetup({
-    beforeSend: function (xhr) {
-      xhr.setRequestHeader('X-CSRF-Token', csrfToken);
-    }
-  });
-
   $(document).ajaxComplete(function(xhr)  {
     StatusDelegate.mark_ready();
   });
@@ -311,10 +303,6 @@ define([
     __init = true;
   // });
   }();
-
-  $(function() {
-    csrfToken = $('meta[name="csrf-token"]').attr('content');
-  });
 
   applicationViewSingleton = new ApplicationView();
 

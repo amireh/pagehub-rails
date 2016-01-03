@@ -30,8 +30,8 @@ header {
 
     > a {
       display: inline-block;
-      line-height: $actionbar_height;
-      height: $actionbar_height;
+      line-height: 32px;
+      height: 32px;
       margin: 0;
       padding: 0 10px;
       cursor: pointer;
@@ -124,6 +124,16 @@ header {
   width: 180px;
   min-height: 40px;
   position: relative;
+}
+
+.action_bar_wrap {
+  width: 100%;
+  height: 32px;
+  position: absolute;
+  z-index: -100;
+  top: 44px;
+  background: rgba(0,0,0,0.025);
+  border-bottom: 1px solid #eee;
 }
 
 .actions {

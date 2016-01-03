@@ -31,9 +31,9 @@ class SpaceUserSerializer < Rack::API::Serializer
     object.space.pages.select { |r| r.user_id == object.user_id }.size
   end
 
-  def include_page_count?
-    object.space.pages.loaded?
-  end
+  # def include_page_count?
+  #   object.space.pages.loaded?
+  # end
 
   def folder_count
     object.space.folders.select { |r| r.user_id == object.user_id }.size

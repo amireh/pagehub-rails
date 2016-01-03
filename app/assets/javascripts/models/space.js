@@ -15,6 +15,8 @@ define([ 'jquery', 'underscore', 'ext/backbone', 'collections/folders' ],
         data = payload;
       }
 
+      data = _.extend({}, data);
+
       if (data.memberships) {
         data.nr_pages = data.memberships.reduce(function(sum, membership) {
           return sum += membership.page_count || 0;
