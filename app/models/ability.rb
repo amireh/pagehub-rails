@@ -2,9 +2,7 @@ class Ability
   include CanCan::Ability
 
   def initialize(user)
-    return false unless user.present?
-
-    user_id = user.id
+    user ||= User.new
 
     can :browse, [ Space, Page, Folder ] do |r|
       r.browsable_by?(user)

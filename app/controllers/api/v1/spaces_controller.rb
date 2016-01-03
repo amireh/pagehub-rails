@@ -40,6 +40,14 @@ class Api::V1::SpacesController < ::ApiController
     authorize! :update, @space,
       message: "You need to be an admin of this space to update it."
 
+    new_params = params.permit(:title, :brief, :is_public)
+
+    if new_params[:title]
+      authorize! :update_meta, @space, message: "Only the space creator can do that."
+    end
+
+    @space.update_attributes(new_params)
+
     ams_expose_object @space
   end
 

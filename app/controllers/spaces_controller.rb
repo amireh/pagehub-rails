@@ -1,7 +1,7 @@
 class SpacesController < ApplicationController
   respond_to :html
 
-  before_filter :require_user
+  before_filter :require_user, except: [ :show, :pretty_resource ]
 
   def new
     authorize! :create, Space, message: "You can not create new spaces as a demo user."
@@ -73,14 +73,15 @@ class SpacesController < ApplicationController
   end
 
   def pretty_resource
-    space = current_user.spaces
+    user = require_slugged_user
+    space = user.spaces
       .includes(:user, :folders, :pages)
       .find_by(pretty_title: params[:space_pretty_title])
 
     halt! 404, "No such space." if space.nil?
 
     unless can? :browse, space
-      halt 401, "You are not allowed to browse that space."
+      halt! 401, "You are not allowed to browse that space."
     end
 
     fragments = params[:resource_pretty_title].split('/')
@@ -113,8 +114,6 @@ class SpacesController < ApplicationController
   def require_slugged_user
     User.find_by(nickname: params[:user_nickname]).tap do |user|
       halt! 404, "User not found." if user.nil?
-
-      authorize! :read, user
     end
   end
 
