@@ -72,7 +72,16 @@ Rails.application.routes.draw do
   end
 
   resources :pages, only: [ :edit ] do
-    resources :revisions, controller: :page_revisions, only: [ :index, :show ]
+    resources :revisions, controller: :page_revisions, param: :revision_id, only: [] do
+      collection do
+        get '/', action: :index
+      end
+
+      member do
+        get '/', action: :show
+        post '/', action: :rollback, as: :rollback
+      end
+    end
   end
 
   scope '/:user_nickname', controller: :users do

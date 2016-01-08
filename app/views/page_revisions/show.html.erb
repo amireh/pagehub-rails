@@ -83,7 +83,7 @@
 </p>
 
 <% if @next_rv %>
-  <%= form_tag page_revision_url(@page.id, @rv.id), method: 'POST' do %>
+  <%= form_tag rollback_page_revision_url(@page.id, @rv.id), method: 'POST' do %>
     <h3>Rollback</h3>
     <div class="alert alert-danger">
       <p><strong>WARNING</strong></p>

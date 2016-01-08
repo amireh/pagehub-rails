@@ -2070,7 +2070,6 @@ input[type="button"].btn-block {
 }
 .btn-danger,
 #status.bad,
-.flashes.error,
 .ui-dialog.warning .ui-dialog-buttonset button:last-of-type {
   color: #ffffff;
   text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.25);
@@ -2104,8 +2103,7 @@ input[type="button"].btn-block {
   background-color: #942a25;
 }
 .btn-success,
-#status.good,
-.flashes.notice {
+#status.good {
   color: #ffffff;
   text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.25);
   background-color: #5bb75b;
