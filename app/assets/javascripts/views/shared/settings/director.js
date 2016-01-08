@@ -255,7 +255,7 @@ function(Backbone, $, Shortcut, UI) {
 
         this.state.set('syncing', true);
 
-        this.model.save(attrs, {
+        this.model.save({ space: attrs }, {
           wait: true,
           patch: true,
 

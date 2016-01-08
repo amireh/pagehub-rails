@@ -15,9 +15,11 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 class SpaceUserSerializer < Rack::API::Serializer
+  include Gravatarify::Base
+
   attributes :role, :user_id, :space_id,
     :user_nickname,
-    :user_gravatar_email,
+    :gravatar,
     :page_count,
     :folder_count
 
@@ -51,11 +53,11 @@ class SpaceUserSerializer < Rack::API::Serializer
     object.association(:user).loaded?
   end
 
-  def user_gravatar_email
-    object.user.gravatar_email
+  def gravatar
+    gravatar_url(object.user.gravatar_email)
   end
 
-  def include_user_gravatar_email?
-    object.association(:user).loaded?
-  end
+  # def include_gravatar?
+  #   object.association(:user).loaded?
+  # end
 end

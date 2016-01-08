@@ -1,7 +1,6 @@
 define([ 'underscore', 'ext/backbone', 'collections/folders', 'utils/ajax' ],
   function(_, Backbone, Folders, ajax) {
   var groupBy = _.groupBy;
-  var keys = Object.keys;
 
   var Space = Backbone.DeepModel.extend({
     parse: function(payload) {
@@ -33,7 +32,7 @@ define([ 'underscore', 'ext/backbone', 'collections/folders', 'utils/ajax' ],
         var folderPages = groupBy(data.pages, 'folder_id');
         var folders = this.folders;
 
-        keys(folderPages).forEach(function(folderId) {
+        Object.keys(folderPages).forEach(function(folderId) {
           var folder = folders.get(folderId);
 
           if (folder) {

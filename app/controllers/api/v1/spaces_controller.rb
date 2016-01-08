@@ -40,13 +40,13 @@ class Api::V1::SpacesController < ::ApiController
     authorize! :update, @space,
       message: "You need to be an admin of this space to update it."
 
-    new_params = params.permit(:title, :brief, :is_public)
+    space_params = params.require(:space).permit(:title, :brief, :is_public, { preferences: space_preferences_params })
 
-    if new_params[:title]
+    if params[:title]
       authorize! :update_meta, @space, message: "Only the space creator can do that."
     end
 
-    @space.update_attributes(new_params)
+    SpaceService.new.update(@space, space_params)
 
     ams_expose_object @space
   end
@@ -58,6 +58,7 @@ class Api::V1::SpacesController < ::ApiController
       first
 
     halt! 404 if space.nil?
+
     authorize! :read, space
 
     parameter :memberships, type: :array, allow_nil: true
@@ -112,5 +113,18 @@ class Api::V1::SpacesController < ::ApiController
 
       space.add_with_role(user, role.to_sym)
     end
+  end
+
+  private
+
+  def space_preferences_params
+    {
+      publishing: [
+        :custom_css,
+        { navigation_links: [ :uri, :title ] },
+        { layout: [ :name, :show_breadcrumbs, :show_homepages_in_sidebar ] },
+        { theme: [ :name ] },
+      ],
+    }
   end
 end

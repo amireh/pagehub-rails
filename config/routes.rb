@@ -21,7 +21,7 @@ Rails.application.routes.draw do
   get '/features', controller: :guests, action: :features
   get '/open-source', controller: :guests, action: :open_source
 
-  namespace :api do
+  namespace :api, format: [ :json, :txt ] do
     namespace :v1 do
       scope '/users', controller: :users do
         post '/nickname_availability', {
@@ -33,6 +33,8 @@ Rails.application.routes.draw do
           action: :resend_confirmation_instructions,
           as: :user_resend_confirmation_instructions
         }
+
+        get '/search', action: :search
 
         scope '/:user_id' do
           get '/', action: :show, as: :user

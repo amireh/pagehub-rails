@@ -1,7 +1,7 @@
 class UsersController < ApplicationController
   respond_to :html
 
-  before_filter :require_user, except: [ :show ]
+  before_filter :require_user, only: [ :dashboard ]
 
   def dashboard
     spaces = current_user.spaces.includes(:user, :folders, :pages, :space_users)

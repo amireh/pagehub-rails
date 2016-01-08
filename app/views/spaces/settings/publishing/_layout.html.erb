@@ -31,7 +31,10 @@
       </div>
     </li>
     <li class="span8">
-      <a class="btn btn-info btn-block" target="_blank" href="<%= @space.href %>"><i class="icon-film icon-white"></i> Preview <span class="help small">(Ctrl+Alt+V)</span></a>
+      <a
+        class="btn btn-info btn-block"
+        target="_blank"
+        href="<%= user_space_url(@space.user.nickname, @space.pretty_title) %>"><i class="icon-film icon-white"></i> Preview <span class="help small">(Ctrl+Alt+V)</span></a>
 
     </li>
   </ul>

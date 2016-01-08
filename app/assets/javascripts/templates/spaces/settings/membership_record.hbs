@@ -1,13 +1,13 @@
-<tr id="user_{{id}}">
+<tr id="user_{{user_id}}">
   <td><img class="avatar" src="{{gravatar}}" /> {{nickname}}</td>
   <td>
     <span>{{#pluralize 'page'   contributions.nr_pages}}{{/pluralize}}</span> and
     <span>{{#pluralize 'folder' contributions.nr_folders}}{{/pluralize}}</span>
   </td>
   <td>
-    <label><input type="radio" name="users[{{id}}][role]" value="member" {{#checkify role 'member'}}{{/checkify}} /> M</label>
-    <label><input type="radio" name="users[{{id}}][role]" value="editor" {{#checkify role 'editor'}}{{/checkify}} /> E</label>
-    <label><input type="radio" name="users[{{id}}][role]" value="admin"  {{#checkify role 'admin creator'}}{{/checkify}} /> A</label>
+    <label><input type="radio" name="users[{{user_id}}][role]" value="member" {{#checkify role 'member'}}{{/checkify}} /> M</label>
+    <label><input type="radio" name="users[{{user_id}}][role]" value="editor" {{#checkify role 'editor'}}{{/checkify}} /> E</label>
+    <label><input type="radio" name="users[{{user_id}}][role]" value="admin"  {{#checkify role 'admin creator'}}{{/checkify}} /> A</label>
   </td>
   <td>
     {{#if can_kick}}

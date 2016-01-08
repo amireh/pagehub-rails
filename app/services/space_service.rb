@@ -33,4 +33,14 @@ class SpaceService < Service
 
     accept_with space
   end
+
+  def update(space, params)
+    attrs = params
+
+    if params[:preferences]
+      attrs[:preferences] = space.preferences.deep_merge(params[:preferences])
+    end
+
+    space.update_attributes(attrs)
+  end
 end

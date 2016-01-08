@@ -15,7 +15,7 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 class SpaceSerializer < Rack::API::Serializer
-  attributes :id, :title, :pretty_title, :brief, :is_public, :url, :creator
+  attributes :id, :title, :pretty_title, :brief, :is_public, :url, :creator, :preferences
 
   has_many :folders
   has_many :pages

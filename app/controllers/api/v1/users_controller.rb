@@ -1,4 +1,6 @@
 class Api::V1::UsersController < ::ApiController
+  include Gravatarify::Base
+
   before_filter :require_user, only: [ :show, :update ]
 
   def show
@@ -20,6 +22,22 @@ class Api::V1::UsersController < ::ApiController
         available: available
       }
     })
+  end
+
+  def search
+    params.permit(:nickname)
+
+    halt! 200, [].to_json if params[:nickname].empty?
+
+    results = User.where('nickname LIKE ?', "#{params[:nickname]}%").limit(10).map do |user|
+      {
+        id: user.id,
+        nickname: user.nickname,
+        gravatar: gravatar_url(user.gravatar_email, :size => 24)
+      }
+    end
+
+    render({ json: { users: results } })
   end
 
   def update
