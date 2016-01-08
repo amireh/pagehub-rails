@@ -49,7 +49,8 @@ class SpaceSerializer < Rack::API::Serializer
   def creator
     {
       id: object.user.id.to_s,
-      nickname: object.user.nickname.to_s
+      nickname: object.user.nickname.to_s,
+      href: user_path(object.user.nickname)
     }
   end
 end

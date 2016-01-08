@@ -1,12 +1,10 @@
-<a href="{{user.href}}"  class="link--reset">{{user.nickname}}</a>
-
 {{#if user}}
+  <a href="{{user.href}}" class="link--reset">{{user.nickname}}</a>
+
   {{#if space}}
     /
   {{/if}}
-{{/if}}
 
-{{#if space}}
   {{#if space.title}}
     <a href="{{space.links.edit}}#" class="link--reset"><strong>{{space.title}}</strong></a>
   {{/if}}

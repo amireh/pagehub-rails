@@ -10,20 +10,13 @@ define([
 
       if (app.space) { // editing a space?
         this.space      = app.space;
-        this.user       = app.space.getCreator();
+        this.user       = app.space.attributes.creator;
 
         this.space.on('sync', this.render, this);
       } else if (app.user) { // dashboard? profile?
         this.user = app.user;
-      } else {
-        if (app.current_user) {
-          this.user = app.current_user;
-        }
-      }
-
-      if (this.user && app.current_user == app.user) { // current user sections
-        this.user.on('change:nickname', this.render, this);
-        this.user.on('sync', this.render, this);
+      } else if (app.current_user) {
+        this.user = app.current_user;
       }
 
       this.state.on('bootstrapped', this.render, this);
@@ -34,12 +27,11 @@ define([
       var data = {};
 
       if (this.user) {
-        data.user = this.user.toProps();
+        data.user = this.user.toProps ? this.user.toProps() : this.user;
       }
 
       if (this.space) {
         data.space = this.space.toProps();
-        data.space_admin = this.space.is_admin(this.state.current_user.get('id'));
       }
 
       this.$el.find('#path').html(HeaderPath(data));
