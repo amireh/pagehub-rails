@@ -3,7 +3,7 @@ define([ 'backbone' ], function(Backbone) {
     el: $("#flash-messages"),
 
     events: {
-      'click .flash': 'hide'
+      'click .flash-messages__message': 'hide'
     },
 
     template: null,
@@ -13,11 +13,7 @@ define([ 'backbone' ], function(Backbone) {
     },
 
     hide: function(e) {
-      var $flash = $(e.target).closest('.flash');
-
-      $flash.animate({ right: -500 }, 400, 'linear').promise().then(function() {
-        $flash.remove();
-      });
+      this.$el.remove();
     }
   });
 });

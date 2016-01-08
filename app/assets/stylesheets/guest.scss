@@ -6,13 +6,13 @@ body.guest {
   }
 
   header {
-    padding: 5px 0 6px 0;
-    height: auto;
+    // padding: 5px 0 6px 0;
+    // height: auto;
 
     nav {
-      position: relative;
-      display: inline-block;
-      margin-left: 0px;
+      // position: relative;
+      // display: inline-block;
+      // margin-left: 0px;
 
       a,
       a:visited {
@@ -27,11 +27,11 @@ body.guest {
         }
       }
 
-      &:last-of-type {
-        position: absolute;
-        right: 0;
-        top: 8px;
-      }
+      // &:last-of-type {
+      //   position: absolute;
+      //   right: 0;
+      //   top: 8px;
+      // }
     }
 
     img {

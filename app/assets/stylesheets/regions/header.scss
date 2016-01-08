@@ -13,7 +13,7 @@
 
   // color: #E94E77; // pink
   // color: darken($alternate_fg, 5%);
-  color: $alternate_fg;
+  // color: $alternate_fg;
   border-bottom: 5px solid #e4e4e4;
   // text-shadow: 0 1px 0 white;
 
@@ -46,7 +46,7 @@
 
     a {
       display: inline-block;
-      padding: 0 $whitespace;
+      padding: 0 1em;
       position: relative;
 
       &.selected:after {

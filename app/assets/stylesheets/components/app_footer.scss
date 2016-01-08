@@ -1,0 +1,29 @@
+.app-footer {
+  margin: 1em auto 1em auto;
+  border-top: 1px dotted $low_contrast_border;
+  // padding: 0;
+  // line-height: 20px;
+  position: absolute;
+  // left: 0;
+  // bottom: 0;
+  height: 44px;
+  width: 960px;
+  padding: 1em 0;
+  left: 50%;
+  margin-left: -480px;
+  text-align: center;
+
+  p {
+    width: 960px;
+    margin: 0 auto;
+    font-size: 11px;
+
+    // > a {
+    //   margin-right: 10px;
+    // }
+
+    // .copyright {
+    //   float: right;
+    // }
+  }
+}

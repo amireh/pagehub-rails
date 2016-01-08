@@ -1,4 +1,4 @@
-<a href="{{user.href}}">{{user.nickname}}</a>
+<a href="{{user.href}}"  class="link--reset">{{user.nickname}}</a>
 
 {{#if user}}
   {{#if space}}
@@ -8,16 +8,6 @@
 
 {{#if space}}
   {{#if space.title}}
-    <a href="{{space.links.edit}}#"><strong>{{space.title}}</strong></a>
-  {{/if}}
-
-  {{#each folders}}
-    / <strong><a href="#{{path}}">{{title}}</a></strong>
-  {{/each}}
-  {{#if page}}
-    / <span>{{page.title}}</span>
-  {{/if}}
-  {{#if space_admin}}
-    <a rel="tooltip" id="space_settings_link" title="Space settings" class="space-settings-link btn btn-mini btn-primary" href="{{space.links.settings}}">Space Admin</a>
+    <a href="{{space.links.edit}}#" class="link--reset"><strong>{{space.title}}</strong></a>
   {{/if}}
 {{/if}}

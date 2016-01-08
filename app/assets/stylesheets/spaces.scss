@@ -131,7 +131,7 @@ header {
   height: 32px;
   position: absolute;
   z-index: -100;
-  top: 44px;
+  top: 51px;
   background: rgba(0,0,0,0.025);
   border-bottom: 1px solid #eee;
 }
@@ -431,17 +431,11 @@ header {
 } /* browser */
 
 .browser-actionbar {
-  border-top: 1px solid $low_contrast_border;
-  margin-top: 5px;
-  padding-top: 5px;
-  position: absolute;
-  bottom: 0;
-  width: 100%;
-
-  .browser-setting-buttons {
-    position: absolute;
-    right: 0;
-  }
+  // border-top: 1px solid $low_contrast_border;
+  margin-top: 1em;
+  // position: absolute;
+  // bottom: 0;
+  // width: 100%;
 }
 .scroller.finder-like {
   margin-left: 0;

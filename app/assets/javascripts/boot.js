@@ -8,18 +8,14 @@ define(function(require) {
   var ENV = this.ENV;
 
   //>>excludeStart("production", pragmas.production);
-  if (ENV.DEBUG) {
-    global.App = application;
+  var injectScript = function(src) {
+    var node = document.createElement('script');
+    node.type = 'text/javascript';
+    node.src = src;
+    document.body.appendChild(node);
+  };
 
-    var injectScript = function(src) {
-      var node = document.createElement('script');
-      node.type = 'text/javascript';
-      node.src = src;
-      document.body.appendChild(node);
-    };
-
-    injectScript("http://localhost:9135/livereload.js");
-  }
+  injectScript("http://localhost:9135/livereload.js");
   //>>excludeEnd("production");
 
   if (ENV.hasOwnProperty('app_preferences')) {

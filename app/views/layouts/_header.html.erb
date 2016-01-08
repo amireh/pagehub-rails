@@ -10,10 +10,10 @@
 <% if !logged_in? %>
   <header id="header">
     <div class="stuff">
-      <strong class="path"><a href="/">PageHub</a></strong>
+      <strong class="path"><a href="/" class="app-header__home">PageHub</a></strong>
 
       <nav>
-        <a class="btn btn-small" href="<%= new_user_session_url %>">Sign in</a>
+        <%= link_to "Sign in", new_user_session_url %>
       </nav>
     </div>
   </header>
@@ -36,6 +36,15 @@
           title="Your dashboard"
           href="<%= user_dashboard_url %>">Dashboard
         </a>
+
+        <% if @space && can?(:edit, @space) %>
+          <a
+            href="<%= user_space_settings_url(@space.user.nickname, @space.pretty_title) %>"
+            class="<%= nav_highlight 'settings' %> icon settings"
+            rel="tooltip"
+            title="Space settings">Space Settings
+          </a>
+        <% end %>
 
         <a
           href="<%= settings_url %>"

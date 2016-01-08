@@ -1,84 +1,70 @@
 @import "skins/base";
 
 body.light {
+  background: #fafafa;
 
-// background: url(/assets/images/bgs/brillant/brillant.png) repeat;
+  header {
 
-header {
+    .icon.dashboard { background-image: url(/assets/icons/16x16/home-inverse.png);      }
+    .icon.signout   { background-image: url(/assets/icons/16x16/shut_down-inverse.png); }
+    .icon.settings  { background-image: url(/assets/icons/16x16/process-inverse.png);   }
+    .icon.tools     { background-image: url(/assets/icons/16x16/tools-inverse.png);     }
 
-  .icon.dashboard { background-image: url(/assets/icons/16x16/home-inverse.png);      }
-  .icon.signout   { background-image: url(/assets/icons/16x16/shut_down-inverse.png); }
-  .icon.settings  { background-image: url(/assets/icons/16x16/process-inverse.png);   }
-  .icon.tools     { background-image: url(/assets/icons/16x16/tools-inverse.png);     }
-
-  a, & {
-    text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.25);
+    .link--reset {
+      color: $high_contrast_fg;
+    }
+    a, & {
+      text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.25);
+    }
   }
 
-  a:hover {
-    color: inherit;
+
+  .icon.spaces          { background-position: -88px  -32px;}
+  .icon.help            { background-position: -56px  16px; }
+  .icon.save_page       { background-position: -152px 12px; }
+  .icon.pretty_page     { background-position: -120px -36px;}
+  /*.icon.delete_page   { background-position: -24px  12px; }*/
+  .icon.share_page      { background-position: -24px  -36px;}
+  /* .icon.history      { background-position: -56px  -36px;}*/
+  .icon.move_page       { background-position: -120px 12px; }
+  .icon.editor_settings { background-position: 8px    -36px;}
+  /* .icon.new_resource { background-position: 4px    8px;  }*/
+  /* .icon.edit_folder  { background-image: url("../icons/16x16/edit.png"); }*/
+  .icon.kick_member,
+  .icon.remove        { background-image: url(/assets/icons/16x16/remove.png);}
+  .icon.search        { background-image: url(/assets/icons/24x24/search.png);}
+  .icon.new_resource  { background-image: url(/assets/icons/16x16/new_page.png);}
+  .icon.edit_page     { background-image: url(/assets/icons/16x16/edit.png);}
+  .icon.delete_page   { background-image: url(/assets/icons/16x16/trash.png);}
+  .icon.signout       { background-image: url(/assets/icons/16x16/shut_down.png);}
+  .icon.settings      { background-image: url(/assets/icons/16x16/process.png);}
+  .icon.dashboard     { background-image: url(/assets/icons/16x16/home.png);}
+  .icon.tools         { background-image: url(/assets/icons/16x16/tools.png);}
+  .icon.folder        { background-image: url(/assets/icons/16x16/folder.png);}
+  .icon.save          { background-image: url(/assets/icons/16x16/save.png);}
+  .icon.preview       { background-image: url(/assets/icons/16x16/television.png);}
+  .icon.history       { background-image: url(/assets/icons/16x16/wired.png);}
+  .icon.new-folder    { background-image: url(/assets/icons/20x20/folder.png);}
+  .icon.new-page      { background-image: url(/assets/icons/16x16/new_page.png);}
+  .icon.fullscreen    { background-image: url(/assets/icons/16x16/fullscreen.png);}
+  .icon.more          { background-image: url(/assets/icons/16x16/more.png);}
+  .icon.github        { background-image: url(/assets/icons/16x16/github.png);}
+
+  .cm-s-neat span.cm-header {
+    color: $foreground;
   }
 
-  .selected,
-  a.icon:hover {
-    background-color: rgba(0,0,0,0.25);
+  .success {
+    color: #333;
   }
-}
 
+  .hint {
+    color: #888;
+  }
 
-.icon.spaces          { background-position: -88px  -32px;}
-.icon.help            { background-position: -56px  16px; }
-.icon.settings        { background-position: -88px  16px; }
-.icon.save_page       { background-position: -152px 12px; }
-.icon.pretty_page     { background-position: -120px -36px;}
-/*.icon.delete_page   { background-position: -24px  12px; }*/
-.icon.share_page      { background-position: -24px  -36px;}
-/* .icon.history      { background-position: -56px  -36px;}*/
-.icon.move_page       { background-position: -120px 12px; }
-.icon.editor_settings { background-position: 8px    -36px;}
-/* .icon.new_resource { background-position: 4px    8px;  }*/
-/* .icon.edit_folder  { background-image: url("../icons/16x16/edit.png"); }*/
-.icon.kick_member,
-.icon.remove        { background-image: url(/assets/icons/16x16/remove.png);}
-.icon.search        { background-image: url(/assets/icons/24x24/search.png);}
-.icon.new_resource  { background-image: url(/assets/icons/16x16/new_page.png);}
-.icon.edit_page     { background-image: url(/assets/icons/16x16/edit.png);}
-.icon.delete_page   { background-image: url(/assets/icons/16x16/trash.png);}
-.icon.signout       { background-image: url(/assets/icons/16x16/shut_down.png);}
-.icon.settings      { background-image: url(/assets/icons/16x16/process.png);}
-.icon.dashboard     { background-image: url(/assets/icons/16x16/home.png);}
-.icon.tools         { background-image: url(/assets/icons/16x16/tools.png);}
-.icon.folder        { background-image: url(/assets/icons/16x16/folder.png);}
-.icon.save          { background-image: url(/assets/icons/16x16/save.png);}
-.icon.preview       { background-image: url(/assets/icons/16x16/television.png);}
-.icon.history       { background-image: url(/assets/icons/16x16/wired.png);}
-.icon.new-folder    { background-image: url(/assets/icons/20x20/folder.png);}
-.icon.new-page      { background-image: url(/assets/icons/16x16/new_page.png);}
-.icon.fullscreen    { background-image: url(/assets/icons/16x16/fullscreen.png);}
-.icon.more          { background-image: url(/assets/icons/16x16/more.png);}
-.icon.github        { background-image: url(/assets/icons/16x16/github.png);}
-
-h2,
-.cm-s-neat span.cm-header {
-  color: $foreground;
-}
-
-h3 {
-  /*color: #4ECDC4;*/
-  color: #777;
-}
-
-.success {
-  color: #333;
-}
-
-.hint {
-  color: #888;
-}
-
-.gravatar {
-  box-shadow: 0 0 3px 1px #555;
-  border-color: #555;
-}
+  .gravatar {
+    box-shadow: 0 0 3px 1px #555;
+    border-color: #555;
+  }
 
 } /* body.light */

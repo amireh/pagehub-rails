@@ -1,0 +1,38 @@
+.icon {
+  vertical-align: middle;
+  display: inline-block;
+
+  width:   32px;
+  height:  40px;
+
+  &.icon16 {
+    width:  16px;
+    height: 24px;
+  }
+
+  &.icon24 {
+    width:  24px;
+    height: 24px;
+  }
+
+  font-size: 0;
+  box-shadow: none;
+  background-color:     transparent;
+  background-position:  center center;
+  background-repeat:    no-repeat;
+  background-image:     url($icon_sprite);
+  border: none;
+  padding: 0;
+} /* icon */
+
+/** -- listlikes -- **/
+.icon:hover {
+  /*background-color: rgba(0,0,0,0.05);*/
+  background-color: $low_contrast_bg;
+  border-color: $active_fg;
+  cursor: pointer;
+}
+.btn > .icon:hover {
+  background-color: transparent;
+  border-color: transparent;
+}

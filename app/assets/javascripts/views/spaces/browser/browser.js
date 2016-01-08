@@ -179,15 +179,15 @@ function( $, Backbone, DragManager, ActionBar, Settings, BrowserImplementation, 
 
     resize: function() {
       if (this.state.current_user.get('preferences.workspace.scrolling')) {
-        this.elements.scroller.css({
-          "max-height": $(window).height() - this.offset,
-          "min-height": "inherit"
-        });
+        // this.elements.scroller.css({
+        //   "max-height": $(window).height() - this.offset,
+        //   "min-height": "inherit"
+        // });
       } else {
-        this.elements.scroller.css({
-          "max-height": "inherit",
-          "min-height": $(window).height() - this.offset
-        });
+        // this.elements.scroller.css({
+        //   "max-height": "inherit",
+        //   "min-height": $(window).height() - this.offset
+        // });
       }
     },
 

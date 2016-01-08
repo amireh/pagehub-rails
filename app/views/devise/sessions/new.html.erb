@@ -1,27 +1,33 @@
-<h2>Sign in</h2>
+<h2 class="blocky-heading">Sign in</h2>
 
 <div class="login-form">
 <%= form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
-  <div>
-    <%= f.label :email, class: 'login-form__label' %>
-    <%= f.email_field :email, autofocus: true %>
-  </div>
-
-  <div>
-    <%= f.label :password, class: 'login-form__label' %>
-    <%= f.password_field :password, autocomplete: "off" %>
-  </div>
-
-  <div>
-    <div class="login-form__actions">
-      <% if devise_mapping.rememberable? -%>
-        <div><%= f.check_box :remember_me %> <%= f.label :remember_me %></div>
-      <% end -%>
-
-      <%= f.submit "Sign in", class: 'btn btn-primary' %>
+  <fieldset class="form-horizontal">
+    <div  class="control-group">
+      <%= f.label :email, class: 'control-label' %>
+      <div class="controls">
+        <%= f.email_field :email, autofocus: true %>
+      </div>
     </div>
 
-  </div>
+    <div>
+      <%= f.label :password, class: 'control-label' %>
+      <div class="controls">
+        <%= f.password_field :password, autocomplete: "off" %>
+      </div>
+    </div>
+
+    <div class="controls">
+      <div>
+        <% if devise_mapping.rememberable? -%>
+          <p><%= f.check_box :remember_me %> <%= f.label :remember_me %></p>
+        <% end -%>
+
+        <%= f.submit "Sign in", class: 'btn' %>
+      </div>
+
+    </div>
+  </fieldset>
 <% end %>
 </div>
 

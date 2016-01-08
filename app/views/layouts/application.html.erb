@@ -39,7 +39,7 @@
   <div id="loader" class="loader"></div>
   <div class="loader-overlay"></div>
 
-  <%= render "layouts/footer" %>
+  <%= render "layouts/footer" unless logged_in? %>
 
   <script src="/javascripts/compiled/app.js"></script>
 
