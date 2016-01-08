@@ -1,0 +1,108 @@
+<% content_for :section do %>revisions<% end %>
+
+<h2><%= h @page.title %></h2>
+
+<p>There are
+  <%= link_to "#{@page.revisions.count} revisions",
+    page_revisions_url(@page.id)
+  %>
+
+  for this page.
+  You are currently viewing revision <strong><code><%= @rv.pretty_version %></code></strong>
+  which was committed by <strong><%= @rv.user.nickname %></strong>
+  <%= @rv.user == current_user && " (yourself)" %>
+  on <%= pretty_time @rv.created_at %>.
+</p>
+
+<div class="page-revisions__navigation">
+  <% if @prev_rv %>
+    <%= link_to "&larr; Previous revision".html_safe, page_revision_url(@page.id, @prev_rv.id),
+      class: "plain thin button"
+    %>
+  <% end %>
+
+  <% if @next_rv %>
+    <%= link_to "Next revision &rarr;".html_safe, page_revision_url(@page.id, @next_rv.id),
+      class: "right plain thin button"
+    %>
+  <% end %>
+</div>
+
+<div class="page-revisions__diff-blocks">
+  <div class="page-revisions__diff-block">
+    <h4>
+      <% if @rv %>
+        The page in this revision (<%= "#{@rv.index}/#{@page.revisions.count}" %>)
+      <% else %>
+        Original copy
+      <% end %>
+    </h4>
+
+    <% snapshot = @page.snapshot(@rv) %>
+    <pre style="overflow: auto;"><%= snapshot.html_safe %></pre>
+  </div>
+
+  <div id="changes" class="page-revisions__diff-block">
+    <% if @prev_rv %>
+      <h4>Changes to the previous version</h4>
+
+      <%
+        diffs = Marshal.load @rv.blob
+        out = ""
+        count = { :additions => 0, :deletions => 0 }
+
+        diffs.each { |dset|
+          dset.each { |d|
+            action = ""
+            if d.action == '-'
+              action = "del"
+              count[:deletions] += 1
+            else
+              count[:additions] += 1
+              action = "ins"
+            end
+            out += "<#{action}>#{d.action} #{d.element}</#{action}>\n"
+          }
+        }
+      %>
+<pre style="overflow: auto; word-wrap: normal;">
+<%= count[:additions] %> line(s) added | <%= count[:deletions] %> line(s) modified/removed
+
+<%= out.html_safe %>
+</pre>
+    <% else %>
+      <h4>N/A</h4>
+      <p>This is the original revision, there's nothing to compare it to.</p>
+    <% end %>
+  </div>
+</div>
+
+<p>
+  You can <%= link_to "use this link", user_pretty_resource_url(@page.user.nickname, @page.space.pretty_title, PathBuilder.new.for_page(@page), params: { revision_id: @rv.id }), target: '_blank' %>
+  to view the rendered page at this revision.
+</p>
+
+<% if @next_rv %>
+  <%= form_tag page_revision_url(@page.id, @rv.id), method: 'POST' do %>
+    <h3>Rollback</h3>
+    <div class="alert alert-danger">
+      <p><strong>WARNING</strong></p>
+      <p>
+        Rolling back will cause all edits made <strong>after</strong> this revision
+        to be <strong>LOST FOREVER</strong>. This action is <strong>NOT</strong> reversible.
+      </p>
+    </div>
+    <p>
+      <label>
+        <input name="confirmed" type="checkbox" value="do it" />
+        I have read the warning, do it!
+      </label>
+    </p>
+    <p>
+      <%= submit_tag "Rollback to this version", class: "btn thin" %>
+    </p>
+  <% end %>
+<% else %>
+  <p><em>This is your latest revision, you can not roll back to it.</em></p>
+<% end %>
+

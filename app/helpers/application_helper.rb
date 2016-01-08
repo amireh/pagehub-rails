@@ -83,6 +83,10 @@ module ApplicationHelper
     "the #{day} of #{month}, #{year}"
   end
 
+  def pretty_time(datetime)
+    datetime.strftime("%D")
+  end
+
   private
 
   def get_space_folders(space, query)

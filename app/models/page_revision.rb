@@ -92,6 +92,10 @@ class PageRevision < ActiveRecord::Base
     self.page.revisions.where('created_at > ?', self.created_at).first
   end
 
+  def index
+    self.page.revisions.where('created_at < ?', self.created_at).count + 1
+  end
+
   # Gets the revision right before this one, if any
   def prev
     self.page.revisions.where('created_at < ?', self.created_at).last

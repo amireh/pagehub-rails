@@ -15,10 +15,10 @@
   <% end %>
 <% end %>
 
-<% if @page.nil? || @page.content.empty? %>
+<% if @page.nil? || @page_content.empty? %>
   <p>This page is a stub.</p>
 <% else %>
-  <%= render_markdown(@page.content).html_safe %>
+  <%= render_markdown(@page_content).html_safe %>
 <% end %>
 
 <% authors = @page.revisions.map(&:user).uniq %>

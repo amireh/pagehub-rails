@@ -1,12 +1,14 @@
-<div id="flash-messages" class="flash-messages">
-  <% flash.each do |ctx, messages| %>
-    <% ctx = 'error' if ctx == 'alert' %>
-    <div class="flash flash--<%= ctx %>">
-      <% Array(messages).each do |message| %>
-        <span class="flash--<%= ctx %>__message">
-          <%= message.is_a?(Array) ? message.first.to_s : message %>
-        </span>
-      <% end %>
-    </div>
-  <% end %>
-</div>
+<% if flash.any? %>
+  <div id="flash-messages" class="flash-messages">
+    <% flash.each do |ctx, messages| %>
+      <% ctx = 'error' if ctx == 'alert' %>
+      <div class="flash flash--<%= ctx %>">
+        <% Array(messages).each do |message| %>
+          <span class="flash--<%= ctx %>__message">
+            <%= message.is_a?(Array) ? message.first.to_s : message %>
+          </span>
+        <% end %>
+      </div>
+    <% end %>
+  </div>
+<% end %>

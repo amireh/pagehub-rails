@@ -29,11 +29,6 @@
     border-top: 1px solid #ddd;
   }
 
-  #changes {
-    padding-left: 15px;
-    border-left: 1px solid #ddd;
-    /*float: right;*/
-  }
   #changes pre {
     max-width: 100%;
     word-wrap: break-word;
@@ -42,4 +37,20 @@
   }
   del { color: red; text-decoration: none; }
   ins { color: green; text-decoration: none;}
+}
+
+.page-revisions__navigation {
+  margin: 2em 0;
+}
+
+.page-revisions__diff-block {
+  width: 460px;
+  display: inline-block;
+  vertical-align: top;
+
+  & + & {
+    margin-left: 30px;
+    padding-left: 30px;
+    border-left: 1px solid #ddd;
+  }
 }

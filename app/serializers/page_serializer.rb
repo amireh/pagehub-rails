@@ -16,7 +16,7 @@
 
 class PageSerializer < Rack::API::Serializer
   attributes :id, :title, :pretty_title, :browsable, :folder_id,
-    :content, :url, :href, :revision_count, :edit_url
+    :content, :url, :href, :revision_count, :edit_url, :revisions_href
 
   stringify_attributes :folder_id
   user_content_attributes :title, :pretty_title
@@ -35,6 +35,10 @@ class PageSerializer < Rack::API::Serializer
 
   def revision_count
     object.revisions.count
+  end
+
+  def revisions_href
+    page_revisions_url(object.id)
   end
 
   def include_revision_count?

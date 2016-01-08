@@ -21,6 +21,7 @@ Rails.application.routes.draw do
   get '/features', controller: :guests, action: :features
   get '/open-source', controller: :guests, action: :open_source
 
+
   namespace :api, format: [ :json, :txt ] do
     namespace :v1 do
       scope '/users', controller: :users do
@@ -70,7 +71,9 @@ Rails.application.routes.draw do
     get '/', action: :index, as: :settings
   end
 
-  resources :pages, only: [ :edit ]
+  resources :pages, only: [ :edit ] do
+    resources :revisions, controller: :page_revisions, only: [ :index, :show ]
+  end
 
   scope '/:user_nickname', controller: :users do
     get '/', action: :show, as: :user

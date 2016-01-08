@@ -104,6 +104,13 @@ class SpacesController < ApplicationController
     @folder = page.folder
     @space = page.space
 
+    @page_content = if params[:revision_id]
+      revision = page.revisions.find(params[:revision_id])
+      page.snapshot(revision)
+    else
+      @page_content = page.content
+    end
+
     respond_to do |format|
       format.html do
         render :"spaces/pretty_resource", layout: "layouts/print"

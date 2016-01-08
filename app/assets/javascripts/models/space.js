@@ -24,7 +24,6 @@ define([ 'underscore', 'ext/backbone', 'collections/folders', 'utils/ajax' ],
       }
 
       if (data.folders) {
-        console.log('Parsing folders:', data.id, data.title, data.folders.length);
         this.parseFolders(data.folders);
       }
 
