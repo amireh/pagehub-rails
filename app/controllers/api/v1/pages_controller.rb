@@ -4,7 +4,9 @@ class Api::V1::PagesController < ApiController
 
     authorized_action! :read, folder
 
-    ams_expose_object folder.pages.includes(:user)
+    render template: 'api/pages/index', locals: {
+      pages: folder.pages.includes(:user)
+    }
   end
 
   def create
@@ -33,9 +35,12 @@ class Api::V1::PagesController < ApiController
   def show
     page = Page.find(params[:page_id])
 
+    puts "can read page? #{page.id} #{can?(:read, page)}"
     authorized_action! :read, page
 
-    ams_expose_object page
+    render template: 'api/pages/index', locals: {
+      pages: [ page ]
+    }
   end
 
   def update

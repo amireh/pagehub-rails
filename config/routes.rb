@@ -22,7 +22,7 @@ Rails.application.routes.draw do
 
   namespace :api, format: [ :json, :txt ] do
     namespace :v1 do
-      mount_devise_token_auth_for 'User', at: 'auth'
+      resources :sessions, only: [ :create ]
 
       scope '/users', controller: :users do
         post '/nickname_availability', {

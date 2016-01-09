@@ -6,11 +6,11 @@ gem 'uuid'
 gem 'pg'
 gem 'addressable'
 gem 'composite_primary_keys', '~> 7.x'
-gem 'active_model_serializers', "~> 0.8.0"
+gem 'jbuilder'
 
 # Use ActiveModel has_secure_password
 gem 'bcrypt', '~> 3.1.7'
-gem 'diff-lcs', '1.1.3'
+gem 'diff-lcs'#, '1.1.3'
 
 # Use Puma as our webserver
 gem 'puma'
@@ -21,8 +21,9 @@ group :development do
 end
 
 group :development, :test do
-  gem 'debugger'
-  gem 'rspec-rails', '~> 2.14.1'
+  gem 'database_cleaner'
+  gem 'pry'
+  gem 'rspec-rails', '~> 3.4.0'
   gem 'rack-test', '~> 0.6.2'
   gem 'shoulda-matchers'
 end
@@ -45,7 +46,6 @@ gem 'omniauth', '~> 1.2'
 gem 'omniauth-github'
 gem 'devise'
 gem 'devise-encryptable'
-gem 'devise_token_auth'
 gem 'foreigner'
 gem 'rdiscount'
 gem 'unicode'

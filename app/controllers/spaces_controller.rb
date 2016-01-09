@@ -10,7 +10,12 @@ class SpacesController < ApplicationController
     @space = current_user.owned_spaces.new
 
     js_env({
-      user: ams_render_object(@user, UserSerializer),
+      user: render_json_template({
+        template: 'api/users/_show',
+        locals: {
+          object: @user
+        }
+      }),
       links: {
         create_space: api_v1_create_user_space_url(current_user)
       }
@@ -31,9 +36,14 @@ class SpacesController < ApplicationController
     authorize! :edit, @space
 
     js_env({
-      space: ams_render_object(@space, SpaceSerializer, {
-        include: [ :pages ]
+      space: render_json_template({
+        template: 'api/spaces/_show.json.jbuilder',
+        locals: {
+          object: @space,
+          nested_resources: [ :pages ]
+        }
       }),
+
       space_creator: {
         id: @space.user.id.to_s
       }
@@ -48,14 +58,23 @@ class SpacesController < ApplicationController
 
     authorize! :update, @space, message: "You must be an admin of this space to manage it."
 
-    js_env({
-      space: ams_render_object(@space, SpaceSerializer, {
-        include: [ :pages, :space_users, :folders ]
-      }),
-      space_creator: {
-        id: @space.user.id.to_s
-      }
-    })
+    respond_to do |format|
+      format.html do
+        js_env({
+          space: render_json_template({
+            template: 'api/spaces/_show.json.jbuilder',
+            locals: {
+              object: @space,
+              nested_resources: [ :pages, :space_users, :folders ]
+            }
+          }),
+
+          space_creator: {
+            id: @space.user.id.to_s
+          }
+        })
+      end
+    end
   end
 
   def show

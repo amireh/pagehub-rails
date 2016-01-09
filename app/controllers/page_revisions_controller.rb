@@ -1,4 +1,5 @@
 class PageRevisionsController < ApplicationController
+  respond_to :html
   def index
     @page = require_page
     @space = @page.space

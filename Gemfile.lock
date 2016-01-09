@@ -14,8 +14,6 @@ GEM
       activesupport (= 4.1.5)
       builder (~> 3.1)
       erubis (~> 2.7.0)
-    active_model_serializers (0.8.2)
-      activemodel (>= 3.0)
     activemodel (4.1.5)
       activesupport (= 4.1.5)
       builder (~> 3.1)
@@ -38,15 +36,10 @@ GEM
       activesupport (>= 3.0)
     cocaine (0.5.4)
       climate_control (>= 0.0.3, < 1.0)
-    columnize (0.8.9)
+    coderay (1.1.0)
     composite_primary_keys (7.0.10)
       activerecord (~> 4.1.4)
-    debugger (1.6.8)
-      columnize (>= 0.3.1)
-      debugger-linecache (~> 1.2.0)
-      debugger-ruby_core_source (~> 1.3.5)
-    debugger-linecache (1.2.0)
-    debugger-ruby_core_source (1.3.5)
+    database_cleaner (1.5.1)
     devise (3.2.4)
       bcrypt (~> 3.0)
       orm_adapter (~> 0.1)
@@ -55,10 +48,7 @@ GEM
       warden (~> 1.2.3)
     devise-encryptable (0.1.2)
       devise (>= 2.1.0)
-    devise_token_auth (0.1.29)
-      devise (~> 3.2)
-      rails (~> 4.1)
-    diff-lcs (1.1.3)
+    diff-lcs (1.2.5)
     dotenv (0.11.1)
       dotenv-deployment (~> 0.0.2)
     dotenv-deployment (0.0.2)
@@ -74,6 +64,9 @@ GEM
     hashie (3.3.1)
     hike (1.2.3)
     i18n (0.6.11)
+    jbuilder (2.2.2)
+      activesupport (>= 3.0.0, < 5)
+      multi_json (~> 1.2)
     json (1.8.1)
     jwt (1.0.0)
     kaminari (0.15.1)
@@ -86,6 +79,7 @@ GEM
       treetop (~> 1.4.8)
     mail_view (2.0.4)
       tilt
+    method_source (0.8.2)
     mime-types (1.25.1)
     mini_portile (0.6.0)
     minitest (5.4.2)
@@ -128,6 +122,10 @@ GEM
     pg (0.17.1)
     polyglot (0.3.5)
     posix-spawn (0.3.9)
+    pry (0.10.3)
+      coderay (~> 1.1.0)
+      method_source (~> 0.8.1)
+      slop (~> 3.4)
     puma (2.9.0)
       rack (>= 1.1, < 2.0)
     pygments.rb (0.6.0)
@@ -168,18 +166,23 @@ GEM
       vegas (~> 0.1.2)
     resque_mailer (2.2.6)
       actionmailer (>= 3.0)
-    rspec-core (2.14.8)
-    rspec-expectations (2.14.5)
-      diff-lcs (>= 1.1.3, < 2.0)
-    rspec-mocks (2.14.6)
-    rspec-rails (2.14.2)
-      actionpack (>= 3.0)
-      activemodel (>= 3.0)
-      activesupport (>= 3.0)
-      railties (>= 3.0)
-      rspec-core (~> 2.14.0)
-      rspec-expectations (~> 2.14.0)
-      rspec-mocks (~> 2.14.0)
+    rspec-core (3.4.1)
+      rspec-support (~> 3.4.0)
+    rspec-expectations (3.4.0)
+      diff-lcs (>= 1.2.0, < 2.0)
+      rspec-support (~> 3.4.0)
+    rspec-mocks (3.4.0)
+      diff-lcs (>= 1.2.0, < 2.0)
+      rspec-support (~> 3.4.0)
+    rspec-rails (3.4.0)
+      actionpack (>= 3.0, < 4.3)
+      activesupport (>= 3.0, < 4.3)
+      railties (>= 3.0, < 4.3)
+      rspec-core (~> 3.4.0)
+      rspec-expectations (~> 3.4.0)
+      rspec-mocks (~> 3.4.0)
+      rspec-support (~> 3.4.0)
+    rspec-support (3.4.1)
     ruby-prof (0.15.1)
     shoulda-matchers (2.7.0)
       activesupport (>= 3.0.0)
@@ -187,6 +190,7 @@ GEM
       rack (~> 1.4)
       rack-protection (~> 1.4)
       tilt (~> 1.3, >= 1.3.4)
+    slop (3.6.0)
     spring (1.1.3)
     sprockets (2.12.2)
       hike (~> 1.2)
@@ -220,19 +224,18 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
-  active_model_serializers (~> 0.8.0)
   addressable
   bcrypt (~> 3.1.7)
   cancan
   composite_primary_keys (~> 7.x)
-  debugger
+  database_cleaner
   devise
   devise-encryptable
-  devise_token_auth
-  diff-lcs (= 1.1.3)
+  diff-lcs
   foreigner
   foreman
   gravatarify (>= 3.1.0)
+  jbuilder
   kaminari (= 0.15.1)
   mail_view
   moneta
@@ -242,6 +245,7 @@ DEPENDENCIES
   pagehub-markdown (>= 0.2.0)
   paperclip (= 4.1.0)
   pg
+  pry
   puma
   rack-cors
   rack-test (~> 0.6.2)
@@ -250,7 +254,7 @@ DEPENDENCIES
   redis (~> 3.0.7)
   resque (~> 1.25)
   resque_mailer (~> 2.2.6)
-  rspec-rails (~> 2.14.1)
+  rspec-rails (~> 3.4.0)
   ruby-prof
   shoulda-matchers
   spring

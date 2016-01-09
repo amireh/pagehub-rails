@@ -37,12 +37,11 @@ module.exports = {
 
     function login(creds) {
       return ajax({
-        url: '/api/v1/auth/sign_in',
+        url: '/api/v1/sessions',
         type: 'POST',
-        data: JSON.stringify({
-          email: creds.email,
-          password: creds.password
-        })
+        headers: {
+          'Authorization': `Basic ${btoa(creds.email + ':' + creds.password)}`
+        }
       });
     }
 

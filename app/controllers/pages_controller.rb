@@ -7,7 +7,10 @@ class PagesController < ApplicationController
       halt! 403
     end
 
-    # layout false
-    render layout: false
+    respond_to do |format|
+      format.html do
+        render layout: false
+      end
+    end
   end
 end

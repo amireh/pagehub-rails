@@ -82,6 +82,8 @@ require([
   'inflection',
   'md5',
   'shortcut',
+  'helpers/handlebars',
+  'helpers/jquery',
 ], function(application) {
   require([
     '/javascripts/pagehub__vendor.js',
@@ -96,8 +98,6 @@ require([
       'collections/folders',
       'collections/pages',
       'collections/spaces',
-      'helpers/handlebars',
-      'helpers/jquery',
       'views/flash',
       'views/header',
       'views/shared/animable_view',

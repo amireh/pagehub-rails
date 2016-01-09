@@ -11,9 +11,12 @@ class UsersController < ApplicationController
         @can_create_spaces = true
         @user = current_user
 
-        js_env({
-          spaces: json_render_set(spaces, SpaceSerializer)
-        })
+        js_env(render_json_template({
+          template: '/api/spaces/index.json.jbuilder',
+          locals: {
+            spaces: spaces
+          }
+        }))
       end
     end
   end

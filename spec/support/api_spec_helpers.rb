@@ -27,9 +27,9 @@ def api(&block)
   api_call(block.yield)
 end
 
-RSpec.configure do |config|
-  config.before :each do
-    header 'Accept', 'application/json; charset=UTF-8'
-    header 'Content-Type', 'application/json; charset=UTF-8'
-  end
-end
+# RSpec.configure do |config|
+#   config.before :each do
+#     header 'Accept', 'application/json; charset=UTF-8'
+#     header 'Content-Type', 'application/json; charset=UTF-8'
+#   end
+# end

@@ -49,11 +49,16 @@ class ApplicationController < ActionController::Base
 
   def expose_preferences
     if current_user
-      current_user_json = ams_render_object current_user, UserSerializer
+      current_user_json = render_json_template({
+        template: '/api/users/index',
+        locals: {
+          users: [ current_user ]
+        }
+      })
 
       js_env({
         app_preferences: PageHub::Config.defaults,
-        current_user: current_user_json
+        current_user: current_user_json['users'][0]
       })
     end
   end
@@ -93,5 +98,9 @@ class ApplicationController < ActionController::Base
     end
 
     yield(svc.output)
+  end
+
+  def render_json_template(options)
+    JSON.parse(render_to_string(options))
   end
 end
