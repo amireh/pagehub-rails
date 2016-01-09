@@ -1,4 +1,6 @@
 class Users::RegistrationsController < Devise::RegistrationsController
+  respond_to :json
+
   def create
     service = UserService.new
     svc = service.create(params)

@@ -4,6 +4,7 @@ const ReactDOM = require('react-dom');
 const Welcome = require('./screens/Welcome');
 const NotFound = require('./screens/NotFound');
 const Features = require('./screens/Features');
+const LoginRoute = require('./screens/LoginRoute');
 
 page('/', function() {
   render(<Welcome />);
@@ -15,6 +16,10 @@ page('/welcome', function() {
 
 page('/features', function() {
   render(<Features />);
+});
+
+page('/login', function() {
+  LoginRoute.handler(render);
 });
 
 // Can't do until the old crap is out.

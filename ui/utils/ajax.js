@@ -1,0 +1,1 @@
+module.exports = require('../../app/assets/javascripts/utils/ajax');

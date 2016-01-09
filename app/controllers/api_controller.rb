@@ -1,5 +1,6 @@
 class ApiController < ApplicationController
   include Rack::API::Parameters
+  include DeviseTokenAuth::Concerns::SetUserByToken
 
   respond_to :json
 

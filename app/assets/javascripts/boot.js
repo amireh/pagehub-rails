@@ -7,6 +7,9 @@ define(function(require) {
   var global = this;
   var ENV = this.ENV;
 
+  global.jQuery = require('jquery');
+  global._ = require('underscore');
+
   //>>excludeStart("production", pragmas.production);
   var injectScript = function(src) {
     var node = document.createElement('script');

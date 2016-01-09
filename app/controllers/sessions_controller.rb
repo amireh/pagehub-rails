@@ -1,4 +1,6 @@
 class SessionsController < Devise::SessionsController
+  respond_to :json
+
   before_filter :require_user, only: [ :logout ]
 
   def logout

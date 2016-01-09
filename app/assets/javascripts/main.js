@@ -82,35 +82,41 @@ require([
   'inflection',
   'md5',
   'shortcut',
-
-  // 'codemirror',
-
-  'models/folder',
-  'models/page',
-  'models/space',
-  'models/user',
-  'collections/folders',
-  'collections/pages',
-  'collections/spaces',
-  'helpers/handlebars',
-  'helpers/jquery',
-  'views/flash',
-  'views/header',
-  'views/shared/animable_view',
-  'views/shared/settings/director',
-  'views/shared/settings/nav',
-  'views/shared/settings/setting_view',
-  'views/spaces/show',
-  'views/spaces/new',
-  'views/spaces/settings/index',
-  'views/users/dashboard/director',
-  'views/users/settings/index',
-  'views/welcome/landing_page'
 ], function(application) {
-  console.log("PageHub dependencies loaded. Booting up...");
+  require([
+    '/javascripts/pagehub__vendor.js',
+    '/javascripts/pagehub__main.js',
+  ], function() {
 
-  require([ 'boot' ], function() {
-    console.log('Booted.');
+    require([
+      'models/folder',
+      'models/page',
+      'models/space',
+      'models/user',
+      'collections/folders',
+      'collections/pages',
+      'collections/spaces',
+      'helpers/handlebars',
+      'helpers/jquery',
+      'views/flash',
+      'views/header',
+      'views/shared/animable_view',
+      'views/shared/settings/director',
+      'views/shared/settings/nav',
+      'views/shared/settings/setting_view',
+      'views/spaces/show',
+      'views/spaces/new',
+      'views/spaces/settings/index',
+      'views/users/dashboard/director',
+      'views/users/settings/index',
+      'views/welcome/landing_page',
+    ], function() {
+      console.log("PageHub dependencies loaded. Booting up...");
+
+      require([ 'boot' ], function() {
+        console.log('Booted.');
+      });
+    });
   });
 });
 
