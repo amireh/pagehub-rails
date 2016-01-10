@@ -17,7 +17,7 @@ class SpacesController < ApplicationController
         }
       }),
       links: {
-        create_space: api_v1_create_user_space_url(current_user)
+        create_space: api_create_user_space_url(current_user)
       }
     })
 

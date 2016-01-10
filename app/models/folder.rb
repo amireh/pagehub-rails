@@ -139,8 +139,8 @@ class Folder < ActiveRecord::Base
 
   def ensure_parent_folder
     # attach to the root folder if no parent was specified
-    if self.folder_id.blank? && self.title != DEFAULT_FOLDER
-      self.folder_id = self.space.root_folder.id
+    if folder_id.nil? && self.title != DEFAULT_FOLDER
+      self.folder_id = space.root_folder.id
     end
   end
 

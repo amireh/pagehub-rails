@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-describe Api::V1::UsersController, type: :controller do
+describe Api::UsersController, type: :controller do
   let(:user) { a_user }
 
   it 'lets me see my profile' do

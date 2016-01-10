@@ -1,4 +1,4 @@
-class Api::V1::SessionsController < ApiController
+class Api::SessionsController < ApiController
   def create
     sign_in current_user
 

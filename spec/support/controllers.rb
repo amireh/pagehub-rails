@@ -14,6 +14,11 @@ module Support
       }
     end
 
+    def login_as(user)
+      set_json_headers
+      set_auth_headers(user.email, Support::Factories::DEFAULT_PASSWORD)
+    end
+
     def response_json
       return @response_json if @last_response.equal?(response)
       @last_response = response

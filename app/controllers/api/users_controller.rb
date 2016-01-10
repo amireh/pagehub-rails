@@ -1,4 +1,4 @@
-class Api::V1::UsersController < ::ApiController
+class Api::UsersController < ::ApiController
   include Gravatarify::Base
 
   before_filter :require_user, only: [ :show, :update ]

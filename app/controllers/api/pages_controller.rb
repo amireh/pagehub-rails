@@ -1,4 +1,4 @@
-class Api::V1::PagesController < ApiController
+class Api::PagesController < ApiController
   def index
     folder = Folder.find(params[:current_folder_id])
 

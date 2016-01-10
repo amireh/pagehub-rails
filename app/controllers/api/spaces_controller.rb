@@ -1,4 +1,4 @@
-class Api::V1::SpacesController < ::ApiController
+class Api::SpacesController < ::ApiController
   before_filter :require_user
   before_filter :require_space, only: [ :show, :update ]
 

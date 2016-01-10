@@ -1,18 +1,20 @@
-class Api::V1::FoldersController < ::ApiController
+class Api::FoldersController < ::ApiController
   before_filter :require_space
   before_filter :require_folder, only: [ :show ]
 
   def index
     authorized_action! :read, @space
 
-    params[:compact] = true
-    ams_expose_object @space.folders.includes(:user, :folder)
+    render locals: {
+      folders: @space.folders.includes(:user, :folder),
+      compact: true
+    }
   end
 
   def show
     authorized_action! :read, @folder
 
-    ams_expose_object @folder
+    render 'api/folders/index', locals: { folders: [@folder] }
   end
 
   def update
@@ -25,8 +27,9 @@ class Api::V1::FoldersController < ::ApiController
 
     authorize! :edit, folder
 
+
     new_params = params.require(:folder).permit(:title, :browsable, :folder_id)
-    # new_params = params[:folder].slice(:title, :browsable, :folder_id)
+    puts new_params
 
     if new_folder_id = new_params[:folder_id]
       new_folder = Folder.find(new_folder_id)
@@ -35,8 +38,6 @@ class Api::V1::FoldersController < ::ApiController
         halt! 422, "You can only move folders between folders within the same space."
       end
     end
-
-    puts "Folder params: #{api.parameters}"
 
     unless folder.update(new_params)
       halt! 400, folder.errors

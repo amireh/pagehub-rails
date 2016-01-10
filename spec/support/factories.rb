@@ -1,11 +1,13 @@
 module Support
   module Factories
+    DEFAULT_PASSWORD = "helloWorld123".freeze
+
     def a_user(params = {})
       attrs = {
         "name" => "Mysterious Mocker",
         "email" => "very@mysterious.com",
-        "password" => "helloWorld123",
-        "password_confirmation" => "helloWorld123",
+        "password" => Factories::DEFAULT_PASSWORD,
+        "password_confirmation" => Factories::DEFAULT_PASSWORD,
         "nickname" => ""
       }.merge(params).with_indifferent_access
 
@@ -20,6 +22,14 @@ module Support
       user.owned_spaces.create({
         title: Space::DEFAULT_TITLE
       }.with_indifferent_access.merge(params))
+    end
+
+    def a_space_with_editor(user = a_user, params = {})
+      a_space(user, params).tap do |space|
+        space.space_users.creators.create({
+          user_id: user.id
+        })
+      end
     end
 
     def a_folder(space = a_space, params = {})

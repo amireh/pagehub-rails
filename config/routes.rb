@@ -21,50 +21,48 @@ Rails.application.routes.draw do
   get '/open-source', controller: :guests, action: :open_source
 
   namespace :api, format: [ :json, :txt ] do
-    namespace :v1 do
-      resources :sessions, only: [ :create ]
+    resources :sessions, only: [ :create ]
 
-      scope '/users', controller: :users do
-        post '/nickname_availability', {
-          action: :nickname_availability,
-          as: :user_nickname_availability
-        }
+    scope '/users', controller: :users do
+      post '/nickname_availability', {
+        action: :nickname_availability,
+        as: :user_nickname_availability
+      }
 
-        post '/resend_confirmation_instructions', {
-          action: :resend_confirmation_instructions,
-          as: :user_resend_confirmation_instructions
-        }
+      post '/resend_confirmation_instructions', {
+        action: :resend_confirmation_instructions,
+        as: :user_resend_confirmation_instructions
+      }
 
-        get '/search', action: :search
+      get '/search', action: :search
 
-        scope '/:user_id' do
-          get '/', action: :show, as: :user
-          patch '/', action: :update
-        end
+      scope '/:user_id' do
+        get '/', action: :show, as: :user
+        patch '/', action: :update
       end
+    end
 
-      scope '/users/:user_id/spaces', controller: :spaces do
-        get '/', action: :index, as: :user_spaces
-        post '/', action: :create, as: :create_user_space
-        get '/:space_id', action: :show, as: :user_space
-        patch '/:space_id', action: :update
-        patch '/:space_id/memberships', action: :update_memberships, as: :user_space_memberships
-      end
+    scope '/users/:user_id/spaces', controller: :spaces do
+      get '/', action: :index, as: :user_spaces
+      post '/', action: :create, as: :create_user_space
+      get '/:space_id', action: :show, as: :user_space
+      patch '/:space_id', action: :update
+      patch '/:space_id/memberships', action: :update_memberships, as: :user_space_memberships
+    end
 
-      scope '/spaces/:space_id/folders', controller: :folders do
-        get '/', action: :index, as: :space_folders
-        get '/:folder_id', action: :show, as: :space_folder
-        patch '/:folder_id', action: :update
-      end
+    scope '/spaces/:space_id/folders', controller: :folders do
+      get '/', action: :index, as: :space_folders
+      get '/:folder_id', action: :show, as: :space_folder
+      patch '/:folder_id', action: :update
+    end
 
-      scope '/folders/:current_folder_id/pages', controller: :pages do
-        get '/', action: :index, as: :folder_pages
-        get '/:page_id', action: :show, as: :folder_page
-        post '/', action: :create
-        patch '/:page_id', action: :update
-        delete '/:page_id', action: :destroy
-      end
-    end # namespace :v1
+    scope '/folders/:current_folder_id/pages', controller: :pages do
+      get '/', action: :index, as: :folder_pages
+      get '/:page_id', action: :show, as: :folder_page
+      post '/', action: :create
+      patch '/:page_id', action: :update
+      delete '/:page_id', action: :destroy
+    end
   end # namespace :api
 
   scope '/settings', controller: :settings do

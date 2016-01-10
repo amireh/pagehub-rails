@@ -1,5 +1,5 @@
 json.id               object.id.to_s
-json.url              api_v1_user_space_url(object.user, object)
+json.url              api_user_space_url(object.user, object)
 json.title            ERB::Util.h(object.title)
 json.pretty_title     ERB::Util.h(object.pretty_title)
 json.brief            ERB::Util.h(object.brief)
@@ -25,7 +25,7 @@ end
 
 json.links do
   json.edit         user_space_edit_url(object.user.nickname, object.pretty_title)
-  json.folders      api_v1_space_folders_url(object)
-  json.memberships  api_v1_user_space_memberships_url(object.user_id, object)
+  json.folders      api_space_folders_url(object)
+  json.memberships  api_user_space_memberships_url(object.user_id, object)
   json.settings     user_space_settings_url(object.user.nickname, object.pretty_title)
 end
