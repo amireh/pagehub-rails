@@ -1,5 +1,5 @@
 # PageHub - Open editing platform.
-# Copyright (C) 2014 Ahmad Amireh <ahmad@algollabs.com>
+# Copyright (C) 2016 Algol Labs <hi@algollabs.com>
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU Affero General Public License as
@@ -14,30 +14,23 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-module CoreExt::Hash
-  # Removes a key from the hash and returns the hash
-  def delete!(key)
-    tap do
-      self.delete(key)
-    end
-  end
-
-  # Merges self with another hash, recursively.
+module HashUtils
+  # Merges self with another, recursively.
   #
   # This code was lovingly stolen from some random gem:
   # http://gemjack.com/gems/tartan-0.1.1/classes/Hash.html
   #
   # Thanks to whoever made it.
-  def deep_merge(hash)
-    target = dup
+  def self.deep_merge(lhs, rhs)
+    target = lhs.dup
 
-    hash.keys.each do |key|
-      if hash[key].is_a? Hash and self[key].is_a? Hash
-        target[key] = target[key].deep_merge(hash[key])
+    rhs.keys.each do |key|
+      if rhs[key].is_a? Hash and lhs[key].is_a? Hash
+        target[key] = target[key].deep_merge(rhs[key])
         next
       end
 
-      target[key] = hash[key]
+      target[key] = rhs[key]
     end
 
     target

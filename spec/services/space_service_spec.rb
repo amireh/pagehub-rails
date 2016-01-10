@@ -1,10 +1,10 @@
 require 'rails_helper'
 
 describe SpaceService do
-  describe '#create' do
-    let(:user) { a_user }
+  let(:user) { a_user }
 
-    before do
+  describe '#create' do
+    before(:each) do
       @svc = subject.create(user, { title: 'Personal' })
       @space = @svc.output
     end
@@ -28,6 +28,31 @@ describe SpaceService do
 
     it "should create a homepage for the space by default" do
       expect(@space.root_folder.has_homepage?).to eq(true)
+    end
+  end
+
+  describe '#update' do
+    let(:space) { a_space(user) }
+
+    describe 'updating preferences' do
+      before(:each) do
+        subject.update(space, { preferences: { publishing: { theme_name: 'a' } } })
+        space.reload
+      end
+
+      it 'updates preferences' do
+        expect(space.preference('publishing.theme_name')).to eq('a')
+      end
+
+      it 'does not erase existing, nested keys' do
+        subject.update(space, { preferences: { publishing: { foo: 'bar' } } })
+        expect(space.preference('publishing.foo')).to eq('bar')
+      end
+
+      it 'overwrites existing keys' do
+        subject.update(space, { preferences: { publishing: { theme_name: 'b' } } })
+        expect(space.preference('publishing.theme_name')).to eq('b')
+      end
     end
   end
 end

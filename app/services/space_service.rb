@@ -38,7 +38,7 @@ class SpaceService < Service
     attrs = params
 
     if params[:preferences]
-      attrs[:preferences] = space.preferences.deep_merge(params[:preferences])
+      attrs[:preferences] = HashUtils.deep_merge(space.preferences, params[:preferences])
     end
 
     space.update_attributes(attrs)
