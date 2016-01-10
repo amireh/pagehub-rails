@@ -101,6 +101,6 @@ class ApplicationController < ActionController::Base
   end
 
   def render_json_template(options)
-    JSON.parse(render_to_string(options))
+    JSON.parse(render_to_string(options.merge({ content_type: Mime::HTML.to_s })))
   end
 end

@@ -5,11 +5,10 @@ class Api::V1::UsersController < ::ApiController
 
   def show
     authorized_action! :read, @user
-    @users = [ @user ]
-    respond_to do |format|
-      format.json { render template: '/api/users/index' }
-    end
-    # expose @user
+
+    render '/api/users/index', locals: {
+      users: [ @user ]
+    }
   end
 
   def nickname_availability

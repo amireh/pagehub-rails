@@ -1,17 +1,4 @@
-# ENV["RAILS_ENV"] ||= 'test'
-
-# require File.expand_path("../../config/environment", __FILE__)
-# require 'rspec/rails'
-# require 'rack/test'
-# require 'rack/utils'
-# require 'paperclip/matchers'
-
-# ActiveRecord::Migration.check_pending! if defined?(ActiveRecord::Migration)
-
 RSpec.configure do |config|
-  # config.include Rack::Test::Methods
-  # config.include Paperclip::Shoulda::Matchers
-
   config.run_all_when_everything_filtered = true
   config.filter_run :focus
 
@@ -45,17 +32,4 @@ RSpec.configure do |config|
   end
 
   Kernel.srand config.seed
-
-  # def app
-  #   PageHub::Application
-  # end
-
-  # if ENV['VERBOSE']
-  #   Rails.logger = Logger.new(STDOUT)
-  # end
 end
-
-# require_relative "./support/factories"
-
-# Dir["./spec/support/**/*.rb"].sort.each { |f| require f }
-

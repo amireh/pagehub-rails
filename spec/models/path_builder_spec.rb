@@ -1,17 +1,17 @@
-require 'spec_helper'
+require 'rails_helper'
 
 describe PathBuilder do
-  let(:user) { valid! fixture(:user) }
-  let(:space) { valid! user.create_default_space }
+  let(:user) { a_user }
+  let(:space) { a_space(user) }
+  let(:root_folder) { space.create_root_folder }
 
   describe "Instance methods" do
     before do
-      space.create_root_folder
-      @root        = space.root_folder
-      @parent      = valid! fixture(:folder, space, { title: "Parent" })
-      @child       = valid! fixture(:folder, space, { title: "Child",     folder_id: @parent.id })
-      @grandchild  = valid! fixture(:folder, space, { title: "Granchild", folder_id: @child.id  })
-      @uncle       = valid! fixture(:folder, space, { title: "Uncle" })
+      @root        = root_folder
+      @parent      = a_folder(space, { title: "Parent" })
+      @child       = a_folder(space, { title: "Child",     folder_id: @parent.id })
+      @grandchild  = a_folder(space, { title: "Granchild", folder_id: @child.id  })
+      @uncle       = a_folder(space, { title: "Uncle" })
     end
 
     describe '.folder_ancestors' do

@@ -1,6 +1,7 @@
-describe 'import_from_legacy rake task' do
-  require 'rake'
+require 'rails_helper'
+require 'rake'
 
+describe 'import_from_legacy rake task' do
   let :path do
     Rails.root.join('tmp', 'legacy_import_fixture.json')
   end
@@ -35,7 +36,7 @@ describe 'import_from_legacy rake task' do
       'users' => json_fixture('import_from_legacy/users.json')
     })
 
-    User.count.should == 2
+    expect(User.count).to eq 2
   end
 
   describe 'spaces' do
@@ -47,21 +48,21 @@ describe 'import_from_legacy rake task' do
     end
 
     it 'should import spaces' do
-      User.count.should == 2
-      Space.count.should == 5
+      expect(User.count).to eq 2
+      expect(Space.count).to eq 5
 
-      User.find(1).owned_spaces.count.should == 3
-      User.find(2).owned_spaces.count.should == 2
+      expect(User.find(1).owned_spaces.count).to eq 3
+      expect(User.find(2).owned_spaces.count).to eq 2
     end
 
     it 'should import attributes properly' do
       space = Space.find(1)
-      space.title.should == 'Personal'
-      space.pretty_title.should == 'personal'
-      space.is_public.should == false
-      space.preferences['publishing'].should be_present
-      space.preferences['publishing']['scheme'].should == 'Clean'
-      space.created_at.should == Time.parse('2013-02-19T21:59:02+02:00')
+      expect(space.title).to eq 'Personal'
+      expect(space.pretty_title).to eq 'personal'
+      expect(space.is_public).to eq false
+      expect(space.preferences['publishing']).to be_present
+      expect(space.preferences['publishing']['scheme']).to eq 'Clean'
+      expect(space.created_at).to eq Time.parse('2013-02-19T21:59:02+02:00')
     end
   end
 
@@ -72,7 +73,7 @@ describe 'import_from_legacy rake task' do
       'space_users' => json_fixture('import_from_legacy/space_users.json')
     })
 
-    SpaceUser.count.should == 1
+    expect(SpaceUser.count).to eq 1
   end
 
   it 'should not import blacklisted items' do
@@ -84,12 +85,17 @@ describe 'import_from_legacy rake task' do
       }
     }, { users: [ 10 ]})
 
-    User.count.should == 0
+    expect(User.count).to eq 0
   end
 
   it 'should import everything' do
     run({
       'users' => json_fixture('import_from_legacy/users.json')
     })
+  end
+
+  def json_fixture(path)
+    json = JSON.parse File.read File.join(Rails.root, 'spec', 'fixtures', path)
+    json.is_a?(Hash) ? json.with_indifferent_access : json
   end
 end

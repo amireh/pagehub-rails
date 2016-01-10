@@ -78,7 +78,7 @@ class PageRevision < ActiveRecord::Base
     self.additions = patch.additions
     self.deletions = patch.deletions
 
-    puts "New version: #{self.version} (blob: #{self.blob[0..255]}"
+    Rails.logger.debug "New version: #{self.version} (blob: #{self.blob[0..255]}"
 
     true
   end
@@ -143,7 +143,7 @@ class PageRevision < ActiveRecord::Base
   #
   # @return [Patch]
   def build_patch(old_content, new_content)
-    puts "Generating diff between #{old_content[0..255]} and #{new_content[0..255]}..."
+    Rails.logger.debug "Generating diff between #{old_content[0..255]} and #{new_content[0..255]}..."
 
     patch = Patch.new(nil, 0, 0)
     patch.diff = Diff::LCS.diff(old_content.split("\n"), new_content.split("\n"))

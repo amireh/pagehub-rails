@@ -1,84 +1,80 @@
-require 'spec_helper'
+require 'rails_helper'
 
 describe Page do
-  let :user do
-    valid! fixture(:user)
-  end
-
-  let :space do
-    user.create_default_space.tap do |space|
-      space.create_root_folder
-    end
-  end
-
-  let :root_folder do
-    space.root_folder
-  end
+  let!(:user) { a_user }
+  let!(:space) { a_space(user) }
+  let!(:root_folder) { space.create_root_folder }
 
   after do
-    user.pages.destroy_all.should be_true
+    expect(user.pages.destroy_all).to be_truthy
   end
 
   it "should be creatable" do
-    folder = valid! fixture(:folder, space)
-    page = valid! folder.pages.create({ title: "Test", user: user })
-    page.folder.should == folder
-    folder.pages.count.should == 1
+    folder = a_folder(space)
+    page = a_page(folder, { title: "Test", user: user })
+
+    expect(page.valid?).to be_truthy
+    expect(page.folder).to eq folder
+
+    expect(folder.pages.count).to eq 1
   end
 
   it "should be destroyed" do
-    page = valid! fixture(:page, root_folder)
-    page.destroy.should be_true
+    page = a_page(root_folder)
+    expect(page.destroy).to be_truthy
+    expect { page.reload }.to raise_error(/Couldn't find Page/)
   end
 
   it "should generate a carbon copy on creation" do
-    page = valid! fixture(:page, root_folder)
-    page.carbon_copy.should be_present
-    page.carbon_copy.content.should be_blank, 'Initial CC has no content'
+    page = a_page(root_folder)
+    expect(page.carbon_copy).to be_present
+    expect(page.carbon_copy.content).to be_blank, 'Initial CC has no content'
   end
 
   context "versioning" do
-    let(:page) { valid! fixture(:page, root_folder) }
+    let!(:page) { a_page(root_folder) }
 
     before do
       @updates = [ "foobar", "adooken", "got\n\nya" ]
       @revisions = []
 
       @updates.each do |new_content|
-        page.generate_revision(new_content, page.user).should be_true
+        expect(page.generate_revision(new_content, page.user)).to be_truthy
         page.update!({ content: new_content })
       end
 
       @revisions = page.revisions.to_a
-      @revisions.count.should == @updates.length
 
-      page.content.should == @updates.last
+      expect(@revisions.count).to eq @updates.length
+      expect(page.content).to eq @updates.last
     end
 
     it 'snapshotting' do
-      page.snapshot(@revisions[0]).should == 'foobar'
-      page.snapshot(@revisions[1]).should == 'adooken'
-      page.snapshot(@revisions[2]).should == "got\n\nya"
+      expect(page.snapshot(@revisions[0])).to eq 'foobar'
+      expect(page.snapshot(@revisions[1])).to eq 'adooken'
+      expect(page.snapshot(@revisions[2])).to eq "got\n\nya"
     end
 
     it 'rolling back' do
-      page.content.should == @updates.last
-      page.revisions.count.should == 3
-      page.rollback(@revisions[0]).should be_true
+      expect(page.content).to eq @updates.last
+
+      expect(page.revisions.count).to eq 3
+      page.rollback(@revisions[0])
       page.reload
-      page.content.should == 'foobar'
-      page.revisions.count.should == 1
+      expect(page.content).to eq 'foobar'
+      expect(page.revisions.count).to eq 1
     end
 
     it 'rolling back to the latest HEAD' do
-      page.rollback(@revisions.last).should be_true
-      page.reload.content.should == "got\n\nya"
+      page.rollback(@revisions.last)
+      expect(page.reload.content).to eq "got\n\nya"
     end
 
     it 'rolling back sequentially' do
       @revisions.reverse.each_with_index do |rv, i|
-        page.rollback(rv).should be_true
-        page.content.should == @updates.reverse[i]
+        page.rollback(rv)
+
+        expect(page.content).to eq @updates.reverse[i]
       end
     end
   end

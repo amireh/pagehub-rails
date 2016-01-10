@@ -1,13 +1,8 @@
-require 'spec_helper'
+require 'rails_helper'
 
 describe Space do
-  let(:user) do
-    valid! fixture(:user)
-  end
-
-  let(:space) do
-    user.create_default_space
-  end
+  let(:user) { a_user }
+  let(:space) { user.create_default_space }
 
   subject { space }
 
@@ -16,61 +11,67 @@ describe Space do
   it { should have_many(:folders).dependent(:destroy) }
 
   it 'validate_uniqueness_of :title within :user_id scope' do
-    space2 = invalid! user.owned_spaces.create({ title: space.title })
-    space2.errors.get(:title).first.should =~ /already have a space/
+    space2 = a_space(user, { title: space.title })
+
+    expect(space2.valid?).to eq(false)
+    expect(space2.errors.get(:title).first).to match /already have a space/
   end
 
   context "Creation" do
     it "should reject duplicate titled spaces per-user scope" do
-      space = valid! fixture(:space, user, { title: "Moo" })
-      space = invalid! fixture(:space, user, { title: "Moo" })
-      space.errors.get(:title).first.should match(/already have a space with that title/)
+      space1 = a_space(user, { title: "Moo" })
+      expect(space1.valid?).to eq(true)
 
-      another_user = valid! fixture(:user, {
+      space2 = a_space(user, { title: "Moo" })
+      expect(space2.valid?).to eq(false)
+      expect(space2.errors[:title].first).to eq 'You already have a space with that title.'
+
+      another_user = a_user({
         name: 'Adooken',
         email: 'something@else.com'
       })
 
-      space = valid! another_user.owned_spaces.create({ title: "Moo" })
+      space3 = a_space(another_user, { title: "Moo" })
+
+      expect(space3.valid?).to eq(true)
     end
   end
 
   it "update its pretty title whenever the title is updated" do
-    space.pretty_title.should == space.title.sanitize
     space.update({ title: "New Title" })
-    space.pretty_title.should == "New Title".sanitize
+    expect(space.pretty_title).to eq "new-title"
   end
 
   context "Memberships" do
     it "should add a member" do
       membership = subject.add_member(user)
       subject.reload
-      subject.users.count.should == 1
-      user.spaces.count.should == 1
+      expect(subject.users.count).to eq 1
+      expect(user.spaces.count).to eq 1
     end
 
     it "should uprank a member" do
       subject.add_member(user)
-      subject.role_of(user).should == 'member'
+      expect(subject.role_of(user)).to eq 'member'
 
-      subject.add_admin(user).should be_true
-      subject.role_of(user).should == 'admin'
+      subject.add_admin(user)
+      expect(subject.role_of(user)).to eq 'admin'
     end
 
     it "should downrank a member" do
       subject.add_admin(user)
-      subject.role_of(user).should == 'admin'
+      expect(subject.role_of(user)).to eq 'admin'
 
-      subject.add_member(user).should be_true
-      subject.role_of(user).should == 'member'
+      subject.add_member(user)
+      expect(subject.role_of(user)).to eq 'member'
     end
   end
 
   describe '#destroy' do
     it 'should work' do
-      space.destroy.should be_true
+      space.destroy!
       user.reload
-      user.owned_spaces.should be_empty
+      expect(user.owned_spaces).to be_empty
     end
   end
 end

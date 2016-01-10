@@ -1,92 +1,75 @@
-require 'spec_helper'
+require 'rails_helper'
 
 describe PageRevision do
-  before do
-    @user = valid! fixture(:user)
-    @space = @user.create_default_space
-    @root_folder = @space.create_root_folder
-  end
-
-  # before(:all) do
-  #   Fixtures.teardown
-
-  #   @user = valid! fixture(:user)
-  #   @space = @user.create_default_space
-  #   @root_folder = @space.create_root_folder
-
-  #   Fixtures.skip_teardown = true
-  # end
-
-  # after(:all) do
-  #   @user.destroy!
-  #   Fixtures.skip_teardown = false
-  # end
+  let(:user) { a_user }
+  let(:space) { a_space(user) }
+  let(:root_folder) { space.create_root_folder }
 
   context "generation" do
-    before do
-      pending
-
-      @user.pages.destroy
-      @page = fixture(:page, @root_folder)
-    end
+    let(:page) { a_page(root_folder) }
 
     it "should reject generating without a valid context" do
       expect {
         rv = PageRevision.new
-        rv.page = @page
-        rv.user = @page.user
+        rv.page = page
+        rv.user = page.user
         rv.save
       }.to raise_error(PageRevision::InvalidContextError, /context must be populated/)
     end
 
     it "should reject generating without a carbon copy" do
       expect {
-        @page.carbon_copy.destroy.should be_true
-        @page.reload
+        page.carbon_copy.destroy!
+        page.reload
+
         rv = PageRevision.new
-        rv.page = @page
-        rv.user = @page.user
-        rv.context = { content: 'foobar' }
+        rv.page = page
+        rv.user = page.user
+        rv.new_content = 'foobar'
         rv.save
+
       }.to raise_error(PageRevision::InvalidContextError, /must have a CarbonCopy/)
     end
 
     it "should generate" do
-      rv_count = @page.revisions.count
-      @page.generate_revision('foobar', @page.user).should be_true
-      @page.reload.revisions.count.should == rv_count + 1
+      rv_count = page.revisions.count
+
+      expect(page.generate_revision('foobar', page.user)).to be_truthy
+      expect(page.reload.revisions.count).to eq(rv_count + 1)
     end
 
     it "should not generate if content hasn't changed" do
       expect {
-        @page.generate_revision(@page.content, @page.user)
+        page.generate_revision(page.content, page.user)
       }.to raise_error(PageRevision::NothingChangedError)
     end
 
     it "should reject patching content too big" do
       really_large_string = 'a' * PageRevision::MAX_PATCH_SIZE
 
-      @page.generate_revision("First revision.", @page.user)
+      page.generate_revision("First revision.", page.user)
 
       expect {
-        @page.generate_revision(really_large_string, @page.user)
+        page.generate_revision(really_large_string, page.user)
       }.to raise_error(PageRevision::PatchTooBigError)
     end
   end
 
   describe "instance methods" do
+    let(:page) { a_page(root_folder) }
+
     before do
-      @page = fixture(:page, @root_folder)
-      @page.generate_revision('foobar', @page.user).should be_true
-      @page.generate_revision('barfoo', @page.user).should be_true
+      page.generate_revision('foobar', page.user)
+      page.generate_revision('barfoo', page.user)
+      page.reload
 
-      @page.reload
-      @page.revisions.count.should == 2
+      expect(page.revisions.count).to eq 2
 
-      @rv1 = @page.revisions.first
-      @rv1.blob.should_not be_nil
-      @rv2 = @page.revisions.last
-      @rv2.blob.should_not be_nil
+      @rv1 = page.revisions.first
+      @rv2 = page.revisions.last
+
+      expect(@rv1.blob).to_not be_nil
+      expect(@rv2.blob).to_not be_nil
     end
 
     # after(:all) do
@@ -94,28 +77,28 @@ describe PageRevision do
     # end
 
     it "#info" do
-      @rv1.info.should == "1 addition and 0 deletions."
-      @rv2.info.should == "1 addition and 1 deletion."
+      expect(@rv1.info).to eq "1 addition and 0 deletions."
+      expect(@rv2.info).to eq "1 addition and 1 deletion."
     end
 
     it "#next" do
-      @rv1.next.should == @rv2
-      @rv2.next.should == nil
+      expect(@rv1.next).to eq @rv2
+      expect(@rv2.next).to eq nil
     end
 
     it "#prev" do
-      @rv2.prev.should == @rv1
-      @rv1.prev.should == nil
+      expect(@rv2.prev).to eq @rv1
+      expect(@rv1.prev).to eq nil
     end
 
     it '#roll' do
-      @page.revisions.pluck(:blob).should_not include(nil)
+      expect(page.revisions.pluck(:blob)).to_not include(nil)
 
-      @rv1.send(:roll, :backward, 'foobar').should == ''
-      @rv2.send(:roll, :backward, 'barfoo').should == 'foobar'
+      expect(@rv1.send(:roll, :backward, 'foobar')).to eq ''
+      expect(@rv2.send(:roll, :backward, 'barfoo')).to eq 'foobar'
 
-      @rv1.send(:roll, :forward, '').should == 'foobar'
-      @rv2.send(:roll, :forward, 'foobar').should == 'barfoo'
+      expect(@rv1.send(:roll, :forward, '')).to eq 'foobar'
+      expect(@rv2.send(:roll, :forward, 'foobar')).to eq 'barfoo'
     end
 
     it '#roll with a bad patch' do
