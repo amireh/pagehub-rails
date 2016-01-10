@@ -16,21 +16,5 @@
 
 module Rack
   module API
-    extend Callbacks
-
-    class << self
-      # @!attribute logger
-      # @return [ActiveSupport::Logger]
-      # A Logger instance.
-      attr_accessor :logger
-
-      # @!attribute instance
-      # @return [ActionController::Base]
-      #   The application controller instance that is evaluating the current
-      #   request.
-      attr_accessor :instance
-    end
-
-    ParameterValidator.install(self)
   end
 end

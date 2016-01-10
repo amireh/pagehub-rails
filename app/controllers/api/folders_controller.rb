@@ -18,8 +18,7 @@ class Api::FoldersController < ::ApiController
   end
 
   def update
-    space = require_space
-
+    space = @space
     authorize! :author, space,
       message: "You need to be an editor of this space to edit folders."
 
@@ -27,9 +26,7 @@ class Api::FoldersController < ::ApiController
 
     authorize! :edit, folder
 
-
     new_params = params.require(:folder).permit(:title, :browsable, :folder_id)
-    puts new_params
 
     if new_folder_id = new_params[:folder_id]
       new_folder = Folder.find(new_folder_id)
@@ -43,7 +40,7 @@ class Api::FoldersController < ::ApiController
       halt! 400, folder.errors
     end
 
-    expose folder
+    render 'api/folders/index', locals: { folders: [folder] }
   end
 
   private

@@ -43,7 +43,7 @@ class Api::UsersController < ::ApiController
   end
 
   def update
-    accepts *[
+    params.require(:user).permit(
       :name,
       :nickname,
       :gravatar_email,
@@ -51,21 +51,26 @@ class Api::UsersController < ::ApiController
       :preferences,
       :password,
       :password_confirmation
-    ]
+    )
 
-    api.consume :preferences do |prefs|
-      current_user.save_preferences(current_user.preferences.deep_merge(prefs))
+    params.fetch(:user, {}).fetch(:preferences, {}).permit!
+
+    if preferences = params[:user][:preferences]
+      current_user.save_preferences(HashUtils.deep_merge(current_user.preferences, preferences))
+      params[:user].delete(:preferences)
     end
 
-    unless current_user.update(api.parameters)
+    unless current_user.update(params[:user])
       halt! 422, current_user.errors
     end
 
-    expose current_user
+    render '/api/users/index', locals: {
+      users: [ @user ]
+    }
   end
 
   def resend_confirmation_instructions
     current_user.send_confirmation_instructions
-    no_content!
+    head 204
   end
 end

@@ -50,6 +50,12 @@ Rails.application.routes.draw do
       patch '/:space_id/memberships', action: :update_memberships, as: :user_space_memberships
     end
 
+    scope '/spaces/:space_id/memberships', controller: :memberships do
+      post '/:user_id', action: :create
+      patch '/:user_id', action: :update
+      delete '/:user_id', action: :destroy
+    end
+
     scope '/spaces/:space_id/folders', controller: :folders do
       get '/', action: :index, as: :space_folders
       get '/:folder_id', action: :show, as: :space_folder

@@ -4,7 +4,7 @@ class Api::PagesController < ApiController
 
     authorize! :read, folder
 
-    render template: 'api/pages/index', locals: {
+    render 'api/pages/index', locals: {
       pages: folder.pages.includes(:user)
     }
   end
@@ -29,7 +29,7 @@ class Api::PagesController < ApiController
       halt! 422, page.errors
     end
 
-    render template: 'api/pages/index', locals: {
+    render 'api/pages/index', locals: {
       pages: [ page ]
     }
   end
@@ -39,7 +39,7 @@ class Api::PagesController < ApiController
 
     authorize! :read, page
 
-    render template: 'api/pages/index', locals: {
+    render 'api/pages/index', locals: {
       pages: [ page ]
     }
   end
@@ -79,7 +79,7 @@ class Api::PagesController < ApiController
       halt! 422, page.errors
     end
 
-    render template: 'api/pages/index', locals: {
+    render 'api/pages/index', locals: {
       pages: [ page ]
     }
   end

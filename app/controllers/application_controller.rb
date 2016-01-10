@@ -1,6 +1,5 @@
 class ApplicationController < ActionController::Base
   include ErrorRenderer
-  include JsonRenderer
 
   # Prevent CSRF attacks by raising an exception.
   # For APIs, you may want to use :null_session instead.
@@ -29,7 +28,7 @@ class ApplicationController < ActionController::Base
       end
 
       format.any do
-        render text: 'Not Found', status: :not_found, content_type: Mime::TEXT
+        render text: 'Not Found', status: :not_found, content_type: Mime::TEXT.to_s
       end
     end
   end
@@ -71,15 +70,6 @@ class ApplicationController < ActionController::Base
     raise Rack::API::Error.new(status, message)
   end
 
-  # Respond with a 204 No Content, useful for DELETE operations, or ones that
-  # request no-content (such as requests with the [:headless] parameter).
-  #
-  # @warning
-  # Calling this method halts the execution.
-  def no_content!
-    halt! 204
-  end
-
   def require_json_format
     accept = request.headers['HTTP_ACCEPT'] || ''
 
@@ -90,14 +80,6 @@ class ApplicationController < ActionController::Base
 
   def json_request?
     (request.headers['HTTP_ACCEPT'] || '') =~ /json/
-  end
-
-  def with_service(svc, &block)
-    unless svc.successful?
-      halt! 400, svc.error
-    end
-
-    yield(svc.output)
   end
 
   def render_json_template(options)
