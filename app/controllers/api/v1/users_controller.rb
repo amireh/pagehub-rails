@@ -12,7 +12,7 @@ class Api::V1::UsersController < ::ApiController
   end
 
   def nickname_availability
-    nickname = (params[:name] || '').to_s.sanitize
+    nickname = StringUtils.sanitize(params[:name].to_s)
 
     available = nickname.present? &&
       nickname.length >= 3 &&

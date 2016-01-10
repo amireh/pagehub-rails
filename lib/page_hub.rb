@@ -503,7 +503,7 @@ module PageHub
   }
 
   def self.resource_title_available?(raw_title)
-    title = (raw_title || '').to_s.sanitize
+    title = StringUtils.sanitize(raw_title.to_s)
 
     return false if title.empty?
     return false if title.length < 3

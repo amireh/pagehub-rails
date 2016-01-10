@@ -99,7 +99,7 @@ class User < ActiveRecord::Base
   end
 
   def ensure_has_valid_nickname
-    if nickname.sanitize != nickname
+    if StringUtils.sanitize(nickname) != nickname
       errors.add :nickname, "Nicknames can only contain letters, numbers, dashes, and underscores."
       return false
     end

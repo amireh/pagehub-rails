@@ -31,7 +31,7 @@ class UserService < Service
     attrs = ActionController::Parameters.new(params.slice(*CREATION_ATTRS))
     attrs[:provider] ||= 'pagehub'
     attrs[:uid] ||= UUID.generate()
-    attrs[:nickname] ||= params[:name].to_s.sanitize
+    attrs[:nickname] ||= StringUtils.sanitize(params[:name].to_s)
     attrs.permit!
 
     svc.output = user = User.create(attrs)

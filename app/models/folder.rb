@@ -125,7 +125,7 @@ class Folder < ActiveRecord::Base
   #   True if this folder contains no sub-folders or pages that have the given
   #   title.
   def title_available?(raw_title, folder_id=nil)
-    title = raw_title.to_s.sanitize
+    title = StringUtils.sanitize(raw_title.to_s)
 
     self.folders.where({ pretty_title: title }).none? &&
     self.pages.where({ pretty_title: title }).none?

@@ -11,17 +11,17 @@ module Titlable
       }
 
       before_save :set_pretty_title, :if => :title_changed?
-      scope :titled, ->(raw_title) { where(pretty_title: raw_title.to_s.sanitize) }
+      scope :titled, ->(raw_title) { where(pretty_title: StringUtils.sanitize(raw_title.to_s)) }
     end
   end
 
   module InstanceMethods
     def set_pretty_title
-      self.pretty_title = self.title.to_s.sanitize
+      self.pretty_title = StringUtils.sanitize(title.to_s)
     end
 
     def title=(new_title)
-      write_attribute(:pretty_title, new_title.to_s.sanitize)
+      write_attribute(:pretty_title, StringUtils.sanitize(new_title.to_s))
       super
     end
   end

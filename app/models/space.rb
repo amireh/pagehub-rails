@@ -89,7 +89,7 @@ class Space < ActiveRecord::Base
       return nil if !folder
     end
 
-    resource_title = path.last.to_s.sanitize
+    resource_title = StringUtils.sanitize(path.last.to_s)
     page = folder.pages.where({ pretty_title: resource_title }).first
 
     if !page
