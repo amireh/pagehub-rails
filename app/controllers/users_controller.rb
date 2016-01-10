@@ -34,11 +34,18 @@ class UsersController < ApplicationController
 
     respond_to do |format|
       format.html do
-        @user = user
-
         js_env({
-          user: ams_render_object(user, UserSerializer),
-          spaces: json_render_set(spaces, SpaceSerializer)
+          user: render_json_template({
+            template: 'api/users/index',
+            locals: { users: [ user ] }
+          }),
+
+          spaces: render_json_template({
+            template: 'api/spaces/index',
+            locals: {
+              spaces: spaces
+            }
+          })
         })
 
         render :"dashboard"

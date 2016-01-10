@@ -56,7 +56,7 @@ Rails.application.routes.draw do
       patch '/:folder_id', action: :update
     end
 
-    scope '/folders/:current_folder_id/pages', controller: :pages do
+    scope '/folders/:folder_id/pages', controller: :pages do
       get '/', action: :index, as: :folder_pages
       get '/:page_id', action: :show, as: :folder_page
       post '/', action: :create

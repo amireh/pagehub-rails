@@ -1,8 +1,8 @@
 class Api::PagesController < ApiController
   def index
-    folder = Folder.find(params[:current_folder_id])
+    folder = Folder.find(params[:folder_id])
 
-    authorized_action! :read, folder
+    authorize! :read, folder
 
     render template: 'api/pages/index', locals: {
       pages: folder.pages.includes(:user)
@@ -10,7 +10,7 @@ class Api::PagesController < ApiController
   end
 
   def create
-    folder = Folder.find(params[:current_folder_id])
+    folder = Folder.find(params[:folder_id])
     space = folder.space
 
     authorize! :author, space,
@@ -19,24 +19,25 @@ class Api::PagesController < ApiController
     authorize! :author_more, space,
       :message => 'You can not create any more pages in this space.'
 
-    accepts :title, :content, :browsable
+    xparams = params.require(:page).permit(:title, :content, :browsable)
 
-    page = folder.pages.create api.parameters({
+    page = folder.pages.create(xparams.merge({
       user_id: current_user.id
-    })
+    }))
 
     unless page.valid?
       halt! 422, page.errors
     end
 
-    expose page
+    render template: 'api/pages/index', locals: {
+      pages: [ page ]
+    }
   end
 
   def show
     page = Page.find(params[:page_id])
 
-    puts "can read page? #{page.id} #{can?(:read, page)}"
-    authorized_action! :read, page
+    authorize! :read, page
 
     render template: 'api/pages/index', locals: {
       pages: [ page ]
@@ -50,9 +51,9 @@ class Api::PagesController < ApiController
     authorize! :author, space,
       message: "You need to be an editor of this space to edit pages."
 
-    accepts :title, :content, :browsable, :folder_id
+    xparams = params.require(:page).permit(:title, :content, :browsable, :folder_id)
 
-    if new_folder_id = api.get(:folder_id)
+    if new_folder_id = xparams[:folder_id]
       new_folder = Folder.find(new_folder_id)
 
       if new_folder.space != space
@@ -60,8 +61,8 @@ class Api::PagesController < ApiController
       end
     end
 
-    if new_content = api.get(:content)
-      PageHub::Markdown::mutate! @api[:optional][:content]
+    if new_content = xparams[:content]
+      PageHub::Markdown::mutate! xparams[:content]
 
       begin
         unless page.generate_revision(new_content, current_user)
@@ -74,12 +75,15 @@ class Api::PagesController < ApiController
       end
     end
 
-    unless page.update(api.parameters)
+    unless page.update(xparams)
       halt! 422, page.errors
     end
 
-    expose page
+    render template: 'api/pages/index', locals: {
+      pages: [ page ]
+    }
   end
+
   def destroy
     page = Page.find(params[:page_id])
 
@@ -90,6 +94,6 @@ class Api::PagesController < ApiController
       halt! 500, page.errors
     end
 
-    no_content!
+    head 204
   end
 end
