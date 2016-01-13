@@ -1,8 +1,9 @@
 define([
   'backbone',
-  'hbs!templates/header_path'
-], function(Backbone, HeaderPath) {
-  return Backbone.View.extend({
+  'hbs!templates/header_path',
+  'jquery'
+], function(Backbone, HeaderPath, $) {
+  return window.PHLegacy.HeaderView = Backbone.View.extend({
     el: $("#header"),
 
     initialize: function(app) {

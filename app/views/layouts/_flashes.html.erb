@@ -1,4 +1,4 @@
-<% if flash.any? %>
+<% if flash.reject { |(_,m)| m.blank? }.any? %>
   <% style = if flash.any? { |(c,_)| c == 'error' }
     'flash-messages--error'
     else

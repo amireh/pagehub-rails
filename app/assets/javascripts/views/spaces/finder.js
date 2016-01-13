@@ -1,5 +1,5 @@
-define([ 'views/shared/animable_view', 'pagehub', 'shortcut' ],
-function(AnimableView, UI, Shortcut) {
+define([ 'jquery', 'views/shared/animable_view', 'pagehub', 'shortcut' ],
+function($, AnimableView, UI, Shortcut) {
   return AnimableView.extend({
     el: $("#page_finder"),
 

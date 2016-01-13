@@ -3,7 +3,7 @@ define([
   'jquery',
   'hbs!templates/users/dashboard/space_record'
 ], function(Backbone, $, SpaceTmpl) {
-  return Backbone.View.extend({
+  return window.PHLegacy.UserDashboardDirector = Backbone.View.extend({
     el: $("#dashboard"),
 
     // currentUserId: null,

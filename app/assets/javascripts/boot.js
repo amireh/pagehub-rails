@@ -4,8 +4,10 @@ define(function(require) {
   var Flash = require('views/flash');
   var User = require('models/user');
   var Space = require('models/space');
-  var global = this;
-  var ENV = this.ENV;
+  var global = window;
+  var ENV = global.ENV;
+
+  window.PHLegacy.Application = application;
 
   global.jQuery = require('jquery');
   global._ = require('underscore');
@@ -65,4 +67,8 @@ define(function(require) {
   }());
 
   application.trigger('ready');
+  console.log('running %d callbacks', window.PHLegacyCallbacks.length)
+  window.PHLegacyCallbacks.forEach(function(callback) {
+    callback(application);
+  });
 });

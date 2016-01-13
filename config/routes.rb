@@ -20,7 +20,7 @@ Rails.application.routes.draw do
   get '/features', controller: :guests, action: :features
   get '/open-source', controller: :guests, action: :open_source
 
-  namespace :api, format: [ :json, :txt ] do
+  namespace :api, format: :json do
     resources :sessions, only: [ :create ]
 
     scope '/users', controller: :users do
@@ -45,9 +45,11 @@ Rails.application.routes.draw do
     scope '/users/:user_id/spaces', controller: :spaces do
       get '/', action: :index, as: :user_spaces
       post '/', action: :create, as: :create_user_space
+      post '/title_availability', action: :title_availability
       get '/:space_id', action: :show, as: :user_space
       patch '/:space_id', action: :update
       patch '/:space_id/memberships', action: :update_memberships, as: :user_space_memberships
+      delete '/:space_id', action: :destroy
     end
 
     scope '/spaces/:space_id/memberships', controller: :memberships do

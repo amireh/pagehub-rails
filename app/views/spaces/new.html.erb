@@ -2,9 +2,7 @@
 
 <% content_for :deferred_js do %>
   <script>
-    require([ 'views/spaces/new' ],function(View) {
-      application.view = new View(application);
-    })
+    application.view = new PHLegacy.NewSpaceView(application);
   </script>
 <% end %>
 
@@ -15,9 +13,9 @@
 </p>
 
 <p>
-  Read more about spaces <a href="http://www.pagehub.org/pagehub/spaces">here</a>,
+  Read more about spaces <a target="_blank" href="https://pagehub.org/pagehub/pagehub/spaces">here</a>,
   or take a look at a live example of a space; the actual
-  <a href="http://pagehub.org/pagehub">PageHub one</a>!
+  <a target="_blank" href="https://pagehub.org/pagehub/pagehub">PageHub one</a>!
 </p>
 
 <form>

@@ -1,6 +1,6 @@
 class Api::SpacesController < ::ApiController
   before_filter :require_user
-  before_filter :require_space, only: [ :show, :update ]
+  before_filter :require_space, only: [ :show, :update, :destroy ]
 
   def index
     authorize! :read, @user
@@ -21,7 +21,20 @@ class Api::SpacesController < ::ApiController
     halt! 400, result.error unless result.successful?
 
     space = result.output
-    render 'api/spaces/index', locals: { spaces: [space] }
+
+    respond_to do |format|
+      format.json do
+        render 'api/spaces/index', locals: { spaces: [space] }
+      end
+    end
+  end
+
+  def title_availability
+    params.permit(:title)
+
+    render(json: {
+      available: title_available?(current_user, StringUtils.sanitize(params[:title].to_s))
+    }, content_type: Mime::JSON.to_s)
   end
 
   def show
@@ -49,7 +62,15 @@ class Api::SpacesController < ::ApiController
 
     SpaceService.new.update(@space, space_params)
 
-    render 'api/spaces/index', locals: { spaces: [space] }
+    render 'api/spaces/index', locals: { spaces: [@space] }
+  end
+
+  def destroy
+    authorize! :delete, @space, message: "Only the space creator can do that."
+
+    @space.destroy!
+
+    head 204
   end
 
   private
@@ -67,5 +88,14 @@ class Api::SpacesController < ::ApiController
         { theme: [ :name ] },
       ],
     }
+  end
+
+  def title_available?(user, title)
+    return false unless title.present?
+    return false if title.length < 3
+    return false if PageHub::RESERVED_USERNAMES.include?(title)
+    return false unless user.owned_spaces.find_by({ pretty_title: title }).nil?
+
+    true
   end
 end

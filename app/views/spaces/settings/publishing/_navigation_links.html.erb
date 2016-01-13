@@ -1,7 +1,7 @@
 <form id="navigation_links_settings">
   <h3>Navigation links</h3>
   <p>Additional links to show in the navigation bar of your
-    <a target="_blank" href="<%= @space.href %>">public space</a>.
+    <a target="_blank" href="<%= user_space_url(@space.user.nickname, @space.pretty_title) %>">public space</a>.
   </p>
 
   <div id="navigation_links" class="navigation_links"></div>

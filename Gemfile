@@ -30,8 +30,6 @@ end
 
 gem 'gravatarify', ">= 3.1.0"
 gem 'pagehub-markdown', '>= 0.2.0', :require => 'pagehub-markdown'
-gem 'rack-cors', :require => 'rack/cors'
-gem 'moneta', :require => 'rack/session/moneta'
 gem 'cancan'
 gem 'zipruby'
 gem 'redis', '~> 3.0.7', :require => 'redis'

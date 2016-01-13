@@ -12,7 +12,7 @@ define([
 function(Director, $, UI, Shortcut, Router, GeneralView, MembershipsView, PublishingView, BrowsabilityView) {
 
   var saving_captions = { true: "Saving...", false: "Save" };
-  var SpaceSettingsView = Director.extend({
+  var SpaceSettingsView = window.PHLegacy.SpaceSettingsView = Director.extend({
     // el: $("#space_settings"),
 
     initialize: function(state) {

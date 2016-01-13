@@ -23,7 +23,7 @@ module.exports = {
         <Login
           {...state}
           onLogin={compose(
-            IO(displayLoadingStatus(false), displayError),
+            IO(compose(reload, displayLoadingStatus(false)), displayError),
             login,
             Pipe(displayLoadingStatus(true))
           )}
@@ -37,7 +37,7 @@ module.exports = {
 
     function login(creds) {
       return ajax({
-        url: '/api/v1/sessions',
+        url: '/api/sessions',
         type: 'POST',
         headers: {
           'Authorization': `Basic ${btoa(creds.email + ':' + creds.password)}`
@@ -54,6 +54,10 @@ module.exports = {
 
     function setState(newState) {
       assign(state, newState);
+    }
+
+    function reload() {
+      window.location.reload();
     }
   }
 };

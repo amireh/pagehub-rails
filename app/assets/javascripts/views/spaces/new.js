@@ -1,7 +1,7 @@
 define([ 'backbone', 'jquery', 'pagehub', 'core/Notification', 'utils/ajax',
 'utils/serializeForm', 'core/APIError' ],
 function(Backbone, $, UI, Notification, ajax, serializeForm, APIError) {
-  var NewSpaceView = Backbone.View.extend({
+  var NewSpaceView = window.PHLegacy.NewSpaceView = Backbone.View.extend({
     el: $("body"),
 
     events: {
@@ -45,30 +45,35 @@ function(Backbone, $, UI, Notification, ajax, serializeForm, APIError) {
 
     check_availability: function() {
       var btn   = this.elements.availability_checker,
-          name  = this.elements.title.val(),
+          title  = this.elements.title.val().trim(),
           view  = this;
 
       // e.preventDefault();
 
-      if (name.length == 0) {
+      if (title.length == 0) {
         btn.addClass('btn-danger').removeClass('btn-success').find('i').addClass('icon-remove');
-        return false;
-      }
-      else if (name.trim() == this.space.get('title')) {
         return false;
       }
 
       ajax({
-        url: view.space.get('links.name_availability'),
+        url: `/api/users/${ENV.current_user.id}/spaces/title_availability`,
         type: "POST",
-        data: JSON.stringify({ name: name }),
-
-        success: function(status) {
-          if (status.available) {
-            btn.removeClass('btn-danger').addClass('btn-success').find('i').removeClass('icon-remove');
-          } else {
-            btn.removeClass('btn-success').addClass('btn-danger').find('i').addClass('icon-remove');
-          }
+        data: JSON.stringify({ title: title })
+      }).then(function(status) {
+        if (status.available) {
+          btn
+            .removeClass('btn-danger')
+            .addClass('btn-success')
+            .find('i')
+              .removeClass('icon-remove')
+          ;
+        } else {
+          btn
+            .removeClass('btn-success')
+            .addClass('btn-danger')
+            .find('i')
+              .addClass('icon-remove')
+          ;
         }
       });
 
@@ -84,7 +89,9 @@ function(Backbone, $, UI, Notification, ajax, serializeForm, APIError) {
         url: ENV.links.create_space,
         type: 'POST',
         data: JSON.stringify(params)
-      }).then(function(space) {
+      }).then(function(payload) {
+        const space = payload.spaces[0];
+
         Notification.spawn('Great! Will take you now to your new space.', 'notice');
         window.location = space.links.edit;
       }, function(xhrError) {

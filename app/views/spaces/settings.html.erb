@@ -3,9 +3,7 @@
 <% content_for :nav_section do %>space_settings<% end %>
 <% content_for :deferred_js do %>
 <script>
-  require([ 'views/spaces/settings/index' ], function(SettingsView) {
-    application.view = new SettingsView(application);
-  });
+  application.view = new PHLegacy.SpaceSettingsView(application);
 </script>
 <% end %>
 

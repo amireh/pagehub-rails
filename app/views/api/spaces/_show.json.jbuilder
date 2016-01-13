@@ -4,6 +4,7 @@ json.title            ERB::Util.h(object.title)
 json.pretty_title     ERB::Util.h(object.pretty_title)
 json.brief            ERB::Util.h(object.brief)
 json.is_public        object.is_public
+json.preferences      object.preferences
 
 json.creator do
   json.id       object.user.id.to_s

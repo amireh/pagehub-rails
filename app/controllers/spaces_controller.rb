@@ -11,11 +11,12 @@ class SpacesController < ApplicationController
 
     js_env({
       user: render_json_template({
-        template: 'api/users/_show',
+        template: 'api/users/_show.json.jbuilder',
         locals: {
           object: @user
         }
       }),
+
       links: {
         create_space: api_create_user_space_url(current_user)
       }

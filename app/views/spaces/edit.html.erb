@@ -7,9 +7,7 @@
 
 <% content_for :deferred_js do %>
 <script>
-  require([ 'views/spaces/show' ],function(SpaceView) {
-    application.view = new SpaceView(application);
-  })
+  application.view = new PHLegacy.SpaceShowView(application);
 </script>
 <% end %>
 

@@ -4,10 +4,8 @@
 <% content_for :nav_section do %>dashboard<% end %>
 <% content_for :deferred_js do %>
   <script>
-    require([ 'views/users/dashboard/director' ], function(Dashboard) {
-      application.user.spaces.reset(ENV.spaces, { parse: true });
-      application.view = new Dashboard(application);
-    });
+    application.user.spaces.reset(ENV.spaces, { parse: true });
+    application.view = new PHLegacy.UserDashboardDirector(application);
   </script>
 <% end %>
 

@@ -1,5 +1,5 @@
-define([ 'backbone' ],
-function(Backbone) {
+define([ 'jquery', 'backbone' ],
+function($, Backbone) {
   return Backbone.View.extend({
     el: $("#general_actionbar"),
 

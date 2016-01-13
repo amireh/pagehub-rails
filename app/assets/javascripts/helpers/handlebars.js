@@ -1,6 +1,7 @@
-define([ 'underscore', 'Handlebars', 'md5', 'underscore.inflection' ], function(_, Handlebars) {
+define([ 'underscore', 'handlebars/runtime', 'md5' ], function(_, Handlebars, md5) {
   Handlebars.registerHelper("pluralize", function (word, count) {
-    return _(word).pluralize(count, true);
+    return [count, word].join(' ');
+    // return _(word).pluralize(count, true);
   });
 
   Handlebars.registerHelper('escape', function(word) {

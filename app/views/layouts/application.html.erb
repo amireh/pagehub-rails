@@ -13,8 +13,10 @@
   <%= yield :css %>
 
   <link rel="shortcut icon" href="/favicon.ico">
+  <script>
+    window.PHLegacyCallbacks = [];
+  </script>
 
-  <script src="/javascripts/vendor/require.js"></script>
   <%= render "layouts/js_env" %>
 </head>
 
@@ -41,7 +43,9 @@
 
   <%= render "layouts/footer" unless logged_in? %>
 
-  <script src="/javascripts/compiled/app.js"></script>
+  <script src="/javascripts/pagehub__vendor.js"></script>
+  <script src="/javascripts/pagehub__legacy.js"></script>
+  <script src="/javascripts/pagehub__main.js"></script>
 
   <%= render "layouts/page_scripts" %>
 </body>

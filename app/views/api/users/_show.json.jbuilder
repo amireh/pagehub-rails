@@ -3,6 +3,7 @@ json.name           ERB::Util.h(object.name)
 json.nickname       object.nickname
 json.gravatar_email object.gravatar_email
 json.url            api_user_url(object.id)
+json.href           user_url(object.nickname)
 
 json.email          object.email if can?(:view_private_data, object)
 json.preferences    object.preferences if can?(:view_preferences, object)

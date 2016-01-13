@@ -3,9 +3,7 @@
 <% content_for :nav_section do %>settings<% end %>
 <% content_for :deferred_js do %>
 <script>
-  require([ 'views/users/settings/index' ], function(SettingsView) {
-    application.view = new SettingsView(application);
-  })
+  application.view = new PHLegacy.UserSettingsView(application);
 </script>
 <% end %>
 

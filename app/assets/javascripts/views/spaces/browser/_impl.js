@@ -1,7 +1,8 @@
 define([
-  'backbone'
+  'backbone',
+  'jquery'
 ],
-function( Backbone ) {
+function( Backbone, $ ) {
 
   return Backbone.View.extend({
     el: $("#browser"),

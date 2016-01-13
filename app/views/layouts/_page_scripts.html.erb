@@ -1,9 +1,15 @@
 <script>
-  var pageScripts = function(application) {
-    <%= (yield :deferred_js).gsub(/\<\/?script\>/, '').strip.html_safe %>
-  };
+  if (PHLegacy.Application) {
+    runPageScripts(PHLegacy.Application);
+  }
+  else {
+    console.log('queuing');
+    PHLegacy.Application.once('ready', runPageScripts);
+  }
 
-  require([ 'pagehub.state' ], function(application) {
-    application.once('ready', pageScripts.bind(null, application));
-  });
+  function runPageScripts(application) {
+    console.log('running page scripts')
+
+    <%= (yield :deferred_js).gsub(/\<\/?script\>/, '').strip.html_safe %>
+  }
 </script>

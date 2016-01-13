@@ -1,6 +1,7 @@
 define([
-  'backbone'
-], function(Backbone) {
+  'backbone',
+  'jquery'
+], function(Backbone, $) {
 
   $(document).on("click", "#browser a.selected", function(evt) {
     evt.preventDefault();

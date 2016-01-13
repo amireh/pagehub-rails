@@ -83,7 +83,6 @@ GEM
     mime-types (1.25.1)
     mini_portile (0.6.0)
     minitest (5.4.2)
-    moneta (0.8.0)
     mono_logger (1.1.0)
     multi_json (1.10.1)
     multi_xml (0.5.5)
@@ -132,7 +131,6 @@ GEM
       posix-spawn (~> 0.3.6)
       yajl-ruby (~> 1.1.0)
     rack (1.5.2)
-    rack-cors (0.2.9)
     rack-protection (1.5.3)
       rack
     rack-test (0.6.2)
@@ -238,7 +236,6 @@ DEPENDENCIES
   jbuilder
   kaminari (= 0.15.1)
   mail_view
-  moneta
   newrelic_rpm (= 3.8.1.221)
   omniauth (~> 1.2)
   omniauth-github
@@ -247,7 +244,6 @@ DEPENDENCIES
   pg
   pry
   puma
-  rack-cors
   rack-test (~> 0.6.2)
   rails (= 4.1.5)
   rdiscount

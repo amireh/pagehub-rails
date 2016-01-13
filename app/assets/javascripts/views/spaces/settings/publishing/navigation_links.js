@@ -1,9 +1,10 @@
 define([
+  'jquery',
   'backbone',
   'views/shared/settings/setting_view',
   'hbs!templates/spaces/settings/navigation_link'
 ],
-function(Backbone, SettingView, NavigationLinkTmpl) {
+function($, Backbone, SettingView, NavigationLinkTmpl) {
   return SettingView.extend({
     el: $("form#navigation_links_settings"),
 

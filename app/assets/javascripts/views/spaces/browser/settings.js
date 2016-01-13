@@ -1,4 +1,4 @@
-define([ 'backbone', 'hbs!templates/browser/settings' ], function(Backbone, Tmpl) {
+define([ 'backbone', 'jquery', 'hbs!templates/browser/settings' ], function(Backbone, $, Tmpl) {
   return Backbone.View.extend({
     el:       $("#browser_settings"),
     events: {

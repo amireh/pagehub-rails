@@ -1,4 +1,5 @@
 define([
+  'jquery',
   'backbone',
   'views/spaces/workspace/router',
   'views/spaces/resource_actions',
@@ -11,8 +12,8 @@ define([
   'views/spaces/finder',
   'pagehub',
   'timed_operation'
-], function(Backbone, Router, ResourceActions, Browser, PageActionBar, GeneralActionBar, Editor, Finder, UI, TimedOp) {
-  return Backbone.View.extend({
+], function($, Backbone, Router, ResourceActions, Browser, PageActionBar, GeneralActionBar, Editor, Finder, UI, TimedOp) {
+  return window = PHLegacy.SpaceShowView = Backbone.View.extend({
     el: $("#workspace"),
 
     initialize: function(state) {

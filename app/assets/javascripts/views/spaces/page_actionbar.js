@@ -1,5 +1,5 @@
-define([ 'views/shared/animable_view', 'hbs!templates/move_folder_link', 'hbs!templates/dialogs/destroy_page', 'shortcut', 'pagehub', 'timed_operation', 'utils/ajax' ],
-function(AnimableView, MoveFolderLinkTemplate, DestroyPageTmpl, Shortcut, UI, TimedOp, ajax) {
+define([ 'jquery', 'views/shared/animable_view', 'hbs!templates/move_folder_link', 'hbs!templates/dialogs/destroy_page', 'shortcut', 'pagehub', 'timed_operation', 'utils/ajax' ],
+function($, AnimableView, MoveFolderLinkTemplate, DestroyPageTmpl, Shortcut, UI, TimedOp, ajax) {
   return AnimableView.extend({
     el: $("#page_actions"),
 

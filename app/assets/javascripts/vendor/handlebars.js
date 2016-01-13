@@ -25,7 +25,7 @@ THE SOFTWARE.
 // lib/handlebars/base.js
 
 /*jshint eqnull:true*/
-this.Handlebars = {};
+this.Handlebars = global.Handlebars = {};
 
 (function(Handlebars) {
 
@@ -170,7 +170,7 @@ Handlebars.registerHelper('log', function(context, options) {
   Handlebars.log(level, context);
 });
 
-}(this.Handlebars));
+}(global.Handlebars));
 ;
 // lib/handlebars/compiler/parser.js
 /* Jison generated parser */

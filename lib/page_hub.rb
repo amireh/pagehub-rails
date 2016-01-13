@@ -27,6 +27,9 @@ module PageHub
     stars favorites
     edu
     help
+
+    nickname_availability
+    title_availability
   ].concat([
     # Courtesy of https://gist.github.com/caseyohara/1453705
 

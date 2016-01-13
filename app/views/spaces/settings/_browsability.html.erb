@@ -1,22 +1,6 @@
-<% if false %>
-  <% content_for :title do %>Browsability settings<% end %>
-
-  <%= render "spaces/settings/_nav" %>
-
-  <% content_for :deferred_js do %>
-    <script>
-      pagehub_hooks.push(
-        require([ 'models/space', 'views/spaces/settings/browsability' ], function(Space, SettingsView) {
-          var space = new Space(<%= rabl :"/spaces/show", object: @space %>.space);
-          s = new SettingsView({ space: space });
-        })
-      );
-    </script>
-  <% end %>
-<% end %>
-
 <form id="space_browsability_settings">
   <h3>Browsable Pages</h3>
+
   <p>Below is a listing of all the pages and folders within your space.
     Unchecking a resource will prevent it from being publicly browsable
     when people are browsing your <a href="<%= @space.href%>">space</a>.

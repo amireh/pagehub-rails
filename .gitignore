@@ -25,6 +25,7 @@
 /node_modules
 /public/javascripts/compiled
 /public/javascripts/pagehub__main.js
+/public/javascripts/pagehub__legacy.js
 /public/javascripts/pagehub__vendor.js
 /public/stylesheets/compiled
 

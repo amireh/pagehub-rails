@@ -1,4 +1,4 @@
-define([ 'backbone' ], function(Backbone) {
+define([ 'backbone', 'jquery' ], function(Backbone, $) {
   return Backbone.View.extend({
     el: $("#flash-messages"),
 

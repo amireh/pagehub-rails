@@ -1,10 +1,17 @@
 class PageRevisionsController < ApplicationController
   respond_to :html
+
+  before_filter :require_user
+
   def index
     @page = require_page
     @space = @page.space
 
     halt! 403 if current_ability.cannot?(:edit, @page)
+
+    respond_to do |format|
+      format.html
+    end
   end
 
   def show
@@ -15,6 +22,10 @@ class PageRevisionsController < ApplicationController
     @next_rv = @rv.next
 
     halt! 403 if current_ability.cannot?(:edit, @page)
+
+    respond_to do |format|
+      format.html
+    end
   end
 
   def rollback
@@ -24,19 +35,23 @@ class PageRevisionsController < ApplicationController
 
     params.permit(:confirmed)
 
-    if params[:confirmed] != "do it"
-      flash[:error] = "Will not roll-back until you have confirmed your action."
-      return redirect_back_to_revision @page, @rv
+    respond_to do |format|
+      format.html do
+        if params[:confirmed] != "do it"
+          flash[:error] = "Will not roll-back until you have confirmed your action."
+          return redirect_back_to_revision @page, @rv
+        end
+
+        unless @page.rollback(@rv)
+          flash[:error] = "Page failed to rollback: #{@page.collect_errors}"
+          return redirect_back_to_revision @page, @rv
+        end
+
+        flash[:notice] = "Page has been restored to version #{@rv.pretty_version}."
+
+        redirect_back_to_revision @page, @rv
+      end
     end
-
-    unless @page.rollback(@rv)
-      flash[:error] = "Page failed to rollback: #{@page.collect_errors}"
-      return redirect_back_to_revision @page, @rv
-    end
-
-    flash[:notice] = "Page has been restored to version #{@rv.pretty_version}."
-
-    redirect_back_to_revision @page, @rv
   end
 
   private
