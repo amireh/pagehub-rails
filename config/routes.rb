@@ -52,7 +52,8 @@ Rails.application.routes.draw do
       delete '/:space_id', action: :destroy
     end
 
-    scope '/spaces/:space_id/memberships', controller: :memberships do
+    scope '/spaces/:space_id/memberships', controller: :space_memberships do
+      get '/', action: :index
       post '/:user_id', action: :create
       patch '/:user_id', action: :update
       delete '/:user_id', action: :destroy
@@ -100,13 +101,6 @@ Rails.application.routes.draw do
       get '/settings', action: :settings, as: :user_space_settings
 
       get '*resource_pretty_title', action: :pretty_resource, as: :user_pretty_resource
-      # scope '/:resource_pretty_title', controller: :folders do
-      #   get '/', action: :show, as: :space_folder
-
-      #   scope '/:page_pretty_title', controller: :pages do
-      #     get '/', action: :show, as: :folder_page
-      #   end
-      # end
     end
   end
 

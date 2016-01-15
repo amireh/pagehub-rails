@@ -1,6 +1,6 @@
 define(function(require) {
   var Backbone = require('backbone');
-  var InflectionJS = require('inflection');
+  var camelize = require('inflection').camelize;
   var keys = Object.keys;
 
   Backbone.Model.prototype.toProps = function() {
@@ -10,7 +10,7 @@ define(function(require) {
     attrs.is_new = this.isNew();
 
     return keys(attrs).reduce(function(props, key) {
-      props[key.camelize(true)] = attrs[key];
+      props[camelize(key, true)] = attrs[key];
       return props;
     }, {});
   };

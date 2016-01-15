@@ -12,13 +12,13 @@ function(Backbone, $) {
         }
       }
 
-      this.$el.show("blind");
+      this.$el.show();
 
       return this;
     },
 
     hide: function() {
-      this.$el.hide("blind");
+      this.$el.hide();
       this.reset();
 
       return this;

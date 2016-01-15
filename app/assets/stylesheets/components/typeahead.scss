@@ -1,0 +1,29 @@
+.typeahead {
+  width: 320px;
+  position: relative;
+
+  input[type="text"] {
+    width: 100%;
+  }
+
+  &-selector {
+    position: absolute;
+    left: 0;
+    right: 0;
+    border: 1px solid $low_contrast_border;
+    background: white;
+    margin-left: 0;
+    margin-right: 0;
+    margin-top: -11px;
+
+    li {
+      list-style: none;
+      border-bottom: 1px solid $low_contrast_border;
+      padding: 0.5em;
+
+      &.hover, &:hover {
+        background: $low_contrast_border;
+      }
+    }
+  }
+}

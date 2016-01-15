@@ -62,7 +62,7 @@ module.exports = {
       'pagehub':                legacyFile('lib/pagehub'),
       'timed_operation':        legacyFile("lib/timed_operation"),
       'pagehub.state':          legacyFile('state'),
-      'inflection':             legacyFile('vendor/inflection'),
+      // 'inflection':             legacyFile('vendor/inflection'),
       'md5':                    legacyFile("vendor/md5"),
       'animable_view':          legacyFile('views/shared/animable_view'),
       'canvas-loader':          legacyFile('vendor/heartcode-canvasloader-min'),
@@ -76,7 +76,8 @@ module.exports = {
       test: /\.js$/,
       loaders: [ 'babel?presets[]=es2015&presets[]=react' ],
       include: [
-        path.join(root, 'ui')
+        path.join(root, 'ui'),
+        legacyFile('views/spaces/settings/memberships.js')
       ]
     }, {
       test: /\.md$/,
@@ -90,13 +91,15 @@ module.exports = {
       include: [
         path.join(legacyRoot, 'templates')
       ]
-    }, {
-      test: /handlebars\.js/,
-      loader: 'exports?Handlebars!imports?this=>window',
-      include: [
-        path.join(legacyRoot, 'vendor')
-      ]
-    }]
+    },
+    // {
+    //   test: /handlebars\.js/,
+    //   loader: 'exports?Handlebars!imports?this=>window',
+    //   include: [
+    //     path.join(legacyRoot, 'vendor')
+    //   ]
+    // }
+    ]
   }
 };
 

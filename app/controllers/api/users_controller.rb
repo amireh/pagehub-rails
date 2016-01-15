@@ -33,7 +33,7 @@ class Api::UsersController < ::ApiController
 
     results = User.where('nickname LIKE ?', "#{params[:nickname]}%").limit(10).map do |user|
       {
-        id: user.id,
+        id: user.id.to_s,
         nickname: user.nickname,
         gravatar: gravatar_url(user.gravatar_email, :size => 24)
       }

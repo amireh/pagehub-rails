@@ -38,6 +38,8 @@
     "webpack-dev-server": "^1.14.0"
   },
   "dependencies": {
-    "codemirror": "5.10.0"
+    "codemirror": "5.10.0",
+    "inflection": "^1.8.0",
+    "react-typeahead": "^1.1.5"
   }
 }

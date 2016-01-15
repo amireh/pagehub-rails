@@ -1,5 +1,6 @@
 json.id             object.id.to_s
 json.folder_id      object.folder_id.to_s
+json.user_id        object.user_id.to_s
 json.title          ERB::Util.h(object.title)
 json.pretty_title   ERB::Util.h(object.pretty_title)
 json.browsable      object.browsable

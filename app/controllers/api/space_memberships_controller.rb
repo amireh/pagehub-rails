@@ -1,4 +1,12 @@
 class Api::SpaceMembershipsController < ApiController
+  def index
+    space = Space.find(params[:space_id])
+
+    authorize! :read, space
+
+    render 'api/space_users/index', locals: { memberships: space.space_users }
+  end
+
   def create
     params.require(:membership).permit(:role)
 
@@ -19,6 +27,7 @@ class Api::SpaceMembershipsController < ApiController
   def update
     params.require(:membership).permit(:role)
 
+    space = Space.find(params[:space_id])
     role = params[:membership][:role].to_s.to_sym
     user = space.users.find(params[:user_id])
 
