@@ -62,7 +62,9 @@ Rails.application.routes.draw do
     scope '/spaces/:space_id/folders', controller: :folders do
       get '/', action: :index, as: :space_folders
       get '/:folder_id', action: :show, as: :space_folder
+      post '/', action: :create
       patch '/:folder_id', action: :update
+      delete '/:folder_id', action: :destroy
     end
 
     scope '/folders/:folder_id/pages', controller: :pages do

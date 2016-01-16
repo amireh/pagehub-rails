@@ -139,7 +139,7 @@ class Page < ActiveRecord::Base
 
   def generate_default_title
     if self.title.blank?
-      self.title = "Untitled ##{Page.random_suffix}"
+      self.title = "Untitled ##{self.folder.pages.count}"
       self.pretty_title = StringUtils.sanitize(self.title)
     end
   end

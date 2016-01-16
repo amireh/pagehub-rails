@@ -1,6 +1,14 @@
-define([ 'jquery', 'backbone', 'models/folder', 'pagehub', 'shortcut', 'utils/ajax' ],
-function($, Backbone, Folder, UI, Shortcut, ajax) {
-  return Backbone.View.extend({
+const $ = require('jquery');
+const Backbone = require('backbone');
+const Folder = require('models/folder');
+const UI = require('pagehub');
+const Shortcut = require('shortcut');
+const ajax = require('utils/ajax');
+const CreateFolderDialog = require('pagehub-ui/components/CreateFolderDialog');
+const React = require('react');
+const ReactDOM = require('react-dom');
+
+module.exports = Backbone.View.extend({
     el: $("#resource_actions"),
 
     events: {
@@ -28,17 +36,20 @@ function($, Backbone, Folder, UI, Shortcut, ajax) {
     create_page: function(e) {
       if (e) { e.preventDefault(); }
 
-      var workspace = this.workspace;
-      var folder  = workspace.current_folder || this.space.root_folder();
-      var page = folder.pages.add({});
+      const workspace = this.workspace;
+      const folder  = workspace.current_folder || this.space.root_folder();
+      const folderId = folder.get('id');
 
-      workspace.trigger('load_page', page);
+      ajax({
+        url: `/api/folders/${folderId}/pages`,
+        type: 'POST',
+        data: JSON.stringify({ page: {} })
+      }).then(function(payload) {
+        const page = folder.pages.add(payload.pages[0]);
 
-      page.save().then(function() {
+        workspace.trigger('load_page', page);
+
         UI.status.show("Created!", "good");
-      }, function(error) {
-        folder.pages.remove(page);
-        workspace.trigger('reset');
       });
 
       return false;
@@ -47,57 +58,25 @@ function($, Backbone, Folder, UI, Shortcut, ajax) {
     create_folder: function(e) {
       if (e) { e.preventDefault(); }
 
-      // ui.status.show("Creating a new folder...", "pending");
+      const { space } = this;
+      const container = document.querySelector('#app__dialog');
+      const cleanup = () => {
+        ReactDOM.unmountComponentAtNode(container);
+      };
 
-      var parent  = this.workspace.current_folder || this.space.root_folder(),
-          space   = parent.collection.space,
-          view    = this;
+      const storeFolder = (props) => {
+        space.folders.add(props);
+      };
 
-      ajax({
-        type:   "GET",
-        headers: { Accept: "text/html" },
-        url:    space.get('links.folders') + '/new',
-        success: function(dialog_html) {
-          var dialog = $('<div>' + dialog_html + '</div>').dialog({
-            title: "Creating a folder",
-            width: 'auto',
+      ReactDOM.render(
+        <CreateFolderDialog
+          spaceId={space.get('id')}
+          onClose={cleanup}
+          onCommit={storeFolder}
+        />,
 
-            // select the current folder from the parent folder list for convenience
-            open: function() {
-              UI.dialog.on_open($(this));
-
-              $(this)
-              .find('select :selected').attr("selected", false).end()
-              .find("select option[value=" + parent.get('id') + "]").attr("selected", true).end();
-
-              return true;
-            },
-
-            buttons: {
-              Cancel: function() {
-                $(this).dialog("close");
-              },
-              Create: function(e) {
-                var folder_data = dialog.find('form').serializeObject();
-                space.folders.add(folder_data, { silent: true });
-                var folder = _.last(space.folders.models);
-
-                folder.save({}, {
-                  wait: true,
-                  success: function(f) {
-                    UI.status.show("Folder created!", "good");
-                    f.collection.trigger('add', f);
-                    dialog.dialog("close");
-                  }
-                });
-                e.preventDefault();
-              }
-            }
-          });
-        }
-      });
-
-      return false;
+        container
+      );
     },
 
     download_space: function(e) {
@@ -106,4 +85,3 @@ function($, Backbone, Folder, UI, Shortcut, ajax) {
       return true;
     }
   });
-});

@@ -1,6 +1,6 @@
 class Api::FoldersController < ::ApiController
   before_filter :require_space
-  before_filter :require_folder, only: [ :show ]
+  before_filter :require_folder, only: [ :show, :update, :destroy ]
 
   def index
     authorized_action! :read, @space
@@ -17,12 +17,21 @@ class Api::FoldersController < ::ApiController
     render 'api/folders/index', locals: { folders: [@folder] }
   end
 
+  def create
+    authorize! :author, @space
+    attrs = params.fetch(:folder, {}).permit(:title, :folder_id)
+
+    folder = @space.folders.create!(attrs.merge({ user_id: current_user.id }))
+
+    render 'api/folders/index', locals: { folders: [folder] }
+  end
+
   def update
     space = @space
     authorize! :author, space,
       message: "You need to be an editor of this space to edit folders."
 
-    folder = space.folders.find(params[:folder_id])
+    folder = @folder
 
     authorize! :edit, folder
 
@@ -41,6 +50,15 @@ class Api::FoldersController < ::ApiController
     end
 
     render 'api/folders/index', locals: { folders: [folder] }
+  end
+
+  def destroy
+    authorize! :author, @space
+    authorize! :delete, @folder
+
+    @folder.destroy!
+
+    head 204
   end
 
   private

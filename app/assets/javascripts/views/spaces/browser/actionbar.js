@@ -1,13 +1,14 @@
-define([
-  'jquery',
-  'backbone',
-  'hbs!templates/dialogs/destroy_folder',
-  'pagehub',
-  'utils/ajax'
-],
-function( $, Backbone, DestroyFolderTmpl, UI, ajax ) {
+const CreateFolderDialog = require('pagehub-ui/components/CreateFolderDialog');
+const React = require('react');
+const ReactDOM = require('react-dom');
 
-  return Backbone.View.extend({
+const $ = require('jquery');
+const Backbone = require('backbone');
+const DestroyFolderTmpl = require('hbs!templates/dialogs/destroy_folder');
+const UI = require('pagehub');
+const ajax = require('utils/ajax');
+
+module.exports = Backbone.View.extend({
     el: $("#browser_actionbar"),
 
     templates: {
@@ -80,37 +81,27 @@ function( $, Backbone, DestroyFolderTmpl, UI, ajax ) {
       if (!folder || !folder.has_parent()) {
         return false;
       }
-
-      ajax({
-        type:   "GET",
-        headers: { Accept: "text/html" },
-        url:    folder.get('media').url + '/edit',
-        success: function(dialog_html) {
-          var dialog = $("<div>" + dialog_html + "</div>").dialog({
-            title: "Folder properties",
-            buttons: {
-              Cancel: function() {
-                $(this).dialog("close");
-              },
-              Update: function(e) {
-                var folder_data = dialog.find('form').serializeObject();
-                folder.save(folder_data, {
-                  wait: true,
-                  patch: true,
-                  success: function() {
-                    UI.status.show("Updated.", "good");
-                    dialog.dialog("close");
-                  }
-                });
-                e.preventDefault();
-              }
-            }
-          });
-        }
-      });
-
       evt.preventDefault();
-      return false;
+
+      const container = document.querySelector('#app__dialog');
+      const cleanup = () => {
+        ReactDOM.unmountComponentAtNode(container);
+      };
+
+      const update = (props) => {
+        folder.set(props);
+      };
+
+      ReactDOM.render(
+        <CreateFolderDialog
+          folder={folder.toJSON()}
+          spaceId={this.space.get('id')}
+          onClose={cleanup}
+          onCommit={update}
+        />,
+
+        container
+      );
     }, // edit_folder
 
     delete_folder: function(evt) {
@@ -155,4 +146,3 @@ function( $, Backbone, DestroyFolderTmpl, UI, ajax ) {
     }
 
   });
-});

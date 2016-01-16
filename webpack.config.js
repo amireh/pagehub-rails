@@ -46,6 +46,7 @@ module.exports = {
     extensions: [ '', '.js', '.hbs' ],
 
     alias: {
+      'pagehub-ui':             path.join(root, 'ui'),
       'jquery':                 legacyFile('vendor/jquery-1.11.1'),
       'jquery.ui':              legacyFile('vendor/jquery-ui/jquery-ui-1.10.1.custom.min'),
       'jquery.tinysort':        legacyFile('vendor/jquery.tinysort.min'),
@@ -77,7 +78,8 @@ module.exports = {
       loaders: [ 'babel?presets[]=es2015&presets[]=react' ],
       include: [
         path.join(root, 'ui'),
-        legacyFile('views/spaces/settings/memberships.js')
+        legacyFile('views'),
+        legacyFile('models'),
       ]
     }, {
       test: /\.md$/,

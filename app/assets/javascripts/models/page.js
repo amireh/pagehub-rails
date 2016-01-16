@@ -7,8 +7,8 @@ define([ 'jquery', 'underscore', 'backbone', 'backbone.nested' ],
     },
 
     parse: function(payload) {
-      if (payload.hasOwnProperty('page')) {
-        return payload.page;
+      if (payload.hasOwnProperty('pages')) {
+        return payload.pages[0];
       }
       else {
         return payload;
@@ -27,10 +27,6 @@ define([ 'jquery', 'underscore', 'backbone', 'backbone.nested' ],
     initialize: function() {
       this.ctx      = {};
       this.urlRoot  = this.collection.space.get('links.pages');
-
-      if (this.get('title').length === 0) {
-        this.set('title', 'Untitled#' + this.cid.toString().replace('c', ''));
-      }
     },
 
     getFolder: function() {

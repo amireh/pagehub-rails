@@ -19,7 +19,7 @@ class Api::PagesController < ApiController
     authorize! :author_more, space,
       :message => 'You can not create any more pages in this space.'
 
-    xparams = params.require(:page).permit(:title, :content, :browsable)
+    xparams = params.fetch(:page, {}).permit(:title, :content, :browsable)
 
     page = folder.pages.create(xparams.merge({
       user_id: current_user.id
