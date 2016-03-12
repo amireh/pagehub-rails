@@ -39,7 +39,7 @@ module Preferencable
       @cached_preferences ||= begin
         klass = self.class.base_class
 
-        default_prefs = klass.default_preferences
+        default_prefs = klass.default_preferences.clone
 
         model_prefs = read_attribute(klass.preferencable_options[:on]).to_s
         model_prefs = '{}' if model_prefs.empty?
@@ -47,7 +47,7 @@ module Preferencable
 
         # @cached_preferences = Hash.new{ |h,k| h[k] = Hash.new(&h.default_proc) }
         @cached_preferences = {}.with_indifferent_access
-        @cached_preferences.merge!(default_prefs.deep_merge(model_prefs))
+        @cached_preferences.merge!(HashUtils.deep_merge(default_prefs, model_prefs))
       end
     end
 

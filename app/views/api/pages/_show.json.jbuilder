@@ -11,5 +11,5 @@ json.href           generic_resource_url(object.href)
 
 json.edit_url       edit_page_url(object.id)
 
-json.revision_count object.revisions.count
+json.revision_count object.revisions.count if respond_to?(:include_page_count) && include_page_count
 json.revisions_href page_revisions_url(object.id)

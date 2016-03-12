@@ -12,6 +12,8 @@ function(SettingView, Editor, $) {
 
     events: {
       'change input[type=radio], input[type=checkbox]': 'propagate_sync',
+      'click [data-role=save]': 'propagate_sync',
+
       // 'change #editor_font_face_list input': 'preview',
       // 'keyup  #editor_font_dim_settings': 'preview'
     },
@@ -89,7 +91,7 @@ function(SettingView, Editor, $) {
         data[k] = parseInt(data[k]);
       });
 
-      return { preferences: { editing: data } };
+      return { user: { preferences: { editing: data } } };
     }
   });
 });

@@ -17,7 +17,7 @@ json.folders object.folders do |folder|
 end
 
 json.pages object.pages do |page|
-  json.partial! "api/pages/show", object: page
+  json.partial! "api/pages/show", object: page, include_revisions: false
 end
 
 json.memberships object.space_users do |user|

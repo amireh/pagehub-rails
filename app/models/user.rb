@@ -12,13 +12,16 @@ class User < ActiveRecord::Base
     :encryptable,
     :omniauthable,
     {
-      password_length: 6..128,
       # omniauth_providers: [ :github ]
     }
 
   class << self
     def find_for_github_oauth(hash, current_user)
       User.where(provider: 'github', uid: hash.uid, email: hash.info[:email]).first
+    end
+
+    def default_preferences
+      PageHub::Config.defaults["user"].with_indifferent_access
     end
   end
 
@@ -41,14 +44,14 @@ class User < ActiveRecord::Base
 
   validates_presence_of :name, message: 'We need your name.'
   validates_uniqueness_of :nickname, message: 'That nickname is not available.'
-  validates_length_of :nickname, within: 3..64,
+  validates_length_of :nickname, within: 2..64,
     message: 'A nickname must be at least three characters long.'
 
   validate :ensure_has_valid_nickname, if: :nickname_changed?
 
   before_validation do
-    self.encrypted_password = generate_random_password if self.provider != 'pagehub'
-    self.uid = UUID.generate if self.provider == 'pagehub'
+    self.encrypted_password ||= generate_random_password if self.provider != 'pagehub'
+    self.uid ||= UUID.generate if self.provider == 'pagehub'
   end
 
   def href

@@ -30,7 +30,7 @@ module DeviseUserValidatable
       validates_confirmation_of :password, if: :password_required?,
         message: 'You must confirm the passowrd.'
 
-      validates_length_of :password, within: password_length, allow_blank: true,
+      validates_length_of :password, within: 5..128, allow_blank: true,
         message: 'A password must be at least 7 characters long.'
     end
   end

@@ -21,7 +21,7 @@
     <p><strong>Font face</strong></p>
     <div id="editor_font_face_list">
       <% PageHub::FONT_MAP.each_pair do |name, font| %>
-        <label style="font-family: <%= font %>; font-size: 14px">
+        <label style="font-family: <%= font %>; font-size: 14px; display: block;">
           <input type="radio" name="font_face" value="<%=h name%>" <%= checkify("editing.font_face", current_user) { |v| v == name } %>
            /> <%= h name %>
         </label>
@@ -65,4 +65,7 @@ I'm **bold** and I'm *not*.
       </textarea>
     </section>
   </fieldset>
+
+  <button data-role="save" class="settings__save-btn btn btn-primary">Save</button>
+
 </form>

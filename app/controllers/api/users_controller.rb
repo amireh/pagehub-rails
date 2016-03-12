@@ -43,24 +43,51 @@ class Api::UsersController < ::ApiController
   end
 
   def update
-    params.require(:user).permit(
+    user_attrs = params.require(:user).permit(
       :name,
       :nickname,
       :gravatar_email,
       :email,
-      :preferences,
+      :current_password,
       :password,
-      :password_confirmation
+      :password_confirmation,
+      preferences: [
+        { editing: [
+          :font_face,
+          :font_size,
+          :line_height,
+          :letter_spacing,
+          :autosave,
+        ] },
+
+        { workspace: [
+          :fluid,
+          :scrolling,
+          :animable,
+          { browser: [
+              :type
+          ] }
+        ] },
+
+        { runtime: [
+            :spaces
+        ] },
+      ]
     )
 
-    params.fetch(:user, {}).fetch(:preferences, {}).permit!
+    unless user_attrs[:preferences].empty?
+      preferences = HashUtils.deep_merge(current_user.preferences, user_attrs[:preferences])
+      preferences = HashUtils.deep_merge(User.default_preferences.clone, preferences)
 
-    if preferences = params[:user][:preferences]
-      current_user.save_preferences(HashUtils.deep_merge(current_user.preferences, preferences))
-      params[:user].delete(:preferences)
+      user_attrs[:preferences] = preferences
     end
 
-    unless current_user.update(params[:user])
+    if user_attrs[:password]
+      halt! 403 unless current_user.valid_password?(user_attrs[:current_password])
+      user_attrs.delete(:current_password)
+    end
+
+    unless current_user.update(user_attrs)
       halt! 422, current_user.errors
     end
 

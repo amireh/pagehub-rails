@@ -49,17 +49,11 @@ GEM
     devise-encryptable (0.1.2)
       devise (>= 2.1.0)
     diff-lcs (1.2.5)
-    dotenv (0.11.1)
-      dotenv-deployment (~> 0.0.2)
-    dotenv-deployment (0.0.2)
     erubis (2.7.0)
     faraday (0.9.0)
       multipart-post (>= 1.2, < 3)
     foreigner (1.6.1)
       activerecord (>= 3.0.0)
-    foreman (0.75.0)
-      dotenv (~> 0.11.1)
-      thor (~> 0.19.1)
     gravatarify (3.1.1)
     hashie (3.3.1)
     hike (1.2.3)
@@ -223,16 +217,15 @@ PLATFORMS
 
 DEPENDENCIES
   addressable
-  bcrypt (~> 3.1.7)
-  cancan
-  composite_primary_keys (~> 7.x)
+  bcrypt (= 3.1.7)
+  cancan (= 1.6.10)
+  composite_primary_keys (= 7.0.10)
   database_cleaner
-  devise
-  devise-encryptable
-  diff-lcs
-  foreigner
-  foreman
-  gravatarify (>= 3.1.0)
+  devise (= 3.2.4)
+  devise-encryptable (= 0.1.2)
+  diff-lcs (= 1.2.5)
+  foreigner (= 1.6.1)
+  gravatarify (= 3.1.1)
   jbuilder
   kaminari (= 0.15.1)
   mail_view
@@ -246,7 +239,7 @@ DEPENDENCIES
   puma
   rack-test (~> 0.6.2)
   rails (= 4.1.5)
-  rdiscount
+  rdiscount (= 2.1.7.1)
   redis (~> 3.0.7)
   resque (~> 1.25)
   resque_mailer (~> 2.2.6)
@@ -256,4 +249,4 @@ DEPENDENCIES
   spring
   unicode
   uuid
-  zipruby
+  zipruby (= 0.3.6)

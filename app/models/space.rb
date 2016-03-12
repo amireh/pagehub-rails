@@ -23,6 +23,10 @@ class Space < ActiveRecord::Base
   validates_uniqueness_of :title, :scope => [ :user_id ],
     message: 'You already have a space with that title.'
 
+  def self.default_preferences
+    PageHub::Config.defaults["spaces"].with_indifferent_access
+  end
+
   def href
     "#{self.user.href}/#{self.pretty_title}"
   end

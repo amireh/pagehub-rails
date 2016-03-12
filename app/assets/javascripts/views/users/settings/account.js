@@ -19,6 +19,7 @@ function(SettingView, $, NicknameWarningDialogTemplate, UI, ajax) {
       'click #check_availability':  'check_availability',
       'keyup input[name=nickname]': 'queue_availability_check',
       'click #verify_email': 'resend_confirmation_email',
+      'click [data-role=save]': 'propagate_sync',
     },
 
     initialize: function(data) {
@@ -53,7 +54,7 @@ function(SettingView, $, NicknameWarningDialogTemplate, UI, ajax) {
         delete data['current_password'];
       }
 
-      return data;
+      return { user: data };
     },
 
     reset: function() {

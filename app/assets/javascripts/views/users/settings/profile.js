@@ -34,7 +34,7 @@ function(SettingView, $, UI, GravatarTmpl) {
     },
 
     serialize: function() {
-      return this.$el.serializeObject();
+      return { user: this.$el.serializeObject() };
     }
   });
 });

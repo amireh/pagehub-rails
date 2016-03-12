@@ -49,8 +49,7 @@ class Api::SpacesController < ::ApiController
   end
 
   def update
-    authorize! :update, @space,
-      message: "You need to be an admin of this space to update it."
+    authorize! :update, @space
 
     space_params = params.require(:space).permit(:title, :brief, :is_public, {
       preferences: space_preferences_params
