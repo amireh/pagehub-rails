@@ -76,7 +76,8 @@ class User < ActiveRecord::Base
 
   def create_default_space
     default_space || begin
-      owned_spaces.create({ title: Space::DEFAULT_TITLE }).tap do |space|
+      owned_spaces.create!({ title: Space::DEFAULT_TITLE }).tap do |space|
+        SpaceUser.creators.create!({ user_id: id, space_id: space.id })
         space.create_root_folder
       end
     end
