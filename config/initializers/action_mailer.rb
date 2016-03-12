@@ -19,5 +19,8 @@ Rails.application.configure do
   end
 
   config.action_mailer.default_options = settings[:default_options].symbolize_keys
-  config.action_mailer.default_url_options = { host: settings[:host] }
+  config.action_mailer.default_url_options = {
+    host: settings[:host],
+    protocol: settings[:protocol] || 'http'
+  }
 end
