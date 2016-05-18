@@ -12,16 +12,16 @@ define(function(require) {
   global.jQuery = require('jquery');
   global._ = require('underscore');
 
-  //>>excludeStart("production", pragmas.production);
-  var injectScript = function(src) {
-    var node = document.createElement('script');
-    node.type = 'text/javascript';
-    node.src = src;
-    document.body.appendChild(node);
-  };
+  if (process.env.NODE_ENV !== 'production') {
+    var injectScript = function(src) {
+      var node = document.createElement('script');
+      node.type = 'text/javascript';
+      node.src = src;
+      document.body.appendChild(node);
+    };
 
-  injectScript("http://localhost:9135/livereload.js");
-  //>>excludeEnd("production");
+    injectScript("http://localhost:9135/livereload.js");
+  }
 
   if (ENV.hasOwnProperty('app_preferences')) {
     application.set('preferences', ENV.app_preferences.app);
