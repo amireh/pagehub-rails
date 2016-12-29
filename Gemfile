@@ -29,7 +29,7 @@ group :development, :test do
 end
 
 gem 'gravatarify', "3.1.1"
-gem 'pagehub-markdown', '>= 0.2.1', :require => 'pagehub-markdown'
+gem 'pagehub-markdown', '>= 0.2.2', :require => 'pagehub-markdown'
 gem 'cancan', '1.6.10'
 gem 'zipruby', '0.3.6'
 gem 'redis', '~> 3.0.7'

@@ -47,7 +47,7 @@
 
     <% if @space.preference('publishing.custom_css') %>
       <style>
-        <%= @space.preference('publishing.custom_css') %>
+        <%= @space.preference('publishing.custom_css').html_safe %>
       </style>
     <% end %>
   <% else %>
