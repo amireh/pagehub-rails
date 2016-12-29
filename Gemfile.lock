@@ -102,7 +102,7 @@ GEM
       oauth2 (~> 1.0)
       omniauth (~> 1.2)
     orm_adapter (0.5.0)
-    pagehub-markdown (0.2.1)
+    pagehub-markdown (0.2.2)
       json
       nokogiri (= 1.6.3.1)
       pygments.rb (~> 0.6.0)
@@ -232,7 +232,7 @@ DEPENDENCIES
   newrelic_rpm (= 3.8.1.221)
   omniauth (~> 1.2)
   omniauth-github
-  pagehub-markdown (>= 0.2.1)
+  pagehub-markdown (>= 0.2.2)
   paperclip (= 4.1.0)
   pg
   pry
