@@ -51,7 +51,7 @@ class Api::PagesController < ApiController
     authorize! :author, space,
       message: "You need to be an editor of this space to edit pages."
 
-    xparams = params.require(:page).permit(:title, :content, :browsable, :folder_id)
+    xparams = params.require(:page).permit(:title, :content, :browsable, :folder_id, :encrypted, :digest)
 
     if new_folder_id = xparams[:folder_id]
       new_folder = Folder.find(new_folder_id)

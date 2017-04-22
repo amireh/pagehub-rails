@@ -4,6 +4,11 @@ class ApiController < ApplicationController
   before_filter :require_json_format
   before_filter :accept_authenticity
 
+  # we will be doing this in #accept_authenticity because we need to have
+  # accepted basic auth (for now) before we perform this check (we skip it
+  # for OTR calls)
+  skip_before_filter :verify_authenticity_token
+
   protected
 
   # @override
@@ -29,13 +34,21 @@ class ApiController < ApplicationController
     end
 
     warden.custom_failure! if performed?
+
     halt! 401 unless current_user.present?
+    verify_authenticity_token unless otr_api_call?
   end
 
   def authorized_action!(sought_permission, object, options={})
     if current_ability.cannot?(sought_permission.to_sym, object)
       halt! 403, options[:message]
     end
+  end
+
+  # TODO: switch to using API tokens instead of basic auth then we can drop
+  # the header test
+  def otr_api_call?
+    current_user.present? && request.headers['X-0-Hub'] == '1'
   end
 
   alias_method :authorize!, :authorized_action!

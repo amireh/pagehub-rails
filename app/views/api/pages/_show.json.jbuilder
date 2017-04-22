@@ -4,7 +4,9 @@ json.user_id        object.user_id.to_s
 json.title          ERB::Util.h(object.title)
 json.pretty_title   ERB::Util.h(object.pretty_title)
 json.browsable      object.browsable
+json.encrypted      !!object.encrypted
 json.content        object.content
+json.digest         object.digest || nil
 
 json.url            api_folder_page_url(object.folder.space_id, object)
 json.href           generic_resource_url(object.href)

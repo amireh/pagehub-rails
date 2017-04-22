@@ -21,7 +21,10 @@ Rails.application.routes.draw do
   get '/open-source', controller: :guests, action: :open_source
 
   namespace :api, format: :json do
-    resources :sessions, only: [ :create ]
+    resources :sessions do
+      post :create
+      post '/csrf_tokens', action: :generate_csrf_token
+    end
 
     scope '/users', controller: :users do
       post '/nickname_availability', {

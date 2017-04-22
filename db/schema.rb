@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141010185648) do
+ActiveRecord::Schema.define(version: 20170401130101) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -57,14 +57,16 @@ ActiveRecord::Schema.define(version: 20141010185648) do
   add_index "page_revisions", ["user_id"], name: "index_page_revisions_on_user_id", using: :btree
 
   create_table "pages", force: true do |t|
-    t.string   "title",        null: false
+    t.string   "title",                        null: false
     t.string   "pretty_title"
     t.text     "content"
     t.boolean  "browsable"
     t.integer  "folder_id"
-    t.integer  "user_id",      null: false
+    t.integer  "user_id",                      null: false
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.boolean  "encrypted",    default: false
+    t.string   "digest"
   end
 
   add_index "pages", ["folder_id"], name: "index_pages_on_folder_id", using: :btree
