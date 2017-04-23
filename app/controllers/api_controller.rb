@@ -1,4 +1,7 @@
 class ApiController < ApplicationController
+  module V2
+  end
+
   respond_to :json
 
   before_filter :require_json_format
@@ -18,7 +21,7 @@ class ApiController < ApplicationController
   def require_user
     @user = if params[:user_id] == 'self'
       current_user
-    else
+    elsif params[:user_id]
       User.find(params[:user_id])
     end
   end

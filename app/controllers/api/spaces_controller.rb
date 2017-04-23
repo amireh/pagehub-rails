@@ -22,11 +22,9 @@ class Api::SpacesController < ::ApiController
 
     space = result.output
 
-    respond_to do |format|
-      format.json do
-        render 'api/spaces/index', locals: { spaces: [space] }
-      end
-    end
+    render 'api/spaces/index', locals: {
+      spaces: [space]
+    }
   end
 
   def title_availability

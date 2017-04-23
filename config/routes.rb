@@ -21,6 +21,23 @@ Rails.application.routes.draw do
   get '/open-source', controller: :guests, action: :open_source
 
   namespace :api, format: :json do
+    namespace :v2 do
+      scope '/spaces', controller: :spaces do
+        get '/', action: :index
+        post '/', action: :create
+        get '/:space_id', action: :show
+        patch '/:space_id', action: :update
+        delete '/:space_id', action: :destroy
+      end
+
+      scope '/pages', controller: :pages do
+        get '/', action: :index
+        get '/:page_id', action: :show
+        patch '/:page_id', action: :update
+        delete '/:page_id', action: :destroy
+      end
+    end
+
     resources :sessions do
       post :create
       post '/csrf_tokens', action: :generate_csrf_token

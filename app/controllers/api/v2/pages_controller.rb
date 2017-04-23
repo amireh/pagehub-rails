@@ -1,11 +1,15 @@
-class Api::PagesController < ApiController
+class Api::V2::PagesController < ApiController
   def index
-    folder = Folder.find(params[:folder_id])
+    scope = if params[:space_id]
+      Space.find(params[:space_id])
+    elsif params[:folder_id]
+      Folder.find(params[:folder_id])
+    end
 
-    authorize! :read, folder
+    authorize! :read, scope
 
-    render 'api/pages/index', locals: {
-      pages: folder.pages.includes(:user)
+    render 'api/v2/pages/index', locals: {
+      pages: scope.pages
     }
   end
 
@@ -29,7 +33,7 @@ class Api::PagesController < ApiController
       halt! 422, page.errors
     end
 
-    render 'api/pages/index', locals: {
+    render 'api/v2/pages/index', locals: {
       pages: [ page ]
     }
   end
@@ -39,7 +43,7 @@ class Api::PagesController < ApiController
 
     authorize! :read, page
 
-    render 'api/pages/index', locals: {
+    render 'api/v2/pages/index', locals: {
       pages: [ page ]
     }
   end
@@ -79,7 +83,7 @@ class Api::PagesController < ApiController
       halt! 422, page.errors
     end
 
-    render 'api/pages/index', locals: {
+    render 'api/v2/pages/index', locals: {
       pages: [ page ]
     }
   end
