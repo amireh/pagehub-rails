@@ -28,6 +28,10 @@ group :development, :test do
   gem 'shoulda-matchers'
 end
 
+group :test do
+  gem 'timecop'
+end
+
 gem 'gravatarify', "3.1.1"
 gem 'pagehub-markdown', '>= 0.2.2', :require => 'pagehub-markdown'
 gem 'cancan', '1.6.10'
@@ -46,3 +50,4 @@ gem 'devise-encryptable', '0.1.2'
 gem 'foreigner', '1.6.1'
 gem 'rdiscount', '2.1.7.1'
 gem 'unicode'
+gem 'lux', path: 'gems/lux'

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170401130101) do
+ActiveRecord::Schema.define(version: 20170425151444) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -30,6 +30,18 @@ ActiveRecord::Schema.define(version: 20170401130101) do
   add_index "folders", ["folder_id"], name: "index_folders_on_folder_id", using: :btree
   add_index "folders", ["space_id"], name: "index_folders_on_space_id", using: :btree
   add_index "folders", ["user_id"], name: "index_folders_on_user_id", using: :btree
+
+  create_table "locks", force: true do |t|
+    t.integer  "resource_id",   null: false
+    t.string   "resource_type", null: false
+    t.integer  "holder_id",     null: false
+    t.integer  "duration",      null: false
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "locks", ["holder_id"], name: "index_locks_on_holder_id", using: :btree
+  add_index "locks", ["updated_at", "duration"], name: "index_locks_on_updated_at_and_duration", using: :btree
 
   create_table "page_carbon_copies", force: true do |t|
     t.text     "content"

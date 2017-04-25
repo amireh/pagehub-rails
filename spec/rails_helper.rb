@@ -68,6 +68,7 @@ RSpec.configure do |config|
 
   config.include Support::Factories
   config.include Support::Controllers, type: :controller
+  config.include Support::Requests, type: :request
   config.include Support::Views, type: :view
   config.include Paperclip::Shoulda::Matchers
 

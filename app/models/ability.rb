@@ -25,6 +25,7 @@ class Ability
     can :author_more, Space
 
     can :update, [ Page, Folder ] do |r| r.space.editor?(user) end
+    can :lock,   [ Page         ] do |r| r.space.editor?(user) end
     can :delete, [ Page, Folder ] do |r|
       r.creator.id == user.id || r.space.admin?(user)
     end

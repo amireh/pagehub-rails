@@ -51,6 +51,10 @@ class Api::PagesController < ApiController
     authorize! :author, space,
       message: "You need to be an editor of this space to edit pages."
 
+    unless Lux::Lock.for(page).acquire!(holder: current_user) == Lux::LOCK_OK
+      return head 409
+    end
+
     xparams = params.require(:page).permit(:title, :content, :browsable, :folder_id, :encrypted, :digest)
 
     if new_folder_id = xparams[:folder_id]
@@ -90,9 +94,15 @@ class Api::PagesController < ApiController
     authorize! :delete, page,
       message: "You can not remove pages authored by someone else."
 
+    unless Lux::Lock.for(page).acquire!(holder: current_user) == Lux::LOCK_OK
+      return head 409
+    end
+
     unless page.destroy
       halt! 500, page.errors
     end
+
+    Lux::Lock.for(page).release!(holder: current_user)
 
     head 204
   end

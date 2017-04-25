@@ -1,3 +1,9 @@
+PATH
+  remote: gems/lux
+  specs:
+    lux (1.0.0)
+      rails (>= 4.1, < 6)
+
 GEM
   remote: https://rubygems.org/
   specs:
@@ -197,6 +203,7 @@ GEM
     thor (0.19.1)
     thread_safe (0.3.4)
     tilt (1.4.1)
+    timecop (0.8.1)
     treetop (1.4.15)
       polyglot
       polyglot (>= 0.3.1)
@@ -228,6 +235,7 @@ DEPENDENCIES
   gravatarify (= 3.1.1)
   jbuilder
   kaminari (= 0.15.1)
+  lux!
   mail_view
   newrelic_rpm (= 3.8.1.221)
   omniauth (~> 1.2)
@@ -247,6 +255,7 @@ DEPENDENCIES
   ruby-prof
   shoulda-matchers
   spring
+  timecop
   unicode
   uuid
   zipruby (= 0.3.6)

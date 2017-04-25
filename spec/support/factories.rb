@@ -32,6 +32,14 @@ module Support
       end
     end
 
+    def a_space_with_folder(**attrs)
+      user = attrs.delete(:user) || a_user
+
+      SpaceService.new.create(user, attrs.reverse_merge({
+        title: Space::DEFAULT_TITLE
+      })).output
+    end
+
     def a_folder(space = a_space, params = {})
       space.folders.create({
         title: 'Some Folder',

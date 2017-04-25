@@ -30,11 +30,18 @@ Rails.application.routes.draw do
         delete '/:space_id', action: :destroy
       end
 
-      scope '/pages', controller: :pages do
-        get '/', action: :index
-        get '/:page_id', action: :show
-        patch '/:page_id', action: :update
-        delete '/:page_id', action: :destroy
+      resources :pages, only: [ :create, :index ] do
+        get '/', action: :show
+        patch '/', action: :update
+        delete '/', action: :destroy
+      end
+
+      resources :locks, only: [] do
+        collection do
+          post '/', action: :create
+          patch '/', action: :update
+          delete '/', action: :destroy
+        end
       end
     end
 
