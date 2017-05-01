@@ -49,7 +49,7 @@ module Lux
     # @return [Lux::LOCK_OK]
     # @return [Lux::LOCK_NOT_OWNED]
     def acquire!(holder:, duration: DEFAULT_DURATION)
-      if !persisted?
+      if !persisted? || expired?
         self.holder_id = Lock.id_of(holder)
         self.duration = duration
 
@@ -104,6 +104,10 @@ module Lux
 
     def held_by?(holder)
       self.holder_id == Lock.id_of(holder)
+    end
+
+    def expired?
+      !updated_at || Time.now.to_i - updated_at.to_i > duration
     end
 
     private
