@@ -11,6 +11,10 @@ class SpaceUser < ActiveRecord::Base
     scope role_scope, -> { where(role: role_weight) }
   end
 
+  def role_name
+    self.class.role_name(role)
+  end
+
   class << self
     def weigh(role)
       role = ROLES.index(role.to_sym)

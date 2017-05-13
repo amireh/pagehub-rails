@@ -15,10 +15,6 @@
     {{#if isOwner}}
       <div class="emblem owner" rel="tooltip" title="You own this space."></div>
     {{/if}}
-
-    {{#if isMember}}
-      <div class="emblem accessible" rel="tooltip" title="You have access to this space."></div>
-    {{/if}}
   </div>
 
   <div class="meta">
@@ -26,11 +22,6 @@
       <a href="{{#if isGuest}}{{href}}{{else}}{{links.edit}}{{/if}}">
         <strong>{{{creator.nickname}}} / {{{title}}}</strong>
       </a>
-
-      <div class="stats hint small">
-        <span>{{#pluralize 'page' nrPages}}{{/pluralize}}</span>,
-        <span>{{#pluralize 'member' nrMembers}}{{/pluralize}}</span>
-      </div>
     </h3>
 
     <p class="hint">

@@ -4,7 +4,7 @@ class UsersController < ApplicationController
   before_filter :require_user, only: [ :dashboard ]
 
   def dashboard
-    spaces = current_user.spaces.includes(:user, :folders, :pages, :space_users)
+    spaces = current_user.spaces.includes(:user, :space_users)
 
     respond_to do |format|
       format.html do
@@ -12,9 +12,11 @@ class UsersController < ApplicationController
         @user = current_user
 
         js_env(render_json_template({
-          template: '/api/spaces/index.json.jbuilder',
+          template: '/api/v2/spaces/index.json.jbuilder',
           locals: {
-            spaces: spaces
+            spaces: spaces,
+            include_creator: true,
+            include_memberships: true,
           }
         }))
       end

@@ -17,7 +17,18 @@ json.folders object.folders do |folder|
 end
 
 json.pages object.pages do |page|
-  json.partial! "api/pages/show", object: page, include_revisions: false
+  json.id             page.id.to_s
+  json.folder_id      page.folder_id.to_s
+  json.user_id        page.user_id.to_s
+  json.title          ERB::Util.h(page.title)
+  json.pretty_title   ERB::Util.h(page.pretty_title)
+  json.browsable      page.browsable
+  json.encrypted      !!page.encrypted
+
+  json.url            api_folder_page_url(page.folder.space_id, page)
+  json.href           generic_resource_url(page.href)
+
+  json.edit_url       edit_page_url(page.id)
 end
 
 json.memberships object.space_users do |user|

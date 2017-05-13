@@ -3,6 +3,13 @@ class Api::V2::LocksController < ApiController
 
   def create
     with_lockable_resource do |resource|
+      if params[:prune] == '1'
+        Lux::Lock
+          .where(resource_type: params[:resource_type])
+          .owned_by(current_user)
+          .destroy_all
+      end
+
       case Lux::Lock.for(resource).acquire!(holder: current_user)
       when Lux::LOCK_OK
         head 204

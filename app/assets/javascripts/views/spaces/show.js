@@ -190,6 +190,15 @@ define([
       this.trigger('folder_loaded', f, last_folder);
       this.current_folder.on('change', this.broadcast_current_folder_update, this);
 
+      ajax({
+        type: 'DELETE',
+        url: '/api/v2/locks',
+        dataType: 'json',
+        data: JSON.stringify({
+          resource_type: 'Page'
+        })
+      });
+
       return this;
     },
 
@@ -205,22 +214,14 @@ define([
       }
 
       ajax({
-        type: 'DELETE',
+        type: 'POST',
         url: '/api/v2/locks',
+        contentType: 'json',
         dataType: 'json',
         data: JSON.stringify({
-          resource_type: 'Page'
-        })
-      }).then(function() {
-        return ajax({
-          type: 'POST',
-          url: '/api/v2/locks',
-          contentType: 'json',
-          dataType: 'json',
-          data: JSON.stringify({
-            resource_type: 'Page',
-            resource_id: page.get('id'),
-          })
+          resource_type: 'Page',
+          resource_id: page.get('id'),
+          prune: '1'
         })
       }).then(function() {
         page.fetch({
