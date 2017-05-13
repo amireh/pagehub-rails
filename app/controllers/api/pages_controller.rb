@@ -55,6 +55,10 @@ class Api::PagesController < ApiController
       return head 409
     end
 
+    if page.encrypted?
+      halt! 422, "This API does not support modifying encrypted pages."
+    end
+
     xparams = params.require(:page).permit(:title, :content, :browsable, :folder_id, :encrypted, :digest)
 
     if new_folder_id = xparams[:folder_id]
