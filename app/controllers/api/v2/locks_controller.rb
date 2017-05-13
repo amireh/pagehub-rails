@@ -24,6 +24,15 @@ class Api::V2::LocksController < ApiController
   end
 
   def destroy
+    if params[:resource_type] && !params[:resource_id]
+      Lux::Lock
+        .where(resource_type: params[:resource_type])
+        .owned_by(current_user)
+        .destroy_all
+
+      return head 204
+    end
+
     with_lockable_resource do |resource|
       case Lux::Lock.for(resource).release!(holder: current_user)
       when Lux::LOCK_OK

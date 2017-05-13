@@ -2,7 +2,7 @@ module Lux
   class Lock < ActiveRecord::Base
     self.table_name = "locks"
 
-    DEFAULT_DURATION = 5.minutes
+    DEFAULT_DURATION = 3.minutes
 
     # Retrieve a locking handle to a lockable resource.
     #
@@ -24,6 +24,10 @@ module Lux
       where <<-SQL
         EXTRACT(EPOCH FROM age((now() at time zone 'utc'), updated_at)) > duration
       SQL
+    }
+
+    scope :owned_by, ->(holder_id) {
+      where(holder_id: holder_id)
     }
 
     # @return [Boolean] Whether the resource is locked by anyone.
