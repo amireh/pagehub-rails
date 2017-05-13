@@ -1,6 +1,7 @@
 define([
   'jquery',
   'backbone',
+  'pagehub',
   'codemirror/lib/codemirror',
   'codemirror/addon/fold/foldcode',
   'codemirror/addon/fold/foldgutter',
@@ -38,7 +39,7 @@ define([
   'codemirror/mode/sass/sass',
   'codemirror/mode/sql/sql',
   'codemirror/mode/yaml/yaml',
-], function($, Backbone, CodeMirror) {
+], function($, Backbone, UI, CodeMirror) {
 
   var CodeMirror_aliases = {
     'shell': [ 'bash', 'sh' ]
@@ -179,7 +180,15 @@ define([
           scroll = this.editor.getScrollInfo();
 
       this.reset();
-      if (page) {
+
+      if (page && page.attributes.encrypted) {
+        UI.status.show("Sorry! This page is encrypted and can not be edited on the web.", "bad");
+
+        window.location.hash = '#/';
+
+        this.editor.setValue('');
+      }
+      else if (page) {
         this.editor.setValue(_.unescape( page.get('content') ));
       }
 

@@ -138,6 +138,11 @@ function($, AnimableView, MoveFolderLinkTemplate, DestroyPageTmpl, Shortcut, UI,
           if (!autosave) {
             UI.status.show("Updated.", "good");
           }
+        },
+        error: function(_, error) {
+          if (error && error.status === 409) {
+            UI.status.show('Someone else is editing this page, please try again later.', 'bad');
+          }
         }
       });
 

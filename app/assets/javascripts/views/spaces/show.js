@@ -1,5 +1,6 @@
 define([
   'jquery',
+  'utils/ajax',
   'backbone',
   'views/spaces/workspace/router',
   'views/spaces/resource_actions',
@@ -12,7 +13,7 @@ define([
   'views/spaces/finder',
   'pagehub',
   'timed_operation'
-], function($, Backbone, Router, ResourceActions, Browser, PageActionBar, GeneralActionBar, Editor, Finder, UI, TimedOp) {
+], function($, ajax, Backbone, Router, ResourceActions, Browser, PageActionBar, GeneralActionBar, Editor, Finder, UI, TimedOp) {
   return window = PHLegacy.SpaceShowView = Backbone.View.extend({
     el: $("#workspace"),
 
@@ -203,13 +204,35 @@ define([
         this.current_page.off('change', this.broadcast_current_page_update, this);
       }
 
-      page.fetch({
-        wait: true,
-        success: function() {
-          workspace.current_page = page;
-          workspace.trigger('page_loaded', page);
-          workspace.current_page.on('change', workspace.broadcast_current_page_update, workspace);
-        }
+      ajax({
+        type: 'DELETE',
+        url: '/api/v2/locks',
+        dataType: 'json',
+        data: JSON.stringify({
+          resource_type: 'Page'
+        })
+      }).then(function() {
+        return ajax({
+          type: 'POST',
+          url: '/api/v2/locks',
+          contentType: 'json',
+          dataType: 'json',
+          data: JSON.stringify({
+            resource_type: 'Page',
+            resource_id: page.get('id'),
+          })
+        })
+      }).then(function() {
+        page.fetch({
+          wait: true,
+          success: function() {
+            workspace.current_page = page;
+            workspace.trigger('page_loaded', page);
+            workspace.current_page.on('change', workspace.broadcast_current_page_update, workspace);
+          }
+        });
+      }).fail(function() {
+        UI.status.show('Someone else is editing this page, please try again later.', 'bad');
       });
 
       return this;
