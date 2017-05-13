@@ -57,6 +57,8 @@ class Page < ActiveRecord::Base
 
     if !new_content
       return false
+    elsif encrypted?
+      return true
     end
 
     unless rv = revisions.create({ new_content: new_content, user: user })

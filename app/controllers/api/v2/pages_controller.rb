@@ -23,9 +23,9 @@ class Api::V2::PagesController < ApiController
     authorize! :author_more, space,
       :message => 'You can not create any more pages in this space.'
 
-    xparams = params.fetch(:page, {}).permit(:title, :content, :browsable)
+    attributes = params.fetch(:page, {}).permit(:title, :content, :browsable)
 
-    page = folder.pages.create(xparams.merge({
+    page = folder.pages.create(attributes.merge({
       user_id: current_user.id
     }))
 
@@ -59,9 +59,9 @@ class Api::V2::PagesController < ApiController
       return head 409
     end
 
-    xparams = params.require(:page).permit(:title, :content, :browsable, :folder_id, :encrypted, :digest)
+    attributes = params.require(:page).permit(:title, :content, :browsable, :folder_id, :encrypted, :digest)
 
-    if new_folder_id = xparams[:folder_id]
+    if new_folder_id = attributes[:folder_id]
       new_folder = Folder.find(new_folder_id)
 
       if new_folder.space != space
@@ -69,8 +69,8 @@ class Api::V2::PagesController < ApiController
       end
     end
 
-    if new_content = xparams[:content]
-      PageHub::Markdown::mutate! xparams[:content]
+    if new_content = attributes[:content]
+      PageHub::Markdown::mutate! attributes[:content]
 
       begin
         unless page.generate_revision(new_content, current_user)
@@ -83,7 +83,7 @@ class Api::V2::PagesController < ApiController
       end
     end
 
-    unless page.update(xparams)
+    unless page.update(attributes)
       halt! 422, page.errors
     end
 
