@@ -1,0 +1,16 @@
+{
+  "env": {
+    "amd": true
+  },
+  "rules": {
+    "no-shadow": [1],
+    "no-unused-vars": [1],
+  },
+  "globals": {
+    "_": false,
+    "PHLegacy": false,
+    "ENV": false,
+    "CanvasLoader": false,
+    "requirejs": false
+  }
+}

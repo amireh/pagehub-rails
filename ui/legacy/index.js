@@ -1,3 +1,5 @@
+/* global define: false */
+
 window.PHLegacy = {};
 
 define([

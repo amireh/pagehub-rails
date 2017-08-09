@@ -1,3 +1,5 @@
+/app/assets/javascripts/vendor
+
 dist
 doc/compiled
 

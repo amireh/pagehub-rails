@@ -2,7 +2,7 @@ const page = require('page');
 const React = require('react');
 const ReactDOM = require('react-dom');
 const Welcome = require('./screens/Welcome');
-const NotFound = require('./screens/NotFound');
+// const NotFound = require('./screens/NotFound');
 const Features = require('./screens/Features');
 const LoginRoute = require('./screens/LoginRoute');
 

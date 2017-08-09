@@ -8,7 +8,8 @@ describe("LoginRoute", function() {
 
   it('renders', function() {
     let onRender = sandbox().stub();
-    let subject = Subject.handler(onRender);
+
+    Subject.handler(onRender);
 
     assert.calledOnce(onRender);
   });
