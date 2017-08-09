@@ -2,7 +2,7 @@
   "name": "pagehub",
   "version": "1.0.0",
   "scripts": {
-    "build": "webpack && grunt sass",
+    "build": "NODE_ENV=production webpack -p && grunt sass",
     "lint": "eslint ui app/assets/javascripts"
   },
   "devDependencies": {
